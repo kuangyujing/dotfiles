@@ -1,0 +1,8 @@
+# bash options
+set -o vi
+set -o ignoreeof
+
+# bash history
+HISTCONTROL=ignoreboth
+HISTIGNORE='ls:clear'
+

@@ -1,0 +1,27 @@
+# PATH
+export PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# bash prompt
+export PS1=$'\[\033[0m\]\W\[\033[2m\]$(__git_ps1 " (%s)")\[\033[0m\] \xe2\x9d\xb1\[\033]2;bash\a\] '
+
+# bash options
+set -o vi
+set -o ignoreeof
+
+# bash history
+HISTCONTROL=ignoreboth
+HISTIGNORE='ls:clear'
+
+# bash completion
+. /etc/bash_completion
+
+# aliases
+alias r='fc -s'
+alias l='ls'
+alias sl='ls'
+alias la='ls -a'
+alias ll='ls -l'
+alias ls='ls -h --color=auto'
+alias free='free -hw'
+alias vmstat='vmstat -w 1'
+
