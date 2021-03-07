@@ -558,3 +558,13 @@ __git_ps1 () {
     return $exit
 }
 
+# git prompt config
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUPSTREAM=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_STATESEPARATOR=
+
+# PS1
+export PS1=$'\[\033[0m\]\W\[\033[2m\]$(__git_ps1 " (%s)")\[\033[0m\] \xe2\x9d\xb1\[\033]2;bash\a\] '
+
