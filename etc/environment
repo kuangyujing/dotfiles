@@ -1,0 +1,5 @@
+PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+NO_AT_BRIDGE=1
+XCURSOR_THEME=Papirus
+FREETYPE_PROPERTIES=truetype:interpreter-version=40
+#FREETYPE_PROPERTIES="truetype:interpreter-version=35 cff:no-stem-darkening=1 autofitter:warping=1"

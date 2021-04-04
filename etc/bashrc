@@ -1,0 +1,43 @@
+# git prompt
+. /etc/git_prompt
+
+# git prompt config
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUPSTREAM=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_STATESEPARATOR=
+
+# PATH
+export PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# PS1 '\xe2\x9d\xb1' '\[\033]2;bash\a\]'
+export PS1='\[\033[0m\]\W\[\033[2m\]$(__git_ps1 " (%s)")\[\033[0m\] ❱ '
+
+# bash options
+set -o vi
+set -o ignoreeof
+
+# bash history
+HISTCONTROL=ignoreboth
+HISTIGNORE='ls:clear'
+
+# bash completion
+. /etc/bash_completion
+. /etc/npm_completion
+
+# aliases
+alias r='fc -s'
+alias l='ls'
+alias sl='ls'
+alias la='ls -a'
+alias ll='ls -l'
+alias ls='ls -h --color=auto'
+alias free='free -hw'
+alias vmstat='vmstat -w 1'
+alias mpg123='mpg123 -Zv -gapless'
+alias kvm='kvm -alt-grab'
+
+# user xdg directories
+export XDG_CONFIG_HOME=/home/.config
+export XDG_DATA_HOME=/home/.local/share
