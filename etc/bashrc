@@ -35,9 +35,4 @@ alias ll='ls -l'
 alias ls='ls -h --color=auto'
 alias free='free -hw'
 alias vmstat='vmstat -w 1'
-alias mpg123='mpg123 -Zv -gapless'
-alias kvm='kvm -alt-grab'
 
-# user xdg directories
-export XDG_CONFIG_HOME=/home/.config
-export XDG_DATA_HOME=/home/.local/share

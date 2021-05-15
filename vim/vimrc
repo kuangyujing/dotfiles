@@ -1,6 +1,5 @@
 set nocompatible
-set ambiwidth=double "single: listchars, fillchars
-set background=dark
+set ambiwidth=single "single: listchars, fillchars
 set backspace=
 set ttyfast
 set tabstop=4
@@ -23,8 +22,8 @@ set fileencodings=ucs-bom,utf-8,iso-2022-jp,euc-jp,sjis,default,latin1
 set fileformat=unix
 set fileformats=unix,dos,mac
 set matchpairs=(:),{:},[:],<:>,=:;
-set listchars=trail:.,extends:»,precedes:«,tab:¦\  "'
-set fillchars=vert:¦,fold:\  "'vert:\│,fold:─
+set listchars=trail:.,extends:»,precedes:«,tab:ǀ\  "'
+set fillchars=vert:\  "'
 set list
 set hlsearch
 set incsearch
@@ -41,9 +40,11 @@ set nofoldenable
 set mouse=nv
 set timeoutlen=10
 set nocursorline "fix for slow scrolling
+set background=dark
 let g:skip_defaults_vim=1 "disable defaults.vim
 let g:html_indent_style1='inc' "fix style tag indent
 let g:html_indent_script1='inc' "fix script tag indent
+syntax on
 noremap <silent> q <nop>
 noremap <silent> <s-q> <nop>
 nnoremap <silent> <tab> <c-w>w
@@ -52,41 +53,39 @@ filetype plugin indent on
 autocmd BufEnter * if &filetype == '' | setlocal filetype=text | endif
 autocmd InsertLeave * call system('fcitx-remote -c')
 autocmd VimLeave * call system('xsel -ib', getreg('+'))
-autocmd ColorScheme * call onedark#set_highlight('normal',{'fg':{'gui':'#abb2bf','cterm':'145','cterm16':'7'}})
-autocmd ColorScheme * call onedark#set_highlight('linenr',{'fg':{'gui':'#e5c07b','cterm':'180','cterm16':'3'}})
-autocmd ColorScheme * call onedark#set_highlight('visual',{'fg':{'gui':'#ffffff','cterm':'15','cterm16':'15'},'bg':{'gui':'#ff5f5f','cterm':'203','cterm16':'9'}})
-syntax enable
-let g:indentLine_char='¦' "│
+let g:indentLine_char='│' "ǀ│
 let g:python_highlight_all=1
 let g:rainbow_active=1
-let g:onedark_hide_endofbuffer=1
 let g:lightline={'colorscheme':'16color'}
 let g:vim_json_syntax_conceal=0
 let g:vim_markdown_conceal=0
 let g:vim_markdown_conceal_code_blocks=0
 let g:polyglot_disabled=['sensible']
 let g:highlightedyank_highlight_duration=150
+let g:onedark_hide_endofbuffer=1
+let g:onedark_termcolors=256
+autocmd ColorScheme * call onedark#set_highlight('normal',{'fg':{'gui':'#abb2bf','cterm':'145','cterm16':'7'}})
+autocmd ColorScheme * call onedark#set_highlight('linenr',{'fg':{'gui':'#e5c07b','cterm':'180','cterm16':'3'}})
+autocmd ColorScheme * call onedark#set_highlight('visual',{'fg':{'gui':'#ffffff','cterm':'15','cterm16':'15'},'bg':{'gui':'#ff5f5f','cterm':'203','cterm16':'9'}})
 call plug#begin('/etc/vim/plug')
+Plug 'kuangyujing/html5.vim'
 Plug 'sheerun/vim-polyglot'
-Plug 'itchyny/lightline.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'othree/yajs.vim'
 Plug 'othree/es.next.syntax.vim'
 Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'kuangyujing/html5.vim'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'yggdroot/indentline'
 Plug 'hdima/python-syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'luochen1990/rainbow'
 Plug 'moll/vim-node'
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-fugitive'
+Plug 'yggdroot/indentline'
 Plug 'jiangmiao/auto-pairs'
+Plug 'itchyny/lightline.vim'
+Plug 'airblade/vim-gitgutter'
 Plug 'joshdick/onedark.vim'
 call plug#end()
 colorscheme onedark
-highlight HighlightedyankRegion ctermfg=15 ctermbg=203 "'
-"highlight visual ctermfg=15 ctermbg=203
-"highlight visual ctermfg=15 ctermbg=39
-"highlight HighlightedyankRegion ctermfg=15 ctermbg=39 "
+hi HighlightedyankRegion ctermfg=15 ctermbg=203
