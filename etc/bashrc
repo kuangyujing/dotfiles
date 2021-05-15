@@ -12,7 +12,7 @@ export GIT_PS1_STATESEPARATOR=
 export PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # PS1 '\xe2\x9d\xb1' '\[\033]2;bash\a\]'
-export PS1='\[\033[0m\]\W\[\033[2m\]$(__git_ps1 " (%s)")\[\033[0m\] ❱ '
+export PS1='\[\033[0m\]\W\[\033[2m\]$(__git_ps1 " (%s)")\[\033[0m\] \$ '
 
 # bash options
 set -o vi
