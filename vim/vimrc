@@ -51,8 +51,8 @@ nnoremap <silent> <tab> <c-w>w
 nnoremap <silent> <s-tab> <c-w>W
 filetype plugin indent on
 autocmd BufEnter * if &filetype == '' | setlocal filetype=text | endif
-autocmd InsertLeave * call system('fcitx-remote -c')
-autocmd VimLeave * call system('xsel -ib', getreg('+'))
+"autocmd InsertLeave * call system('fcitx-remote -c')
+"autocmd VimLeave * call system('xsel -ib', getreg('+'))
 let g:indentLine_char='│' "ǀ│
 let g:python_highlight_all=1
 let g:rainbow_active=1

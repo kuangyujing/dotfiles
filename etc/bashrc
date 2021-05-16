@@ -1,18 +1,9 @@
-# git prompt
-. /etc/git_prompt
-
-# git prompt config
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWUPSTREAM=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_STATESEPARATOR=
-
 # PATH
 export PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-# PS1 '\xe2\x9d\xb1' '\[\033]2;bash\a\]'
-export PS1='\[\033[0m\]\W\[\033[2m\]$(__git_ps1 " (%s)")\[\033[0m\] \$ '
+# PS1 '\xe2\x9d\xb1' '\[\e]2;bash\a\]'
+export PS1='\[\e[0m\]\W\[\e[2m\]$(__git_ps1 " (%s)")\[\e[0m\] ❱ '
+export PS1='\[\e[0m\]\W\[\e[2m\]$(__git_ps1 " (%s)")\[\e[0m\] \$ '
 
 # bash options
 set -o vi
@@ -24,7 +15,19 @@ HISTIGNORE='ls:clear'
 
 # bash completion
 . /etc/bash_completion
-. /etc/npm_completion
+
+# git prompt
+. /etc/bash_completion.d/git-prompt
+
+# git prompt config
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUPSTREAM=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_STATESEPARATOR=
+
+# npm completion
+. /etc/bash_completion.d/npm-completion
 
 # aliases
 alias r='fc -s'
@@ -35,4 +38,3 @@ alias ll='ls -l'
 alias ls='ls -h --color=auto'
 alias free='free -hw'
 alias vmstat='vmstat -w 1'
-
