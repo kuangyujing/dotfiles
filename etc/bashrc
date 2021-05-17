@@ -15,9 +15,8 @@ HISTIGNORE='ls:clear'
 
 # bash completion
 . /etc/bash_completion
-
-# git prompt
 . /etc/bash_completion.d/git-prompt
+. /etc/bash_completion.d/npm-completion
 
 # git prompt config
 export GIT_PS1_SHOWDIRTYSTATE=1
@@ -25,9 +24,6 @@ export GIT_PS1_SHOWUPSTREAM=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_STATESEPARATOR=
-
-# npm completion
-. /etc/bash_completion.d/npm-completion
 
 # aliases
 alias r='fc -s'
