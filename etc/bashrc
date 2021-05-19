@@ -2,7 +2,7 @@
 export PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # PS1 '\xe2\x9d\xb1' '\[\e]2;bash\a\]'
-export PS1='\[\e[0m\]\W\[\e[2m\]$(__git_ps1 " (%s)")\[\e[0m\] ❱ '
+#export PS1='\[\e[0m\]\W\[\e[2m\]$(__git_ps1 " (%s)")\[\e[0m\] ❱ '
 export PS1='\[\e[0m\]\W\[\e[2m\]$(__git_ps1 " (%s)")\[\e[0m\] \$ '
 
 # bash options
