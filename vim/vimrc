@@ -44,7 +44,7 @@ set background=dark
 let g:skip_defaults_vim=1 "disable defaults.vim
 let g:html_indent_style1='inc' "fix style tag indent
 let g:html_indent_script1='inc' "fix script tag indent
-syntax on
+syntax enable
 noremap <silent> q <nop>
 noremap <silent> <s-q> <nop>
 nnoremap <silent> <tab> <c-w>w
