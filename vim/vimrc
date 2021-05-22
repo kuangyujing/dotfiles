@@ -67,30 +67,30 @@ autocmd ColorScheme * call onedark#set_highlight('normal',{'fg':{'gui':'#abb2bf'
 autocmd ColorScheme * call onedark#set_highlight('linenr',{'fg':{'gui':'#e5c07b','cterm':'180','cterm16':'3'}})
 autocmd ColorScheme * call onedark#set_highlight('visual',{'fg':{'gui':'#ffffff','cterm':'15','cterm16':'15'},'bg':{'gui':'#ff5f5f','cterm':'203','cterm16':'9'}})
 call plug#begin('/etc/vim/plug')
-    " HTML5
-    Plug 'kuangyujing/html5.vim'
-    " JavaScript
-    Plug 'pangloss/vim-javascript'
-    Plug 'othree/yajs.vim'
-    Plug 'othree/es.next.syntax.vim'
-    Plug 'othree/javascript-libraries-syntax.vim'
-    Plug 'maxmellon/vim-jsx-pretty'
-    " Interface
-    Plug 'itchyny/lightline.vim'
-    Plug 'yggdroot/indentline'
-    Plug 'jiangmiao/auto-pairs'
-    Plug 'luochen1990/rainbow'
-    Plug 'machakann/vim-highlightedyank'
-    " Node.js
-    Plug 'moll/vim-node'
-    " Python
-    Plug 'hdima/python-syntax'
-    Plug 'Vimjas/vim-python-pep8-indent'
-    " Git
-    Plug 'tpope/vim-fugitive'
-    Plug 'airblade/vim-gitgutter'
-    " Color scheme
-    Plug 'joshdick/onedark.vim'
+ " HTML5
+ Plug 'kuangyujing/html5.vim'
+ " JavaScript
+ Plug 'pangloss/vim-javascript'
+ Plug 'othree/yajs.vim'
+ Plug 'othree/es.next.syntax.vim'
+ Plug 'othree/javascript-libraries-syntax.vim'
+ Plug 'maxmellon/vim-jsx-pretty'
+ " Interface
+ Plug 'itchyny/lightline.vim'
+ Plug 'yggdroot/indentline'
+ Plug 'jiangmiao/auto-pairs'
+ Plug 'luochen1990/rainbow'
+ Plug 'machakann/vim-highlightedyank'
+ " Node.js
+ Plug 'moll/vim-node'
+ " Python
+ Plug 'hdima/python-syntax'
+ Plug 'Vimjas/vim-python-pep8-indent'
+ " Git
+ Plug 'tpope/vim-fugitive'
+ Plug 'airblade/vim-gitgutter'
+ " Color scheme
+ Plug 'joshdick/onedark.vim'
 call plug#end()
 colorscheme onedark
 hi HighlightedyankRegion ctermfg=15 ctermbg=203
