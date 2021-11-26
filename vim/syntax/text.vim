@@ -8,8 +8,12 @@ endif
 
 "syntax match Label '\<\u\i\+'
 "syntax match Constant '\<\d\+\>'
-syntax match Identifier '^\s*[\-+*]'
-syntax match Comment '\<\@<!#.*$'
+syntax match identifier '^\s*[\-+*>]'
+syntax match comment '\<\@<!#.*$'
+
+syntax match type '\<TODO\>'
+syntax match todo '\<FIXME\>'
+syntax match error '\<XXX\>'
+syntax match special '\<DONE\>'
 
 let b:current_syntax = 'text'
-

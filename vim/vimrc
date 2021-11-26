@@ -12,7 +12,7 @@ set smartindent
 set breakindent
 set cindent
 set cinoptions=+2,t0,l1,j1,J1 "(s,L0
-set formatoptions=tcroqnblmM1j
+set formatoptions=tcroqnblmM1j "'
 set autoread
 set cmdheight=1
 set scrolloff=2
@@ -23,8 +23,10 @@ set fileencodings=ucs-bom,utf-8,iso-2022-jp,euc-jp,sjis,default,latin1
 set fileformat=unix
 set fileformats=unix,dos,mac
 set matchpairs=(:),{:},[:],<:>,=:;
-set listchars=trail:.,extends:»,precedes:«,tab:ǀ\  "'
-set fillchars=vert:\  "'
+"set listchars=trail:.,extends:»,precedes:«,tab:ǀ\  "'
+set listchars=
+"set fillchars=vert:\  "'
+set fillchars=
 set list
 set hlsearch
 set incsearch
@@ -70,7 +72,7 @@ let g:vim_markdown_conceal_code_blocks=0
 let g:onedark_hide_endofbuffer=1
 let g:onedark_termcolors=256
 let g:highlightedyank_highlight_duration=200
-call plug#begin("~/.vim/plug")
+call plug#begin("/usr/share/vim/plug")
  " basics
  Plug 'itchyny/lightline.vim'
  Plug 'yggdroot/indentline'
@@ -93,6 +95,13 @@ call plug#begin("~/.vim/plug")
  " git
  Plug 'tpope/vim-fugitive'
  Plug 'airblade/vim-gitgutter'
+ " typescript
+ Plug 'pangloss/vim-javascript'
+ Plug 'leafgarland/typescript-vim'
+ " jsx, tsx
+ Plug 'maxmellon/vim-jsx-pretty'
+ " graphql
+ Plug 'jparise/vim-graphql'
  " ejs, jst
  Plug 'briancollins/vim-jst',{'for':['ejs','jst']}
  " colorscheme
