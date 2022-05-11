@@ -1,4 +1,4 @@
-![dotfiles](assets/logo.png)
+![dotfiles](.assets/logo.png)
 
 # dotfiles
 
