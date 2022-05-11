@@ -12,7 +12,7 @@ set smartindent
 set breakindent
 set cindent
 set cinoptions=+2,t0,l1,j1,J1 "(s,L0
-set formatoptions=tcroqnblmM1j "'
+set formatoptions=tcroqnblmM1j
 set autoread
 set cmdheight=1
 set scrolloff=2
@@ -23,9 +23,9 @@ set fileencodings=ucs-bom,utf-8,iso-2022-jp,euc-jp,sjis,default,latin1
 set fileformat=unix
 set fileformats=unix,dos,mac
 set matchpairs=(:),{:},[:],<:>,=:;
-"set listchars=trail:.,extends:»,precedes:«,tab:ǀ\  "'
+set listchars=trail:.,extends:»,precedes:«,tab:ǀ\  "'
 set listchars=
-"set fillchars=vert:\  "'
+set fillchars=vert:\  "'
 set fillchars=
 set list
 set hlsearch
@@ -34,78 +34,82 @@ set smartcase
 set noswapfile
 set nobackup
 set noshowmode
-set clipboard=unnamedplus
+set clipboard=unnamed "unnamedplus for Linux
 set conceallevel=0
 set wildmenu
 set number
 set wrap
 set nofoldenable
-set mouse=nv
+set mouse=a
 set timeoutlen=10
 set nocursorline "fix for slow scrolling
+set signcolumn=yes
 set background=dark
 noremap <silent> q <nop>
 noremap <silent> <s-q> <nop>
 nnoremap <silent> <tab> <c-w>w
 nnoremap <silent> <s-tab> <c-w>W
 filetype plugin indent on
+"command Sync Git add -A | Git commit -m update | Git push
 autocmd BufEnter * if &filetype == '' | setlocal filetype=text | endif
-autocmd InsertLeave * call system('fcitx-remote -c')
-autocmd VimLeave * call system('xsel -ib', getreg('+'))
+autocmd InsertLeave * call system('im-select com.apple.keylayout.ABC')
+"autocmd VimLeave * call system('xsel -ib', getreg('+')) "disable for macOS
 autocmd ColorScheme * call onedark#set_highlight
-            \ ('normal',{'fg':{'gui':'#efefef','cterm':'255','cterm16':'15'}})
+\ ('normal',{'fg':{'gui':'#efefef','cterm':'255','cterm16':'15'}})
 autocmd ColorScheme * call onedark#set_highlight
-            \ ('linenr',{'fg':{'gui':'#e5c07b','cterm':'180','cterm16':'3'}})
+\ ('linenr',{'fg':{'gui':'#e5c07b','cterm':'180','cterm16':'3'}})
 autocmd ColorScheme * call onedark#set_highlight
-            \ ('visual',{'fg':{'gui':'#ffffff','cterm':'15','cterm16':'15'},
-            \  'bg':{'gui':'#ff5f5f','cterm':'203','cterm16':'9'}})
+\ ('visual',{'fg':{'gui':'#ffffff','cterm':'15','cterm16':'15'},
+\  'bg':{'gui':'#ff5f5f','cterm':'203','cterm16':'9'}})
+autocmd BufNewFile,BufRead *.todo,TODO,todo,Todo,ToDo setf todo
 let g:skip_defaults_vim=1 "disable defaults.vim
 let g:html_indent_style1='inc' "fix style tag indent
 let g:html_indent_script1='inc' "fix script tag indent
-let g:indentLine_char='│' "│
 let g:python_highlight_all=1
 let g:rainbow_active=1
 let g:lightline={'colorscheme':'16color'}
+"let g:indentLine_char='│' "│
+"let g:indentLine_setConceal=0
 let g:vim_json_syntax_conceal=0
 let g:vim_markdown_conceal=0
 let g:vim_markdown_conceal_code_blocks=0
 let g:onedark_hide_endofbuffer=1
 let g:onedark_termcolors=256
-let g:highlightedyank_highlight_duration=200
-call plug#begin("/usr/share/vim/plug")
- " basics
- Plug 'itchyny/lightline.vim'
- Plug 'yggdroot/indentline'
- Plug 'jiangmiao/auto-pairs'
- Plug 'luochen1990/rainbow'
- Plug 'machakann/vim-highlightedyank'
- " web
- Plug 'kuangyujing/html5.vim',{'for':['html','javascript','css']}
- " javascript
- Plug 'pangloss/vim-javascript',{'for':['html','javascript']}
- Plug 'othree/yajs.vim',{'for':['html','javascript']}
- Plug 'othree/es.next.syntax.vim',{'for':['html','javascript']}
- Plug 'othree/javascript-libraries-syntax.vim',{'for':['html','javascript']}
- Plug 'maxmellon/vim-jsx-pretty',{'for':['html','javascript']}
- " node.js
- Plug 'moll/vim-node',{'for':'javascript'}
- " python
- Plug 'hdima/python-syntax',{'for':'python'}
- Plug 'Vimjas/vim-python-pep8-indent',{'for':'python'}
- " git
- Plug 'tpope/vim-fugitive'
- Plug 'airblade/vim-gitgutter'
- " typescript
- Plug 'pangloss/vim-javascript'
- Plug 'leafgarland/typescript-vim'
- " jsx, tsx
- Plug 'maxmellon/vim-jsx-pretty'
- " graphql
- Plug 'jparise/vim-graphql'
- " ejs, jst
- Plug 'briancollins/vim-jst',{'for':['ejs','jst']}
- " colorscheme
- Plug 'joshdick/onedark.vim'
+let g:highlightedyank_highlight_duration=128
+call plug#begin("~/.vim")
+" basics
+Plug 'itchyny/lightline.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'luochen1990/rainbow'
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-sleuth'
+Plug 'editorconfig/editorconfig-vim'
+" web
+Plug 'kuangyujing/html5.vim',{'for':['html','javascript','css']}
+" javascript
+Plug 'pangloss/vim-javascript',{'for':['html','javascript']}
+Plug 'othree/yajs.vim',{'for':['html','javascript']}
+Plug 'othree/es.next.syntax.vim',{'for':['html','javascript']}
+" node.js
+Plug 'moll/vim-node',{'for':'javascript'}
+" python
+Plug 'hdima/python-syntax',{'for':'python'}
+Plug 'Vimjas/vim-python-pep8-indent',{'for':'python'}
+" git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+" typescript
+Plug 'leafgarland/typescript-vim',{'for':['javascript','typescript']}
+" jsx, tsx
+Plug 'maxmellon/vim-jsx-pretty',{'for':['javascript','typescript']}
+" graphql
+Plug 'jparise/vim-graphql'
+" ejs, jst
+Plug 'briancollins/vim-jst',{'for':['ejs','jst']}
+" colorscheme
+Plug 'joshdick/onedark.vim'
+" todo.vim
+Plug 'kuangyujing/todo.vim'
 call plug#end() " + syntax enable
 colorscheme onedark
 highlight HighlightedyankRegion ctermfg=15 ctermbg=203
