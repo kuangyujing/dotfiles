@@ -51,6 +51,7 @@ export GIT_PS1_STATESEPARATOR=
 
 # aliases
 alias r='fc -s'
+alias g='git'
 alias l='ls'
 alias sl='ls'
 alias la='ls -a'
