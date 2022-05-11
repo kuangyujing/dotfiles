@@ -1,0 +1,59 @@
+# Supress zsh warning
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# PATH
+export PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:$PATH
+
+# Prompt
+export PS1='\[\033]0;\a\[\033[2m\]\W$(__git_ps1 " (%s)") →\[\033[0m\] '
+
+# bash options
+set -o vi
+set -o ignoreeof
+
+# bash history
+export HISTCONTROL=ignoreboth
+export HISTIGNORE='ls:clear'
+
+# bash bind
+bind "TAB:menu-complete"
+bind "set show-all-if-ambiguous on"
+bind "set completion-ignore-case on"
+bind "set menu-complete-display-prefix on"
+
+# homebrew
+export HOMEBREW_NO_ENV_HINTS=1
+
+# git prompt
+. /opt/homebrew/etc/bash_completion.d/git-prompt.sh
+
+# git prompt config
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUPSTREAM=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_STATESEPARATOR=
+
+# bash completion
+. /opt/homebrew/etc/bash_completion
+
+# brew completion
+. /opt/homebrew/etc/bash_completion.d/brew
+
+# git completion
+. /opt/homebrew/etc/bash_completion.d/git-completion.bash
+
+# gh completion
+. /opt/homebrew/etc/bash_completion.d/gh
+
+# aws completion
+. /opt/homebrew/etc/bash_completion.d/aws_bash_completer
+
+# aliases
+alias r='fc -s'
+alias l='ls'
+alias sl='ls'
+alias la='ls -a'
+alias ll='ls -l'
+alias ls='ls -h --color'
+alias free='free -hw'
