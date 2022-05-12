@@ -42,5 +42,4 @@ alias la='ls -a'
 alias ll='ls -l'
 alias ls='ls -h --color=auto'
 alias free='free -hw'
-alias vmstat='vmstat -w 1'
-
+alias vmstat='vmstat -w'
