@@ -1,11 +1,11 @@
-# Supress zsh warning
+# supress zsh warning
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-# PATH
+# path
 export PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:$PATH
 
-# Prompt
-export PS1='\[\033]0;\a\[\033[2m\]\W$(__git_ps1 " (%s)") →\[\033[0m\] '
+# prompt
+export PS1='\[\033]0;\007\033[2m\]\W$(__git_ps1 " (%s)") →\[\033[0m\] '
 
 # bash options
 set -o vi
