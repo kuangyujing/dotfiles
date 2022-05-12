@@ -19,9 +19,7 @@ bind "set show-all-if-ambiguous on"
 #bind "set completion-ignore-case on"
 bind "set menu-complete-display-prefix on"
 
-# bash completion
-. /etc/bash_completion
-. /etc/bash_completion.d/npm-completion
+# git prompt
 . /etc/bash_completion.d/git-prompt
 
 # git prompt config
@@ -30,6 +28,13 @@ export GIT_PS1_SHOWUPSTREAM=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_STATESEPARATOR=
+
+# bash completion
+. /etc/bash_completion
+
+# node.js completion
+. /usr/local/bin/node-completion
+. /usr/local/bin/npm-completion
 
 # aws-cli completion
 complete -C /usr/local/bin/aws_completer aws
