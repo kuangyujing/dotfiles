@@ -1,5 +1,5 @@
 # path
-export PATH=/opt/homebrew/opt/sqlite/bin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:$PATH
+export PATH=/opt/homebrew/opt/sqlite/bin:/opt/homebrew/opt/curl/bin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:$PATH
 
 # prompt
 export PS1='\[\033]0;\007\033[2m\]\W$(__git_ps1 " (%s)") →\[\033[0m\] '
@@ -25,9 +25,8 @@ bind "set completion-ignore-case on"
 bind "set menu-complete-display-prefix on"
 
 # for compilers
-export LDFLAGS="-L/opt/homebrew/opt/sqlite/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/sqlite/include"
-
+export LDFLAGS="-L/opt/homebrew/opt/sqlite/lib -L/opt/homebrew/opt/curl/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/sqlite/include -I/opt/homebrew/opt/curl/include"
 # git prompt config
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUPSTREAM=1
