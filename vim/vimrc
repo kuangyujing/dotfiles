@@ -83,6 +83,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-sleuth'
+Plug 'ciaranm/detectindent'
 Plug 'editorconfig/editorconfig-vim'
 " web
 Plug 'kuangyujing/html5.vim',{'for':['html','javascript','css']}
