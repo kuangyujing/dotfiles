@@ -23,10 +23,8 @@ set fileencodings=ucs-bom,utf-8,iso-2022-jp,euc-jp,sjis,default,latin1
 set fileformat=unix
 set fileformats=unix,dos,mac
 set matchpairs=(:),{:},[:],<:>,=:;
-set listchars=trail:.,extends:»,precedes:«,tab:ǀ\  "'
-set listchars=
+set listchars=trail:.,extends:»,precedes:«,tab:→\  "'
 set fillchars=vert:\  "'
-set fillchars=
 set list
 set hlsearch
 set incsearch
@@ -50,7 +48,6 @@ noremap <silent> <s-q> <nop>
 nnoremap <silent> <tab> <c-w>w
 nnoremap <silent> <s-tab> <c-w>W
 filetype plugin indent on
-"command Sync Git add -A | Git commit -m update | Git push
 autocmd BufEnter * if &filetype == '' | setlocal filetype=text | endif
 autocmd InsertLeave * call system('im-select com.apple.keylayout.ABC')
 "autocmd VimLeave * call system('xsel -ib', getreg('+')) "disable for macOS
@@ -67,9 +64,7 @@ let g:html_indent_style1='inc' "fix style tag indent
 let g:html_indent_script1='inc' "fix script tag indent
 let g:python_highlight_all=1
 let g:rainbow_active=1
-let g:lightline={'colorscheme':'16color'}
-"let g:indentLine_char='│' "│
-"let g:indentLine_setConceal=0
+"let g:lightline={'colorscheme':'16color'}
 let g:vim_json_syntax_conceal=0
 let g:vim_markdown_conceal=0
 let g:vim_markdown_conceal_code_blocks=0
@@ -107,6 +102,8 @@ Plug 'maxmellon/vim-jsx-pretty',{'for':['javascript','typescript']}
 Plug 'jparise/vim-graphql'
 " ejs, jst
 Plug 'briancollins/vim-jst',{'for':['ejs','jst']}
+" csv
+Plug 'chrisbra/csv.vim'
 " colorscheme
 Plug 'joshdick/onedark.vim'
 " todo.vim
