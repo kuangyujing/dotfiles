@@ -1,0 +1,117 @@
+{
+    Command1Through9SwitchesTabs = 0;
+    "Default Window Settings" = bash;
+    DefaultProfilesVersion = 1;
+    HasMigratedDefaults = 1;
+    NSColorPanelMode = 1;
+    NSColorPickerPreferredRGBEntryMode = 2;
+    NSColorPickerSlidersDefaults = 1;
+    NSFontPanelAttributes = "1, 4";
+    NSNavLastRootDirectory = "~/downloads/terminal-app-master";
+    NSNavPanelExpandedSizeForOpenMode = "{800, 448}";
+    "NSSplitView Subview Frames NSColorPanelSplitView" =     (
+        "0.000000, 0.000000, 257.000000, 431.000000, NO, NO",
+        "0.000000, 432.000000, 257.000000, 43.000000, NO, NO"
+    );
+    "NSToolbar Configuration com.apple.NSColorPanel" =     {
+        "TB Is Shown" = 1;
+    };
+    "NSWindow Frame NSColorPanel" = "939 76 257 451 0 0 2560 1415 ";
+    "NSWindow Frame NSFontPanel" = "2476 38 445 96 0 0 3008 1667 ";
+    "NSWindow Frame NSNavPanelAutosaveName" = "0 0 800 448 0 0 2560 1415 ";
+    "NSWindow Frame TTAppPreferences" = "1529 325 667 554 0 0 3008 1667 ";
+    "NSWindow Frame TTWindow" = "2282 676 685 784 0 0 3008 1667 ";
+    "NSWindow Frame TTWindow Basic" = "1251 554 505 394 0 0 2560 1055 ";
+    "NSWindow Frame TTWindow Dracula" = "1662 0 865 1015 0 0 2560 1415 ";
+    "NSWindow Frame TTWindow Numix" = "2051 9 925 1085 0 0 3008 1667 ";
+    "NSWindow Frame TTWindow Terminal" = "1579 122 865 1015 0 0 2560 1415 ";
+    "NSWindow Frame TTWindow bash" = "2197 74 745 805 0 0 3008 1667 ";
+    ProfileCurrentVersion = "2.07";
+    SecureKeyboardEntry = 0;
+    ShowLineMarks = 0;
+    "Startup Window Settings" = bash;
+    StringEncodings =     (
+        4
+    );
+    "TTAppPreferences Selected Tab" = 0;
+    "TTInspector Selected Pane" = Info;
+    "Window Settings" =     {
+        bash =         {
+            ANSIBlackColor = {length = 265, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d0 };
+            ANSIBlueColor = {length = 265, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d0 };
+            ANSIBrightBlackColor = {length = 274, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d9 };
+            ANSIBrightBlueColor = {length = 273, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d8 };
+            ANSIBrightCyanColor = {length = 273, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d8 };
+            ANSIBrightGreenColor = {length = 274, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d9 };
+            ANSIBrightMagentaColor = {length = 274, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d9 };
+            ANSIBrightRedColor = {length = 274, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d9 };
+            ANSIBrightWhiteColor = {length = 271, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d6 };
+            ANSIBrightYellowColor = {length = 274, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d9 };
+            ANSICyanColor = {length = 274, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d9 };
+            ANSIGreenColor = {length = 273, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d8 };
+            ANSIMagentaColor = {length = 274, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d9 };
+            ANSIRedColor = {length = 274, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d9 };
+            ANSIWhiteColor = {length = 273, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d8 };
+            ANSIYellowColor = {length = 274, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d9 };
+            BackgroundAlphaInactive = "0.803612183988764";
+            BackgroundBlur = 0;
+            BackgroundBlurInactive = "0.09927142151955808";
+            BackgroundColor = {length = 1030, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 00000396 };
+            BackgroundSettingsForInactiveWindows = 0;
+            Bell = 0;
+            BellBadge = 0;
+            BellBounce = 0;
+            BlinkText = 0;
+            BookmarkRestorations = 0;
+            CursorBlink = 0;
+            CursorColor = {length = 274, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d9 };
+            CursorType = 1;
+            EastAsianAmbiguousWide = 0;
+            Font = {length = 275, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000d7 };
+            FontAntialias = 1;
+            FontHeightSpacing = 1;
+            FontWidthSpacing = 1;
+            ProfileCurrentVersion = "2.07";
+            SelectionColor = {length = 279, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000de };
+            ShouldRestoreContent = 0;
+            ShowActiveProcessArgumentsInTabTitle = 0;
+            ShowActiveProcessArgumentsInTitle = 0;
+            ShowActiveProcessInTabTitle = 1;
+            ShowActiveProcessInTitle = 0;
+            ShowCommandKeyInTitle = 0;
+            ShowComponentsWhenTabHasCustomTitle = 0;
+            ShowDimensionsInTitle = 0;
+            ShowRepresentedURLInTabTitle = 0;
+            ShowRepresentedURLInTitle = 0;
+            ShowRepresentedURLPathInTabTitle = 0;
+            ShowShellCommandInTitle = 1;
+            ShowTTYNameInTabTitle = 0;
+            ShowTTYNameInTitle = 0;
+            ShowTerminalInDockIcon = 0;
+            ShowWindowSettingsNameInTitle = 0;
+            TextBoldColor = {length = 248, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000bf };
+            TextColor = {length = 248, bytes = 0x62706c69 73743030 d4010203 04050607 ... 00000000 000000bf };
+            UseBoldFonts = 1;
+            UseBrightBold = 1;
+            VisualBell = 0;
+            VisualBellOnlyWhenMuted = 0;
+            WindowTitle = "";
+            columnCount = 120;
+            name = bash;
+            noWarnProcesses =             (
+                                {
+                    ProcessName = screen;
+                },
+                                {
+                    ProcessName = tmux;
+                },
+                                {
+                    ProcessName = ssh;
+                }
+            );
+            rowCount = 55;
+            shellExitAction = 0;
+            type = "Window Settings";
+        };
+    };
+}
