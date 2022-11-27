@@ -49,6 +49,7 @@ nnoremap <silent> <tab> <c-w>w
 nnoremap <silent> <s-tab> <c-w>W
 filetype plugin indent on
 autocmd BufEnter * if &filetype == '' | setlocal filetype=text | endif
+autocmd InsertLeave * redraw!
 autocmd InsertLeave * call system('im-select com.apple.keylayout.ABC')
 "autocmd VimLeave * call system('xsel -ib', getreg('+')) "disable for macOS
 autocmd ColorScheme * call onedark#set_highlight
