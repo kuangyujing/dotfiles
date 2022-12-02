@@ -1,7 +1,6 @@
 set nocompatible
 set ambiwidth=single "listchars, fillchars
 set backspace=indent
-set ttyfast
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -48,10 +47,10 @@ noremap <silent> <s-q> <nop>
 nnoremap <silent> <tab> <c-w>w
 nnoremap <silent> <s-tab> <c-w>W
 filetype plugin indent on
-autocmd BufEnter * if &filetype == '' | setlocal filetype=text | endif
-autocmd InsertLeave * redraw!
+autocmd BufEnter * if &filetype == '' | setf text | endif
+autocmd InsertLeave * redraw
 autocmd InsertLeave * call system('im-select com.apple.keylayout.ABC')
-"autocmd VimLeave * call system('xsel -ib', getreg('+')) "disable for macOS
+"autocmd VimLeave * call system('xsel -ib', getreg('+')) → for Linux
 autocmd ColorScheme * call onedark#set_highlight
 \ ('normal',{'fg':{'gui':'#efefef','cterm':'255','cterm16':'15'}})
 autocmd ColorScheme * call onedark#set_highlight
@@ -65,17 +64,17 @@ let g:html_indent_style1='inc' "fix style tag indent
 let g:html_indent_script1='inc' "fix script tag indent
 let g:python_highlight_all=1
 let g:rainbow_active=1
-"let g:lightline={'colorscheme':'16color'}
 let g:vim_json_syntax_conceal=0
 let g:vim_markdown_conceal=0
 let g:vim_markdown_conceal_code_blocks=0
+"let g:gitgutter_terminal_reports_focus=0
 let g:onedark_hide_endofbuffer=1
 let g:onedark_termcolors=256
 let g:highlightedyank_highlight_duration=128
 call plug#begin("~/.vim")
 " basics
 Plug 'itchyny/lightline.vim'
-Plug 'jiangmiao/auto-pairs'
+"Plug 'jiangmiao/auto-pairs'
 Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-sleuth'

@@ -1,5 +1,5 @@
 # path
-export PATH=/opt/homebrew/opt/sqlite/bin:/opt/homebrew/opt/curl/bin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/opt/findutils/libexec/gnubin:/opt/homebrew/opt/grep/libexec/gnubin:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:/usr/local/bin
+export PATH=/opt/homebrew/opt/unzip/bin:/opt/homebrew/opt/sqlite/bin:/opt/homebrew/opt/curl/bin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/opt/findutils/libexec/gnubin:/opt/homebrew/opt/grep/libexec/gnubin:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:/usr/local/bin
 # prompt
 export PS1='\[\033]0;\007\033[2m\]\W$(__git_ps1 " (%s)") →\[\033[0m\] '
 # supress zsh warning
