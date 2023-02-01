@@ -1,5 +1,5 @@
 # path
-export PATH=/opt/homebrew/opt/unzip/bin:/opt/homebrew/opt/sqlite/bin:/opt/homebrew/opt/curl/bin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/opt/findutils/libexec/gnubin:/opt/homebrew/opt/grep/libexec/gnubin:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:/usr/local/bin
+export PATH=/opt/homebrew/opt/sqlite/bin:/opt/homebrew/opt/unzip/bin:/opt/homebrew/opt/curl/bin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/make/libexec/gnubin:/opt/homebrew/opt/findutils/libexec/gnubin:/opt/homebrew/opt/grep/libexec/gnubin:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/bin:/usr/local/bin
 # prompt
 export PS1='\[\033]0;\007\033[2m\]\W$(__git_ps1 " (%s)") →\[\033[0m\] '
 # supress zsh warning
@@ -8,7 +8,7 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 export HOMEBREW_NO_ENV_HINTS=1
 # bash history
 export HISTCONTROL=ignoreboth
-export HISTIGNORE='ls:clear:cd:sudo:enable:exit'
+export HISTIGNORE='ls:clear:cd:sudo:enable:exit:nohup'
 # git prompt config
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUPSTREAM=1
@@ -35,4 +35,5 @@ alias sl='ls'
 alias la='ls -a'
 alias ll='ls -l'
 alias ls='ls -h --color'
+alias curl='curl -Ss'
 alias tmux='tmux new -As0'
