@@ -40,7 +40,7 @@ set wrap
 set nofoldenable
 set mouse=a
 set timeoutlen=10
-set cursorline "set no for fix slow scrolling
+"set cursorline "set no for fix slow scrolling
 set signcolumn=yes
 set background=dark
 noremap <silent> q <nop>
@@ -69,8 +69,8 @@ let g:highlightedyank_highlight_duration=128
 call plug#begin("~/.vim")
 " basics
 Plug 'itchyny/lightline.vim'
-"Plug 'jiangmiao/auto-pairs'
-Plug 'luochen1990/rainbow'
+Plug 'jiangmiao/auto-pairs'
+"Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-sleuth'
 Plug 'ciaranm/detectindent'
@@ -113,5 +113,6 @@ autocmd filetype c,cpp set cindent
 autocmd filetype markdown set nocindent noautoindent indentexpr=
 syntax on
 colorscheme onedark
-highlight todo term=underline cterm=underline ctermfg=196 ctermbg=235 guifg=#ff0000 guibg=#262626
+highlight matchparen cterm=none ctermfg=204
 highlight HighlightedyankRegion ctermfg=15 ctermbg=203
+highlight todo term=underline cterm=underline ctermfg=196 ctermbg=235
