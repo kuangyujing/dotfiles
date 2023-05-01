@@ -1,6 +1,7 @@
 set nocompatible
 set ambiwidth=single "listchars, fillchars
 set backspace=indent
+set ttyfast
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -9,7 +10,7 @@ set expandtab
 set autoindent
 set smartindent
 set breakindent
-set cindent
+"set cindent
 set cinoptions=+2,t0,l1,j1,J1 "(s,L0
 set formatoptions=tcroqnblmM1j
 set autoread
@@ -39,7 +40,7 @@ set wrap
 set nofoldenable
 set mouse=a
 set timeoutlen=10
-set nocursorline "fix for slow scrolling
+"set cursorline "set no for fix slow scrolling
 set signcolumn=yes
 set background=dark
 noremap <silent> q <nop>
@@ -47,18 +48,15 @@ noremap <silent> <s-q> <nop>
 nnoremap <silent> <tab> <c-w>w
 nnoremap <silent> <s-tab> <c-w>W
 filetype plugin indent on
-autocmd BufEnter * if &filetype == '' | setf text | endif
-autocmd InsertLeave * redraw
-autocmd InsertLeave * call system('im-select com.apple.keylayout.ABC')
-"autocmd VimLeave * call system('xsel -ib', getreg('+')) → for Linux
-autocmd ColorScheme * call onedark#set_highlight
-\ ('normal',{'fg':{'gui':'#efefef','cterm':'255','cterm16':'15'}})
-autocmd ColorScheme * call onedark#set_highlight
-\ ('linenr',{'fg':{'gui':'#e5c07b','cterm':'180','cterm16':'3'}})
-autocmd ColorScheme * call onedark#set_highlight
-\ ('visual',{'fg':{'gui':'#ffffff','cterm':'15','cterm16':'15'},
-\  'bg':{'gui':'#ff5f5f','cterm':'203','cterm16':'9'}})
-autocmd BufNewFile,BufRead *.todo,TODO,todo,Todo,ToDo setf todo
+autocmd bufenter * if &filetype == '' | setlocal filetype=text | endif
+autocmd insertleave * redraw!
+autocmd insertleave * call system('im-select com.apple.keylayout.ABC')
+"autocmd VimLeave * call system('xsel -ib', getreg('+')) "disable for macOS
+autocmd colorscheme * call onedark#set_highlight ('normal',{'fg':{'gui':'#efefef','cterm':'255','cterm16':'15'}})
+autocmd colorscheme * call onedark#set_highlight ('linenr',{'fg':{'gui':'#e5c07b','cterm':'180','cterm16':'3'}})
+autocmd colorscheme * call onedark#set_highlight ('visual',{'fg':{'gui':'#ffffff','cterm':'15','cterm16':'15'}, 'bg':{'gui':'#ff5f5f','cterm':'203','cterm16':'9'}})
+autocmd filetype c,cpp set cindent
+autocmd filetype markdown set nocindent noautoindent indentexpr=
 let g:skip_defaults_vim=1 "disable defaults.vim
 let g:html_indent_style1='inc' "fix style tag indent
 let g:html_indent_script1='inc' "fix script tag indent
@@ -67,15 +65,15 @@ let g:rainbow_active=1
 let g:vim_json_syntax_conceal=0
 let g:vim_markdown_conceal=0
 let g:vim_markdown_conceal_code_blocks=0
-"let g:gitgutter_terminal_reports_focus=0
 let g:onedark_hide_endofbuffer=1
 let g:onedark_termcolors=256
 let g:highlightedyank_highlight_duration=128
 call plug#begin("~/.vim")
+Plug 'junegunn/vim-plug'
 " basics
 Plug 'itchyny/lightline.vim'
-"Plug 'jiangmiao/auto-pairs'
-Plug 'luochen1990/rainbow'
+Plug 'jiangmiao/auto-pairs'
+"Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-sleuth'
 Plug 'ciaranm/detectindent'
@@ -104,10 +102,18 @@ Plug 'jparise/vim-graphql'
 Plug 'briancollins/vim-jst',{'for':['ejs','jst']}
 " csv
 Plug 'chrisbra/csv.vim'
+" markdown
+Plug 'godlygeek/tabular',{'for':['markdown']}
+Plug 'preservim/vim-markdown',{'for':['markdown']}
+" sql
+Plug 'shmup/vim-sql-syntax',{'for':['sql']}
 " colorscheme
 Plug 'joshdick/onedark.vim'
 " todo.vim
 Plug 'kuangyujing/todo.vim'
 call plug#end() " + syntax enable
+syntax on
 colorscheme onedark
+highlight matchparen cterm=none ctermfg=204
 highlight HighlightedyankRegion ctermfg=15 ctermbg=203
+highlight todo term=underline cterm=underline ctermfg=196 ctermbg=235
