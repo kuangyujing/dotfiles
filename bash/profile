@@ -1,0 +1,54 @@
+# paths
+PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+PATH=/usr/local/opt/findutils/libexec/gnubin:$PATH
+PATH=/usr/local/opt/gnu-tar/libexec/gnubin:$PATH
+PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
+PATH=/usr/local/opt/grep/libexec/gnubin:$PATH
+PATH=/usr/local/opt/make/libexec/gnubin:$PATH
+PATH=/usr/local/opt/unzip/bin:$PATH
+PATH=/usr/local/opt/curl/bin:$PATH
+PATH=/usr/local/opt/sqlite/bin:$PATH
+PATH=/usr/local/bin:$PATH
+export PATH
+# prompt
+export PS1='\[\r\]\[\e[0;48;5;33m\] \h \[\e[0;48;5;240m\] \W \[\e[0;48;5;202m\]$(__git_ps1 " (%s) ")\[\e[0m\] '
+export PS2='\[\033[2m\]› \[\033[0m\]'
+export PS3='» '
+export PS4='\[\033[2m\]+(${BASH_SOURCE}:${LINENO}) ${FUNCNAME:+$FUNCNAME()} \[\033[0m\]'
+# supress zsh warning
+export BASH_SILENCE_DEPRECATION_WARNING=1
+# homebrew
+export HOMEBREW_NO_ENV_HINTS=1
+# bash history
+export HISTCONTROL=ignoreboth
+export HISTIGNORE='ls:clear:sudo:enable:exit'
+# git prompt config
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUPSTREAM=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_STATESEPARATOR=
+# for compilers
+export LDFLAGS="-L/usr/local/opt/curl/lib -L/usr/local/opt/sqlite/lib"
+export CPPFLAGS="-I/usr/local/opt/curl/include -I/usr/local/opt/sqlite/include"
+# bash options
+set -o vi
+set -o ignoreeof
+# bash bind
+bind "TAB:menu-complete"
+bind "set show-all-if-ambiguous on"
+bind "set completion-ignore-case on"
+bind "set menu-complete-display-prefix on"
+# bash completion
+. /usr/local/etc/bash_completion
+# awscli completion
+complete -C '/usr/local/bin/aws_completer' aws
+# aliases
+alias r='fc -s'
+alias l='ls'
+alias sl='ls'
+alias la='ls -a'
+alias ll='ls -l'
+alias ls='ls -h --color'
+alias curl='curl -Ss'
+alias tmux='tmux new -As0'
