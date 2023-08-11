@@ -1,19 +1,14 @@
-[user]
-    email = kuangyujing@appsworks.jp
-    name = Kuangyu Jing
-[credential]
-    helper = store
-[core]
-    quotepath = false
-    editor = vim
-    quatepath = false
-    autocrlf = input
 [filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = Kuangyu Jing
+	email = kuangyujing@appsworks.jp
 [init]
-    defaultBranch = master
-[color]
-    ui = auto
+	defaultBranch = master
+[core]
+	autocrlf = input
+[safe]
+	directory = /Users/k/.vim/vim-go

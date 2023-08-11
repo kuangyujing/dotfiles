@@ -49,7 +49,7 @@ nnoremap <silent> <tab> <c-w>w
 nnoremap <silent> <s-tab> <c-w>W
 filetype plugin indent on
 autocmd bufenter * if &filetype == '' | setlocal filetype=text | endif
-autocmd insertleave * redraw!
+autocmd insertleave * redraw! " force redraw
 autocmd insertleave * call system('im-select com.apple.keylayout.ABC')
 "autocmd VimLeave * call system('xsel -ib', getreg('+')) "disable for macOS
 autocmd colorscheme * call onedark#set_highlight ('normal',{'fg':{'gui':'#efefef','cterm':'255','cterm16':'15'}})
@@ -68,16 +68,20 @@ let g:vim_markdown_conceal_code_blocks=0
 let g:onedark_hide_endofbuffer=1
 let g:onedark_termcolors=256
 let g:highlightedyank_highlight_duration=128
+let g:vim_json_conceal=0
+let g:markdown_syntax_conceal=0
+let g:indentLine_char = '┆'
 call plug#begin("~/.vim")
 Plug 'junegunn/vim-plug'
 " basics
 Plug 'itchyny/lightline.vim'
-Plug 'jiangmiao/auto-pairs'
-"Plug 'luochen1990/rainbow'
+"Plug 'jiangmiao/auto-pairs'
+Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-sleuth'
 Plug 'ciaranm/detectindent'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'Yggdroot/indentLine'
 " web
 Plug 'kuangyujing/html5.vim',{'for':['html','javascript','css']}
 " javascript
@@ -86,6 +90,8 @@ Plug 'othree/yajs.vim',{'for':['html','javascript']}
 Plug 'othree/es.next.syntax.vim',{'for':['html','javascript']}
 " node.js
 Plug 'moll/vim-node',{'for':'javascript'}
+" golang
+Plug 'fatih/vim-go',{'for':'go'}
 " python
 Plug 'hdima/python-syntax',{'for':'python'}
 Plug 'Vimjas/vim-python-pep8-indent',{'for':'python'}
@@ -111,9 +117,12 @@ Plug 'shmup/vim-sql-syntax',{'for':['sql']}
 Plug 'joshdick/onedark.vim'
 " todo.vim
 Plug 'kuangyujing/todo.vim'
+" homebrew
+Plug 'xu-cheng/brew.vim'
 call plug#end() " + syntax enable
 syntax on
 colorscheme onedark
-highlight matchparen cterm=none ctermfg=204
-highlight HighlightedyankRegion ctermfg=15 ctermbg=203
-highlight todo term=underline cterm=underline ctermfg=196 ctermbg=235
+hi comment cterm=italic ctermfg=243
+hi matchparen cterm=none ctermfg=204
+hi HighlightedyankRegion ctermfg=15 ctermbg=203
+hi todo term=underline cterm=underline ctermfg=196 ctermbg=235
