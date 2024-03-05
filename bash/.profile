@@ -5,14 +5,12 @@ PATH=/opt/homebrew/opt/findutils/libexec/gnubin:$PATH
 PATH=/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH
 PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH
 PATH=/opt/homebrew/opt/grep/libexec/gnubin:$PATH
-PATH=/opt/homebrew/opt/make/libexec/gnubin:$PATH
 PATH=/opt/homebrew/opt/unzip/bin:$PATH
 PATH=/opt/homebrew/opt/curl/bin:$PATH
-PATH=/opt/homebrew/opt/sqlite/bin:$PATH
 PATH=/opt/homebrew/bin:$PATH
 export PATH
 # prompt ❱
-export PS1='\[\r\]\[\e[0;48;5;33m\] ❱ \[\e[0;48;5;240m\] \W \[\e[0;48;5;202m\]$(__git_ps1 " (%s) ")\[\e[0m\] '
+export PS1='\[\033[0;48;5;27m\] ❱ \[\033[0;48;5;33m\] \w \[\033[0;48;5;39m\]$(__git_ps1 " (%s)") \[\033[0m\] '
 export PS2='\[\033[2m\]› \[\033[0m\]'
 export PS4='\[\033[2m\](${BASH_SOURCE}:${LINENO}) ${FUNCNAME:+$FUNCNAME()} \[\033[0m\]'
 # supress zsh warning
@@ -31,6 +29,8 @@ export GIT_PS1_STATESEPARATOR=
 # for compilers
 export LDFLAGS='-L/opt/homebrew/opt/curl/lib -L/opt/homebrew/opt/sqlite/lib'
 export CPPFLAGS='-I/opt/homebrew/opt/curl/include -I/opt/homebrew/opt/sqlite/include'
+# jira cli
+export JIRA_API_TOKEN=ATATT3xFfGF0ysgSTcNIQUICTSkxbfkrM4l1RpfG0qNlrcq4_uAmqbRuQmtTNCBt1pDz2qKfOxgxXLP7f9n6pS46nd6d_-0_s_KXL0b6RqyunQNEHoeWCXJtSTQzcSs2dM0QxW8ArWLriPgdxrSyvsN2pe5zbMnbPX4S8csnKdwyho0uYLV82tY=EDE60299
 # bash options
 set -o vi
 set -o ignoreeof
@@ -50,6 +50,7 @@ alias sl='ls'
 alias la='ls -a'
 alias ll='ls -l'
 alias ls='ls -h --color=auto'
+alias diff='diff -u'
 alias curl='curl -Ss'
 alias tmux='tmux new -As0'
 alias mpg123='mpg123 -Zv'
