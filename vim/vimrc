@@ -73,6 +73,7 @@ let g:highlightedyank_highlight_duration=128
 let g:vim_json_conceal=0
 let g:markdown_syntax_conceal=0
 let g:indentLine_char = '┆'
+let g:minimap_auto_start=1
 call plug#begin("~/.vim")
 Plug 'junegunn/vim-plug'
 " basics
@@ -123,6 +124,8 @@ Plug 'joshdick/onedark.vim'
 Plug 'kuangyujing/todo.vim'
 " homebrew
 Plug 'xu-cheng/brew.vim'
+" Minimap
+Plug 'wfxr/minimap.vim'
 call plug#end() " + syntax enable
 syntax on
 colorscheme onedark
