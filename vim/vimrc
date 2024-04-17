@@ -74,6 +74,7 @@ let g:vim_json_conceal=0
 let g:markdown_syntax_conceal=0
 let g:indentLine_char = '┆'
 let g:minimap_auto_start=1
+let g:minimap_highlight_range=0
 call plug#begin("~/.vim")
 Plug 'junegunn/vim-plug'
 " basics
@@ -129,7 +130,7 @@ Plug 'wfxr/minimap.vim'
 call plug#end() " + syntax enable
 syntax on
 colorscheme onedark
-hi endofbuffer ctermfg=0
-hi comment cterm=italic ctermfg=243
-hi matchparen cterm=none ctermfg=204
-hi highlightedyankregion ctermfg=15 ctermbg=203
+highlight endofbuffer ctermfg=0
+highlight comment cterm=italic ctermfg=243
+highlight matchparen cterm=none ctermfg=204
+highlight highlightedyankregion ctermfg=15 ctermbg=203
