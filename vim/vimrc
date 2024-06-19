@@ -127,6 +127,8 @@ Plug 'kuangyujing/todo.vim'
 Plug 'xu-cheng/brew.vim'
 " Minimap
 Plug 'wfxr/minimap.vim'
+" Razor and Blazor
+Plug 'jlcrochet/vim-razor'
 call plug#end() " + syntax enable
 syntax on
 colorscheme onedark
