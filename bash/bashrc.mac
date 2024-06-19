@@ -10,13 +10,16 @@ PATH=/opt/homebrew/opt/curl/bin:$PATH
 PATH=/opt/homebrew/bin:$PATH
 export PATH
 # prompt ❱
-export PS1='\[\033[0;48;5;27m\] ❱ \[\033[0;48;5;33m\] \w $(__git_ps1 "\[\033[0;48;5;39m\] (%s) ")\[\033[0m\] '
-export PS2='\[\033[2m\]› \[\033[0m\]'
+export PS1='\w$(__git_ps1 " ❱ (%s)") ❱ '
+#export PS1='\[\033[0;48;5;27m\] ❱ \[\033[0;48;5;33m\] \w $(__git_ps1 "\[\033[0;48;5;39m\] (%s) ")\[\033[0m\] '
+#export PS2='\[\033[2m\]› \[\033[0m\]'
 export PS4='\[\033[2m\](${BASH_SOURCE}:${LINENO}) ${FUNCNAME:+$FUNCNAME()} \[\033[0m\]'
 # supress zsh warning
 export BASH_SILENCE_DEPRECATION_WARNING=1
 # homebrew
 export HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_NO_UPDATE_REPORT_FORMULAE=1
+export HOMEBREW_NO_UPDATE_REPORT_CASKS=1
 # bash history
 export HISTCONTROL=ignoreboth
 export HISTIGNORE=ls:clear:sudo:enable:exit
@@ -32,6 +35,8 @@ export CPPFLAGS='-I/opt/homebrew/opt/curl/include -I/opt/homebrew/opt/sqlite/inc
 # bash options
 set -o vi
 set -o ignoreeof
+# dotnet cli configuration
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
 # bash bind
 bind 'TAB:menu-complete'
 bind 'set show-all-if-ambiguous on'
