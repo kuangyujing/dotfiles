@@ -1,7 +1,6 @@
 set nocompatible
 set ambiwidth=single "listchars, fillchars
 set backspace=indent
-set ttyfast
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -37,6 +36,7 @@ set conceallevel=0
 set wildmenu
 set number
 set wrap
+set ttyfast
 set nofoldenable
 set mouse=a
 set timeoutlen=10
@@ -48,14 +48,15 @@ noremap <silent> <s-q> <nop>
 nnoremap <silent> <tab> <c-w>w
 nnoremap <silent> <s-tab> <c-w>W
 filetype plugin indent on
-autocmd bufenter * if &filetype == '' | setlocal filetype=text | endif
+autocmd filetype c,cpp set cindent
+"autocmd bufenter * if &filetype == '' | setlocal filetype=text | endif
+autocmd bufenter * if expand('%') =~# 'MINIMAP' | set laststatus=0 | else | set laststatus=2 | endif
 autocmd insertleave * redraw! " force redraw
 autocmd insertleave * call system('im-select com.apple.keylayout.ABC')
 "autocmd VimLeave * call system('xsel -ib', getreg('+')) "disable for macOS
 autocmd colorscheme * call onedark#set_highlight ('normal',{'fg':{'gui':'#efefef','cterm':'255','cterm16':'15'}})
 autocmd colorscheme * call onedark#set_highlight ('linenr',{'fg':{'gui':'#e5c07b','cterm':'180','cterm16':'3'}})
 autocmd colorscheme * call onedark#set_highlight ('visual',{'fg':{'gui':'#ffffff','cterm':'15','cterm16':'15'}, 'bg':{'gui':'#ff5f5f','cterm':'203','cterm16':'9'}})
-autocmd filetype c,cpp set cindent
 " autocmd filetype markdown set nocindent noautoindent indentexpr=
 let &t_SI="\033[6 q" " insert mode
 let &t_EI="\033[2 q" " normal mode
@@ -74,7 +75,11 @@ let g:vim_json_conceal=0
 let g:markdown_syntax_conceal=0
 let g:indentLine_char = '┆'
 let g:minimap_auto_start=1
+let g:minimap_auto_start_win_enter=1
 let g:minimap_highlight_range=0
+let g:minimap_block_buftypes=['nofile','nowrite','quickfix','terminal','prompt']
+let g:minimap_git_colors=1
+let g:nredtree_tabs_open_on_console_startup=1
 call plug#begin("~/.vim")
 Plug 'junegunn/vim-plug'
 " basics
@@ -102,8 +107,6 @@ Plug 'Vimjas/vim-python-pep8-indent',{'for':'python'}
 " git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-" nerdtree
-Plug 'scrooloose/nerdtree'
 " typescript
 Plug 'leafgarland/typescript-vim',{'for':['javascript','typescript']}
 " jsx, tsx
@@ -126,7 +129,7 @@ Plug 'kuangyujing/todo.vim'
 " homebrew
 Plug 'xu-cheng/brew.vim'
 " Minimap
-Plug 'wfxr/minimap.vim'
+Plug 'kuangyujing/minimap.vim'
 " Razor and Blazor
 Plug 'jlcrochet/vim-razor'
 call plug#end() " + syntax enable
