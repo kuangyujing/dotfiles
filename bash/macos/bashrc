@@ -12,32 +12,33 @@ PATH=/opt/homebrew/opt/curl/bin:$PATH
 PATH=/opt/homebrew/sbin:$PATH
 PATH=/opt/homebrew/bin:$PATH
 export PATH
+# git_color
+git_color() {
+  local git_status="$(git status --porcelain 2>/dev/null)"
+  local untracked_files="$(git status --porcelain 2>/dev/null | grep '^??' || echo '')"
+  if [[ -n "$untracked_files" ]]; then echo "\033[3;38;5;15;48;5;203m"; elif [[ -n "$git_status" ]]; then echo "\033[3;38;5;15;48;5;63m"; else echo "\033[3;38;5;15;48;5;39m"; fi
+}
 # prompt ❱
-export PS1='\[\033[0;48;5;27m\] ❱ \[\033[0;48;5;33m\] \w $(__git_ps1 "(%s) ")\[\033[0m\] '
-#export PS1='\[\033[0;48;5;239m\] ❱ \[\033[0;48;5;241m\] \w $(__git_ps1 "\[\033[0;48;5;243m\] (%s) ")\[\033[0m\] '
-export PS4='\[\033[2m\](${BASH_SOURCE}:${LINENO}) ${FUNCNAME:+$FUNCNAME()} \[\033[0m\]'
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM=no
+export GIT_PS1_STATESEPARATOR=
+export PS1='\[\r\]\[\033[1;38;5;15;48;5;26m\] ❱ \[\033[3;38;5;15;48;5;33m\] \w $(__git_ps1 "\[$(git_color)\] %s ")\[\033[0m\] '
+export PS4='\[\033[3;38;5;15;48;5;239m\] ${BASH_SOURCE} \[\033[3;38;5;15;48;5;241m\] ${LINENO} \[\033[0m\] '
 # supress zsh warning
 export BASH_SILENCE_DEPRECATION_WARNING=1
 # homebrew
-export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_UPDATE_REPORT_FORMULAE=1
 export HOMEBREW_NO_UPDATE_REPORT_CASKS=1
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_EMOJI=1
 export HOMEBREW_BAT=1
 # bash history
 export HISTCONTROL=ignoreboth
 export HISTIGNORE=ls:clear:sudo:enable:exit
-# git prompt config
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWUPSTREAM=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_STATESEPARATOR=
-# for compilers
-export LDFLAGS='-L/opt/homebrew/opt/curl/lib -L/opt/homebrew/opt/sqlite/lib'
-export CPPFLAGS='-I/opt/homebrew/opt/curl/include -I/opt/homebrew/opt/sqlite/include'
 # bash options
 set -o vi
 set -o ignoreeof
@@ -56,12 +57,8 @@ bind 'set menu-complete-display-prefix on'
 complete -C /opt/homebrew/bin/aws_completer aws
 # aliases
 alias r='fc -s'
-alias l='ls'
-alias sl='ls'
-alias la='ls -a'
-alias ll='ls -l'
-alias ls='ls -h --color=auto'
+alias ls='ls -h --color=auto --group-directories-first'
 alias diff='diff -u'
-alias cat='bat --tabs 4 --paging always --style full'
+alias cat='bat --tabs 4 --paging auto --style full'
 alias curl='curl -Ss'
 alias tmux='tmux new -As0'

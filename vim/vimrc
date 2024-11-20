@@ -39,10 +39,10 @@ set wrap
 set ttyfast
 set nofoldenable
 set mouse=a
-set timeoutlen=10
 "set cursorline "set no for fix slow scrolling
 set signcolumn=yes
 set background=dark
+set timeoutlen=1
 noremap <silent> q <nop>
 noremap <silent> <s-q> <nop>
 nnoremap <silent> <tab> <c-w>w
@@ -51,12 +51,13 @@ filetype plugin indent on
 autocmd filetype c,cpp set cindent
 "autocmd bufenter * if &filetype == '' | setlocal filetype=text | endif
 autocmd bufenter * if expand('%') =~# 'MINIMAP' | set laststatus=0 | else | set laststatus=2 | endif
-autocmd insertleave * redraw! " force redraw
+autocmd insertleave * redraw! " force redraw for macOS
 autocmd insertleave * call system('im-select com.apple.keylayout.ABC')
 "autocmd VimLeave * call system('xsel -ib', getreg('+')) "disable for macOS
 autocmd colorscheme * call onedark#set_highlight ('normal',{'fg':{'gui':'#efefef','cterm':'255','cterm16':'15'}})
 autocmd colorscheme * call onedark#set_highlight ('linenr',{'fg':{'gui':'#e5c07b','cterm':'180','cterm16':'3'}})
 autocmd colorscheme * call onedark#set_highlight ('visual',{'fg':{'gui':'#ffffff','cterm':'15','cterm16':'15'}, 'bg':{'gui':'#ff5f5f','cterm':'203','cterm16':'9'}})
+autocmd bufwritepre <buffer> LspDocumentFormatSync
 " autocmd filetype markdown set nocindent noautoindent indentexpr=
 let &t_SI="\033[6 q" " insert mode
 let &t_EI="\033[2 q" " normal mode
@@ -80,58 +81,63 @@ let g:minimap_highlight_range=0
 let g:minimap_block_buftypes=['nofile','nowrite','quickfix','terminal','prompt']
 let g:minimap_git_colors=1
 let g:nredtree_tabs_open_on_console_startup=1
+let g:html_indent_autotags='html'
+let g:lsp_signature_help_enabled=0
+let g:lsp_semantic_enabled=1
 call plug#begin("~/.vim")
 Plug 'junegunn/vim-plug'
 " basics
 Plug 'itchyny/lightline.vim'
-"Plug 'jiangmiao/auto-pairs'
 Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-sleuth'
 Plug 'ciaranm/detectindent'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'Yggdroot/indentLine'
-" web
+" Language Server
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+" Web
 Plug 'kuangyujing/html5.vim',{'for':['html','javascript','css']}
-" javascript
+" JavaScript
 Plug 'pangloss/vim-javascript',{'for':['html','javascript']}
 Plug 'othree/yajs.vim',{'for':['html','javascript']}
 Plug 'othree/es.next.syntax.vim',{'for':['html','javascript']}
-" node.js
+" Node.js
 Plug 'moll/vim-node',{'for':'javascript'}
-" golang
+" Golang
 Plug 'fatih/vim-go',{'for':'go'}
-" python
+" Python
 Plug 'hdima/python-syntax',{'for':'python'}
 Plug 'Vimjas/vim-python-pep8-indent',{'for':'python'}
-" git
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-" typescript
+" TypeScript
 Plug 'leafgarland/typescript-vim',{'for':['javascript','typescript']}
-" jsx, tsx
+" JSX, TSX
 Plug 'maxmellon/vim-jsx-pretty',{'for':['javascript','typescript']}
-" graphql
+" GraphQL
 Plug 'jparise/vim-graphql'
-" ejs, jst
-Plug 'briancollins/vim-jst',{'for':['ejs','jst']}
-" csv
+" CSV
 Plug 'chrisbra/csv.vim'
-" markdown
+" Markdown
 Plug 'godlygeek/tabular',{'for':['markdown']}
 Plug 'preservim/vim-markdown',{'for':['markdown']}
-" sql
+" SQL
 Plug 'shmup/vim-sql-syntax',{'for':['sql']}
-" colorscheme
+" ColorScheme
 Plug 'joshdick/onedark.vim'
 " todo.vim
 Plug 'kuangyujing/todo.vim'
-" homebrew
+" Homebrew
 Plug 'xu-cheng/brew.vim'
 " Minimap
 Plug 'kuangyujing/minimap.vim'
 " Razor and Blazor
 Plug 'jlcrochet/vim-razor'
+" Others
+Plug 'kuangyujing/todo.vim'
 call plug#end() " + syntax enable
 syntax on
 colorscheme onedark
