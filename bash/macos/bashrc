@@ -59,6 +59,11 @@ complete -C /opt/homebrew/bin/aws_completer aws
 alias r='fc -s'
 alias ls='ls -h --color=auto --group-directories-first'
 alias diff='diff -u'
-alias cat='bat --tabs 4 --paging auto --style full'
+#alias cat='bat --tabs 4 --paging auto --style full'
 alias curl='curl -Ss'
+alias sleepnow='pmset sleepnow'
 alias tmux='tmux new -As0'
+alias tree='find . | sort | sed "1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g"'
+# typo
+alias sl='ls'
+alias gti='git'
