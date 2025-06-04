@@ -1,11 +1,12 @@
 # paths
 PATH=/usr/bin
 PATH=/usr/local/bin:$PATH
-PATH=/usr/local/node/bin:$PATH
+PATH=/opt/homebrew/opt/node@22/bin:$PATH
 PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
 PATH=/opt/homebrew/opt/findutils/libexec/gnubin:$PATH
 PATH=/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH
 PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH
+PATH=/opt/homebrew/opt/make/libexec/gnubin:$PATH
 PATH=/opt/homebrew/opt/grep/libexec/gnubin:$PATH
 PATH=/opt/homebrew/opt/unzip/bin:$PATH
 PATH=/opt/homebrew/opt/curl/bin:$PATH
@@ -46,6 +47,9 @@ set -o ignoreeof
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 # man pager
 export MANPAGER='col -bx | bat -l man -p'
+# compilers
+export LDFLAGS=-L/opt/homebrew/opt/node@22/lib
+export CPPFLAGS=-I/opt/homebrew/opt/node@22/include
 # bash bind
 bind 'TAB:menu-complete'
 bind 'set show-all-if-ambiguous on'
@@ -59,11 +63,14 @@ complete -C /opt/homebrew/bin/aws_completer aws
 alias r='fc -s'
 alias ls='ls -h --color=auto --group-directories-first'
 alias diff='diff -u'
-#alias cat='bat --tabs 4 --paging auto --style full'
+alias cat='bat --tabs 4 --paging auto --style full'
+alias glow='glow -p'
 alias curl='curl -Ss'
-alias sleepnow='pmset sleepnow'
 alias tmux='tmux new -As0'
-alias tree='find . | sort | sed "1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g"'
+alias kubectl='kubecolor'
+alias sleepnow='pmset sleepnow'
+#alias tree='find . | sort | sed "1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g"'
 # typo
 alias sl='ls'
 alias gti='git'
+alias wget='wget -q'

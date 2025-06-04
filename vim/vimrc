@@ -1,3 +1,4 @@
+source /opt/homebrew/etc/plug.vim
 set nocompatible
 set ambiwidth=single "listchars, fillchars
 set backspace=indent
@@ -128,8 +129,6 @@ Plug 'preservim/vim-markdown',{'for':['markdown']}
 Plug 'shmup/vim-sql-syntax',{'for':['sql']}
 " ColorScheme
 Plug 'joshdick/onedark.vim'
-" todo.vim
-Plug 'kuangyujing/todo.vim'
 " Minimap
 Plug 'kuangyujing/minimap.vim'
 " Razor and Blazor
