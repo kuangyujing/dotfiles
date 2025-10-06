@@ -1,5 +1,6 @@
 # paths
-PATH=/usr/bin
+PATH=/bin
+PATH=/usr/bin:$PATH
 PATH=/usr/local/bin:$PATH
 PATH=/opt/homebrew/opt/node@22/bin:$PATH
 PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
@@ -14,25 +15,26 @@ PATH=/opt/homebrew/sbin:$PATH
 PATH=/opt/homebrew/bin:$PATH
 #PATH=~/.local/bin:$PATH
 export PATH
-# git_color
+# prompt
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM=auto
+export GIT_PS1_STATESEPARATOR=
 #git_color() {
 #  local git_status="$(git status --porcelain 2>/dev/null)"
 #  local untracked_files="$(git status --porcelain 2>/dev/null | grep '^??' || echo '')"
 #  if [[ -n "$untracked_files" ]]; then echo "\033[3;38;5;15;48;5;203m"; elif [[ -n "$git_status" ]]; then echo "\033[3;38;5;15;48;5;63m"; else echo "\033[3;38;5;15;48;5;39m"; fi
 #}
-# prompt ❱
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
-export GIT_PS1_SHOWUPSTREAM=no
-export GIT_PS1_STATESEPARATOR=
-#export PS1='\[\r\]\[\033[1;38;5;15;48;5;26m\] ❱ \[\033[3;38;5;15;48;5;33m\] \w $(__git_ps1 "\[$(git_color)\] %s ")\[\033[0m\] '
-export PS1='\[\r\]\[\033[1;38;5;15;48;5;26m\] ❱ \[\033[3;38;5;15;48;5;33m\] \w $(__git_ps1 "\033[3;38;5;15;48;5;39m %s ")\[\033[0m\] '
+#export PS1='\[\r\]\[\033[1;38;5;15;48;5;26m\] ❱ \[\033[3;38;5;15;48;5;33m\] \w $(__git_ps1 "\033[3;38;5;15;48;5;39m %s ")\[\033[0m\] '
+PROMPT_COMMAND='stty -echo; printf "\033[6n" >&2; IFS=";" read -sdR -r -d R cur_pos; stty echo; col=${cur_pos##*;}; [ "$col" != "1" ] && echo'
+export PS1='\[\033[2K\r\]\[\033[1;38;5;15;48;5;26m\] \w \033[3;38;5;15;48;5;33m $(__git_ps1 "%s ")\[\033[0m\] ' #\033[2K: Erase Entire Line
 export PS4='\[\033[3;38;5;15;48;5;239m\] ${BASH_SOURCE} \[\033[3;38;5;15;48;5;241m\] ${LINENO} \[\033[0m\] '
 # supress zsh warning
 export BASH_SILENCE_DEPRECATION_WARNING=1
 # homebrew
 export HOMEBREW_BAT=1
+export HOMEBREW_BUNDLE_DUMP_NO_VSCODE=1
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_EMOJI=1
@@ -46,13 +48,13 @@ export HISTIGNORE=ls:clear:sudo:enable:exit
 # bash options
 set -o vi
 set -o ignoreeof
+set -o noclobber # `echo "..." >| output.txt` for overwriting once
+set -o pipefail
+set -o nounset
 # dotnet cli configuration
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 # man pager
 export MANPAGER='col -bx | bat -l man -p'
-# compilers
-export LDFLAGS=-L/opt/homebrew/opt/node@22/lib
-export CPPFLAGS=-I/opt/homebrew/opt/node@22/include
 # Claude Code
 export CLAUDE_CODE_DISABLE_TERMINAL_TITLE=1
 export DISABLE_AUTOUPDATER=1
@@ -66,23 +68,24 @@ bind 'set show-all-if-ambiguous on'
 bind 'set completion-ignore-case on'
 bind 'set menu-complete-display-prefix on'
 # bash completion
-. /opt/homebrew/etc/bash_completion
+[ -f /opt/homebrew/etc/bash_completion ] && { set +u; . /opt/homebrew/etc/bash_completion; set -u; }
 # gh completion
 eval "$(gh completion -s bash)"
 # awscli completion
 complete -C /opt/homebrew/bin/aws_completer aws
 # aliases
-alias r='fc -s'
-alias ls='ls -h --color=auto --group-directories-first'
-alias diff='diff -u'
-alias cat='bat --tabs 4 --paging auto --style full'
-alias glow='glow -p -w0'
-alias curl='curl -Ss'
-alias wget='wget -q'
-alias tmux='tmux new -As0'
-alias kubectl='kubecolor'
-#alias sleepnow='pmset sleepnow'
-#alias tree='find . | sort | sed "1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g"'
-# typo
-alias sl='ls'
-alias gti='git'
+if [[ $- == *i* ]]; then
+  alias r='fc -s'
+  alias ls='ls -h --color=auto --group-directories-first'
+  alias diff='diff -u'
+  alias cat='bat --tabs 4 --paging auto --style full'
+  alias glow='glow -p -w0'
+  alias curl='curl -Ss'
+  alias wget='wget -q'
+  alias tmux='tmux new -As0'
+  alias kubectl='kubecolor'
+  #alias tree='find . | sort | sed "1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g"'
+  # typo
+  alias sl='ls'
+  alias gti='git'
+fi
