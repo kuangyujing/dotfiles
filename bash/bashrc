@@ -26,10 +26,12 @@ export GIT_PS1_STATESEPARATOR=
 #  local untracked_files="$(git status --porcelain 2>/dev/null | grep '^??' || echo '')"
 #  if [[ -n "$untracked_files" ]]; then echo "\033[3;38;5;15;48;5;203m"; elif [[ -n "$git_status" ]]; then echo "\033[3;38;5;15;48;5;63m"; else echo "\033[3;38;5;15;48;5;39m"; fi
 #}
-#export PS1='\[\r\]\[\033[1;38;5;15;48;5;26m\] ❱ \[\033[3;38;5;15;48;5;33m\] \w $(__git_ps1 "\033[3;38;5;15;48;5;39m %s ")\[\033[0m\] '
+#export PS1='\[\033[2K\r\]\[\033[3;38;5;15;48;5;26m\] \w \033[3;38;5;15;48;5;33m $(__git_ps1 "%s ")\[\033[0m\] ' #\033[2K: Erase Entire Line
 PROMPT_COMMAND='stty -echo; printf "\033[6n" >&2; IFS=";" read -sdR -r -d R cur_pos; stty echo; col=${cur_pos##*;}; [ "$col" != "1" ] && echo'
-export PS1='\[\033[2K\r\]\[\033[1;38;5;15;48;5;26m\] \w \033[3;38;5;15;48;5;33m $(__git_ps1 "%s ")\[\033[0m\] ' #\033[2K: Erase Entire Line
-export PS4='\[\033[3;38;5;15;48;5;239m\] ${BASH_SOURCE} \[\033[3;38;5;15;48;5;241m\] ${LINENO} \[\033[0m\] '
+export PS1='\[\033[2K\r\]\[\033[2m\]\w $(__git_ps1 "(%s)")\[\033[0m\] ' #\033[2K: Erase Entire Line
+export PS2=
+export PS4='\[\033[2m\] ${BASH_SOURCE}:${LINENO}\[\033[0m\] '
+#export PS4='\[\033[3;38;5;15;48;5;239m\] ${BASH_SOURCE} \[\033[3;38;5;15;48;5;241m\] ${LINENO} \[\033[0m\] '
 # supress zsh warning
 export BASH_SILENCE_DEPRECATION_WARNING=1
 # homebrew
@@ -50,7 +52,6 @@ set -o vi
 set -o ignoreeof
 set -o noclobber # `echo "..." >| output.txt` for overwriting once
 set -o pipefail
-set -o nounset
 # dotnet cli configuration
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 # man pager
@@ -68,7 +69,7 @@ bind 'set show-all-if-ambiguous on'
 bind 'set completion-ignore-case on'
 bind 'set menu-complete-display-prefix on'
 # bash completion
-[ -f /opt/homebrew/etc/bash_completion ] && { set +u; . /opt/homebrew/etc/bash_completion; set -u; }
+[ -f /opt/homebrew/etc/bash_completion ] && . /opt/homebrew/etc/bash_completion
 # gh completion
 eval "$(gh completion -s bash)"
 # awscli completion
