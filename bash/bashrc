@@ -12,31 +12,34 @@ PATH=/opt/homebrew/opt/unzip/bin:$PATH
 PATH=/opt/homebrew/opt/curl/bin:$PATH
 PATH=/opt/homebrew/sbin:$PATH
 PATH=/opt/homebrew/bin:$PATH
+#PATH=~/.local/bin:$PATH
 export PATH
 # git_color
-git_color() {
-  local git_status="$(git status --porcelain 2>/dev/null)"
-  local untracked_files="$(git status --porcelain 2>/dev/null | grep '^??' || echo '')"
-  if [[ -n "$untracked_files" ]]; then echo "\033[3;38;5;15;48;5;203m"; elif [[ -n "$git_status" ]]; then echo "\033[3;38;5;15;48;5;63m"; else echo "\033[3;38;5;15;48;5;39m"; fi
-}
+#git_color() {
+#  local git_status="$(git status --porcelain 2>/dev/null)"
+#  local untracked_files="$(git status --porcelain 2>/dev/null | grep '^??' || echo '')"
+#  if [[ -n "$untracked_files" ]]; then echo "\033[3;38;5;15;48;5;203m"; elif [[ -n "$git_status" ]]; then echo "\033[3;38;5;15;48;5;63m"; else echo "\033[3;38;5;15;48;5;39m"; fi
+#}
 # prompt ❱
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM=no
 export GIT_PS1_STATESEPARATOR=
-export PS1='\[\r\]\[\033[1;38;5;15;48;5;26m\] ❱ \[\033[3;38;5;15;48;5;33m\] \w $(__git_ps1 "\[$(git_color)\] %s ")\[\033[0m\] '
+#export PS1='\[\r\]\[\033[1;38;5;15;48;5;26m\] ❱ \[\033[3;38;5;15;48;5;33m\] \w $(__git_ps1 "\[$(git_color)\] %s ")\[\033[0m\] '
+export PS1='\[\r\]\[\033[1;38;5;15;48;5;26m\] ❱ \[\033[3;38;5;15;48;5;33m\] \w $(__git_ps1 "\033[3;38;5;15;48;5;39m %s ")\[\033[0m\] '
 export PS4='\[\033[3;38;5;15;48;5;239m\] ${BASH_SOURCE} \[\033[3;38;5;15;48;5;241m\] ${LINENO} \[\033[0m\] '
 # supress zsh warning
 export BASH_SILENCE_DEPRECATION_WARNING=1
 # homebrew
-export HOMEBREW_NO_UPDATE_REPORT_FORMULAE=1
-export HOMEBREW_NO_UPDATE_REPORT_CASKS=1
+export HOMEBREW_BAT=1
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_NO_ENV_HINTS=1
 export HOMEBREW_NO_EMOJI=1
-export HOMEBREW_BAT=1
+export HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+export HOMEBREW_NO_UPDATE_REPORT_CASKS=1
+export HOMEBREW_NO_UPDATE_REPORT_FORMULAE=1
 # bash history
 export HISTCONTROL=ignoreboth
 export HISTIGNORE=ls:clear:sudo:enable:exit
@@ -50,6 +53,13 @@ export MANPAGER='col -bx | bat -l man -p'
 # compilers
 export LDFLAGS=-L/opt/homebrew/opt/node@22/lib
 export CPPFLAGS=-I/opt/homebrew/opt/node@22/include
+# Claude Code
+export CLAUDE_CODE_DISABLE_TERMINAL_TITLE=1
+export DISABLE_AUTOUPDATER=1
+export DISABLE_BUG_COMMAND=1
+export DISABLE_COST_WARNINGS=1
+export DISABLE_ERROR_REPORTING=1
+export DISABLE_TELEMETRY=1
 # bash bind
 bind 'TAB:menu-complete'
 bind 'set show-all-if-ambiguous on'
@@ -57,6 +67,8 @@ bind 'set completion-ignore-case on'
 bind 'set menu-complete-display-prefix on'
 # bash completion
 . /opt/homebrew/etc/bash_completion
+# gh completion
+eval "$(gh completion -s bash)"
 # awscli completion
 complete -C /opt/homebrew/bin/aws_completer aws
 # aliases
@@ -64,12 +76,12 @@ alias r='fc -s'
 alias ls='ls -h --color=auto --group-directories-first'
 alias diff='diff -u'
 alias cat='bat --tabs 4 --paging auto --style full'
-alias glow='glow -p'
+alias glow='glow -p -w0'
 alias curl='curl -Ss'
 alias wget='wget -q'
 alias tmux='tmux new -As0'
 alias kubectl='kubecolor'
-alias sleepnow='pmset sleepnow'
+#alias sleepnow='pmset sleepnow'
 #alias tree='find . | sort | sed "1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g"'
 # typo
 alias sl='ls'
