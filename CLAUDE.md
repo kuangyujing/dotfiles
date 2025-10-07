@@ -52,19 +52,17 @@ bash --rcfile bash/bashrc
 
 ## Architecture Overview
 
-The repository follows a directory-per-application structure with automated Makefile-based installation. Key architectural decisions:
+The repository follows a flexible directory structure with automated Makefile-based installation. Key architectural decisions:
 
-1. **Automated Configuration**: Makefile provides complete automation for environment setup using symbolic links and file copying. Configuration files are automatically linked to their target locations via `make setup`.
+1. **Automated Configuration**: Makefile provides complete automation for environment setup using symbolic links and file copying.
 
-2. **Symbolic Link Strategy**: Most configuration files use symbolic links to enable automatic synchronization between the repository and active configurations. Changes to active configs are immediately reflected in the working tree.
+2. **Symbolic Link Strategy**: Most configuration files use symbolic links to enable automatic synchronization between repository and active configurations. Changes made through applications are automatically reflected in the working tree.
 
-3. **Bash Configuration**: Single `bash/bashrc` file handles all shell setup including PATH configuration, prompt customization, environment variables, and aliases. Automatically linked to `~/.profile` during setup.
+3. **Package Management**: `homebrew/Brewfile` serves as single source of truth for all installed packages. Created with `--no-vscode` to exclude VS Code extensions.
 
-4. **Package Management**: `homebrew/Brewfile` serves as the single source of truth for all installed packages (56+ packages including development tools, CLI utilities, and GUI applications). The Brewfile was created with `--no-vscode` option to exclude VS Code extensions from package management.
+4. **VS Code Integration**: VS Code extensions managed through built-in sync functionality, separate from Homebrew package management.
 
-5. **VS Code Integration**: Contains complete VS Code configuration including settings, keybindings, and Claude Code-specific local settings. VS Code extensions are managed through VS Code's built-in sync functionality rather than Homebrew, keeping them outside the scope of this dotfiles repository.
-
-6. **Bidirectional Synchronization**: Since configuration files are symbolically linked to the repository, any changes made through applications (vim, git, etc.) are automatically reflected in the repository's working tree, enabling continuous configuration tracking.
+5. **Flexible Organization**: Directory structure and Makefile targets organized pragmatically based on installation needs rather than rigid per-application rules.
 
 ## Important Configuration Files
 
@@ -77,40 +75,19 @@ Central automation script that provides:
 - Handles existing file cleanup, symbolic link creation, and system configuration
 
 ### homebrew/Brewfile
-Contains 56+ packages including:
-- Development tools: python@3.13, go, node@22, azure-cli, awscli
-- CLI utilities: ripgrep, bat, gh, kubectl, terraform, helm
-- Specialized tools: kubecolor, lazydocker, kubeseal, atlas
-- GUI applications: github, qlmarkdown, stats
-- Created with `--no-vscode` to exclude VS Code extensions
+Contains 56+ packages including development tools, CLI utilities, specialized tools, and GUI applications. Created with `--no-vscode` to exclude VS Code extensions.
 
 ### bash/bashrc (→ ~/.profile)
-Comprehensive bash configuration that:
-- Sets up PATH with Homebrew directories prioritized
-- Configures git-aware prompt with status indicators
-- Sets environment variables for development tools (kubectl, dotnet, etc.)
-- Defines aliases for common commands (kubectl→kubecolor, cat→bat)
-- Enables vi mode and bash completion
-- Configures Claude Code environment variables
+Comprehensive bash configuration handling PATH setup, git-aware prompt, environment variables, aliases, vi mode, and bash completion.
 
 ### vim/vimrc (→ ~/.vimrc) and vim/plug.vim (→ ~/.vim/autoload/plug.vim)
-Vim configuration with vim-plug plugin manager:
-- Automatically installs vim-plug during setup
-- Runs `:PlugInstall` to install all configured plugins
-- Creates `~/.vim/plugged/` directory for plugin installations
+Vim configuration with vim-plug plugin manager. Automatically installs vim-plug and runs `:PlugInstall` during setup.
 
 ### git/gitconfig (→ ~/.gitconfig)
-Git configuration with:
-- Git LFS filter configuration
-- User identity (name and email)
-- Default branch set to "main"
-- HTTP/1.1 version specification
-- Current branch push behavior
+Git configuration including LFS, user identity, default branch "main", and push behavior.
 
 ### fonts/ (copied to ~/Library/Fonts/)
-UDEVGothicLG font family:
-- UDEVGothicLG-Regular.ttf, Bold.ttf, Italic.ttf, BoldItalic.ttf
-- Files are copied (not linked) to system font directory
+UDEVGothicLG font family (4 files). Files are copied, not linked, to system font directory.
 
 ### vscode/settings.json
 VS Code configuration with Claude Code integration and development-focused settings. VS Code extensions managed separately via Settings Sync.
@@ -137,11 +114,7 @@ VS Code configuration with Claude Code integration and development-focused setti
 - System changes (like shell configuration) should be reversible in the uninstall target
 
 ### Configuration Change Tracking:
-Since most configurations use symbolic links, changes made through applications are automatically reflected in the repository working tree. This enables:
-- Real-time tracking of configuration modifications
-- Easy diffing and version control of active configurations
-- Seamless synchronization between multiple machines
-- No manual copying required to keep repository updated
+Symbolic links enable automatic synchronization between active configurations and repository, providing real-time tracking and seamless multi-machine synchronization without manual copying.
 
 ### Future Development:
 When adding new tools or configurations, approach should be determined based on the specific situation:
