@@ -1,6 +1,6 @@
 # dotfiles Makefile for macOS development environment setup
 
-.PHONY: help setup-homebrew install-packages setup-bash link-bashrc install-fonts setup-vim setup-git setup all
+.PHONY: help setup-homebrew install-packages setup-bash link-bashrc install-fonts setup-vim setup-git setup uninstall all
 
 # Default target
 help:
@@ -13,6 +13,7 @@ help:
 	@echo "  install-fonts    - Copy fonts to ~/Library/Fonts"
 	@echo "  setup-vim        - Setup vim configuration and plug.vim"
 	@echo "  setup-git        - Create symbolic link from git/gitconfig to ~/.gitconfig"
+	@echo "  uninstall        - Remove all configurations, packages, and restore defaults"
 	@echo "  help             - Show this help message"
 
 # Complete setup
@@ -128,3 +129,62 @@ setup-git:
 	@# Create symbolic link
 	@ln -s "$$(pwd)/git/gitconfig" ~/.gitconfig
 	@echo "Symbolic link created: ~/.gitconfig -> $$(pwd)/git/gitconfig"
+
+# Uninstall all configurations and packages
+uninstall:
+	@echo ""
+	@echo "=================================================="
+	@echo "Uninstalling dotfiles environment..."
+	@echo "=================================================="
+	@echo ""
+	@# Remove symbolic links
+	@echo "Removing symbolic links..."
+	@for file in ~/.profile ~/.vimrc ~/.gitconfig; do \
+		if [ -L "$$file" ]; then \
+			echo "Removing symbolic link $$file"; \
+			rm -f "$$file"; \
+		fi; \
+	done
+	@# Remove vim configuration directory
+	@if [ -d ~/.vim ]; then \
+		echo "Removing ~/.vim directory"; \
+		rm -rf ~/.vim; \
+	fi
+	@# Remove installed fonts
+	@echo "Removing installed fonts..."
+	@for font in UDEVGothicLG-Bold.ttf UDEVGothicLG-BoldItalic.ttf UDEVGothicLG-Italic.ttf UDEVGothicLG-Regular.ttf; do \
+		if [ -f ~/Library/Fonts/$$font ]; then \
+			echo "Removing ~/Library/Fonts/$$font"; \
+			rm -f ~/Library/Fonts/$$font; \
+		fi; \
+	done
+	@# Restore default shell
+	@echo "Restoring default shell to /bin/bash..."
+	@chsh -s /bin/bash
+	@# Remove Homebrew bash from /etc/shells
+	@if grep -q "/opt/homebrew/bin/bash" /etc/shells 2>/dev/null; then \
+		echo "Removing Homebrew bash from /etc/shells..."; \
+		sudo sed -i '' '/\/opt\/homebrew\/bin\/bash/d' /etc/shells; \
+	fi
+	@# Uninstall Homebrew packages
+	@echo "Uninstalling Homebrew packages..."
+	@if command -v brew >/dev/null 2>&1; then \
+		cd homebrew && brew bundle cleanup --force; \
+		echo "Homebrew packages removed"; \
+	fi
+	@echo ""
+	@echo "=================================================="
+	@echo "Uninstall complete!"
+	@echo ""
+	@echo "The following has been removed:"
+	@echo "  - All symbolic links (bashrc, vimrc, gitconfig)"
+	@echo "  - Vim configuration and plugins"
+	@echo "  - Installed fonts"
+	@echo "  - Homebrew packages from Brewfile"
+	@echo "  - Homebrew bash from /etc/shells"
+	@echo "  - Default shell restored to /bin/bash"
+	@echo ""
+	@echo "Note: Homebrew itself was not removed."
+	@echo "To completely remove Homebrew, run:"
+	@echo "/bin/bash -c \"\$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)\""
+	@echo "=================================================="
