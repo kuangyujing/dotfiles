@@ -83,3 +83,4 @@ When making changes:
 - Update `homebrew/Brewfile` when adding new packages: `brew bundle dump --force`
 - Test bash configuration changes in isolation before applying
 - No automation scripts exist - all installation is manual per README.md instructions
+- NEVER use emojis in code, documentation, or any files in this repository
