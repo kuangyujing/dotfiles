@@ -1,6 +1,6 @@
 # dotfiles Makefile for macOS development environment setup
 
-.PHONY: help setup setup-apps setup-extra setup-all uninstall backup-brewfile _install-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _configure-system _configure-vscode _install-apps _configure-linearmouse
+.PHONY: help setup setup-apps setup-extra setup-all uninstall backup-brewfile _authenticate _install-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _configure-system _configure-vscode _install-apps _configure-linearmouse
 
 # Default target
 help:
@@ -13,8 +13,16 @@ help:
 	@echo "  backup-brewfile - Create host-specific Brewfile backup"
 	@echo "  help      - Show this help message"
 
+# Authenticate sudo once for the entire session
+_authenticate:
+	@echo "Authenticating sudo access for 1 hour..."
+	@sudo -v
+	@# Extend sudo timeout to 1 hour for this session
+	@echo "Defaults timestamp_timeout=60" | sudo tee /etc/sudoers.d/dotfiles_temp > /dev/null
+	@echo "Sudo authentication successful (valid for 1 hour)"
+
 # Basic setup
-setup: _install-homebrew _install-packages _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git
+setup: _authenticate _install-homebrew _install-packages _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git
 	@echo ""
 	@echo "=================================================="
 	@echo "Basic environment setup complete!"
@@ -232,7 +240,7 @@ setup-apps: _install-apps _configure-linearmouse _configure-system _configure-vs
 	@echo "macOS applications and LinearMouse configuration setup complete!"
 
 # Setup additional development tools
-setup-extra: _install-homebrew _install-dev-cli _install-dev-cli-extra _install-dev-apps
+setup-extra: _authenticate _install-homebrew _install-dev-cli _install-dev-cli-extra _install-dev-apps
 	@echo "Additional development tools setup complete!"
 
 # Uninstall all configurations and packages
@@ -289,6 +297,11 @@ uninstall:
 	@echo "To completely remove Homebrew, run:"
 	@echo "/bin/bash -c \"\$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)\""
 	@echo "=================================================="
+	@# Remove temporary sudoers file
+	@if [ -f /etc/sudoers.d/dotfiles_temp ]; then \
+		echo "Removing temporary sudo configuration..."; \
+		sudo rm -f /etc/sudoers.d/dotfiles_temp; \
+	fi
 
 # Create host-specific Brewfile backup
 backup-brewfile:

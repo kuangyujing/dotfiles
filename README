@@ -91,11 +91,13 @@ INTERNAL TARGETS
      _configure-system       Configure global system settings (key repeat)
      _configure-vscode       Configure VS Code settings (key repeat)
      _configure-linearmouse  Setup LinearMouse configuration
+     _authenticate           Authenticate sudo access for 1 hour session
 
 SYSTEM REQUIREMENTS
      - macOS (tested on recent versions)
      - Internet connection for Homebrew and package downloads
-     - Administrative privileges for shell configuration changes
+     - Administrative privileges for system configuration changes
+     - Password input required once at the beginning (valid for 1 hour)
 
 INSTALLATION
      Clone the repository and run setup:
@@ -124,6 +126,9 @@ EXAMPLES
          make help
 
 NOTES
+     - Password is required once at the beginning for sudo operations
+     - Sudo authentication is automatically extended to 1 hour for unattended setup
+     - Temporary sudo configuration is removed during uninstall
      - Homebrew itself is not removed during uninstall
      - VS Code extensions are managed through Settings Sync
      - Shell changes require terminal restart to take effect

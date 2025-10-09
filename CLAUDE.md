@@ -8,6 +8,7 @@ This file provides comprehensive guidance to Claude Code (claude.ai/code) when w
 **Primary Interface**: Makefile-based automation system
 **Architecture**: File copying (not symbolic links) for repository independence
 **Target Platform**: macOS with Homebrew ecosystem
+**Authentication**: One-time sudo authentication with 1-hour session extension
 
 ## Quick Command Reference
 
@@ -24,6 +25,7 @@ make backup-brewfile # Create host-specific Brewfile backup
 
 ### Internal Implementation
 All setup is handled through internal targets with underscore prefix:
+- `_authenticate`: Sudo authentication with 1-hour timeout extension
 - `_install-*`: Installation tasks (homebrew, packages, apps, fonts)
 - `_configure-*`: Configuration tasks (bash, vim, git, system, vscode, linearmouse)
 
@@ -35,15 +37,22 @@ All setup is handled through internal targets with underscore prefix:
 - **Implication**: Changes to active configs don't sync back to repository
 - **Update Process**: Modify repository → re-run appropriate make target
 
-### 2. Package Management Dual System
+### 2. Authentication Strategy
+**Current**: One-time sudo authentication with automatic 1-hour extension
+- **Implementation**: `_authenticate` target creates `/etc/sudoers.d/dotfiles_temp`
+- **Security**: Temporary file automatically removed during uninstall
+- **User Experience**: Single password prompt enables fully unattended setup
+- **Timeout**: 60-minute session prevents multiple password prompts
+
+### 3. Package Management Dual System
 **Installation**: Direct `brew install` commands in Makefile targets
 **Backup**: `brewfiles/[hostname]/Brewfile` for host-specific package snapshots
 - **Key Point**: Brewfiles are NOT used for installation, only for backup/reference
 - **Command**: `make backup-brewfile` creates/updates host-specific backup
 
-### 3. Target Naming Convention
+### 4. Target Naming Convention
 **Public** (user-facing): `help`, `setup`, `setup-apps`, `setup-extra`, `setup-all`, `uninstall`, `backup-brewfile`
-**Internal** (implementation): `_install-*`, `_configure-*` with underscore prefix
+**Internal** (implementation): `_authenticate`, `_install-*`, `_configure-*` with underscore prefix
 - **Rule**: Never use `setup` prefix for internal targets
 - **Visibility**: Only public targets appear in help output
 
@@ -58,6 +67,11 @@ vim/plug.vim → ~/.vim/autoload/plug.vim
 git/gitconfig → ~/.gitconfig
 linearmouse/linearmouse.json → ~/.config/linearmouse/linearmouse.json
 fonts/*.ttf → ~/Library/Fonts/
+```
+
+### System Files (temporary, removed on uninstall)
+```
+/etc/sudoers.d/dotfiles_temp → Sudo timeout extension (60 minutes)
 ```
 
 ### Package Categories (installed via Makefile)
@@ -105,17 +119,32 @@ dotfiles/
 3. **Integration Steps**
    - Add internal target to appropriate public target dependencies
    - Add to `.PHONY` declaration
+   - Consider if sudo authentication is needed (add `_authenticate` dependency)
    - Implement uninstall logic in `uninstall` target
    - Update help text if adding public target
    - Document in this file and README
 
+### Authentication Requirements
+
+**When to add `_authenticate` dependency:**
+- Target requires `sudo` commands (system file modifications, shell changes)
+- Target modifies `/etc/` files or system preferences
+- Target uses `chsh`, `dscl`, or other privileged commands
+
+**When NOT to add `_authenticate`:**
+- File copying to user home directory (`~/.config`, `~/.vimrc`, etc.)
+- Homebrew operations (brew install, brew bundle)
+- Creating directories in user space
+
 ### Makefile Best Practices
 
 - **Dependencies**: Use proper target dependencies (`target: dependency`)
+- **Authentication**: Add `_authenticate` dependency for sudo operations
 - **Error Handling**: Check for existing files/directories before operations
 - **User Feedback**: Provide clear echo messages for major operations
 - **macOS Compatibility**: Test with system default `/bin/bash`
-- **Cleanup**: Always implement reverse operations in `uninstall`
+- **Cleanup**: Always implement reverse operations in `uninstall` target
+- **Security**: Remove temporary sudo configurations during cleanup
 
 ### Package Management
 
@@ -135,8 +164,10 @@ Before committing changes:
 1. Test full installation: `make setup-all`
 2. Test partial installations: `make setup`, `make setup-apps`, `make setup-extra`
 3. Test uninstallation: `make uninstall`
-4. Verify host-specific backup: `make backup-brewfile`
-5. Test on clean macOS system if possible
+4. Verify authentication works correctly (single password prompt)
+5. Verify sudo cleanup (check `/etc/sudoers.d/dotfiles_temp` is removed)
+6. Verify host-specific backup: `make backup-brewfile`
+7. Test on clean macOS system if possible
 
 ## Code Quality Standards
 
@@ -145,6 +176,7 @@ Before committing changes:
 - **Clear Documentation**: Update both CLAUDE.md and README for changes
 - **Error Messages**: Provide helpful feedback for failures
 - **Idempotency**: Make targets should be safe to run multiple times
+- **Security**: Handle sudo operations responsibly with proper cleanup
 
 ## Context for AI Code Generation
 
@@ -152,8 +184,18 @@ When Claude Code works with this repository:
 
 1. **Primary Goal**: Maintain and extend the automated macOS development environment setup
 2. **Core Constraint**: Preserve file copying approach (not symbolic links)
-3. **Extension Pattern**: Follow the internal/public target naming convention
-4. **Testing Requirement**: All changes must be testable via make commands
-5. **Documentation Standard**: Update both CLAUDE.md and README for user-facing changes
+3. **Authentication Pattern**: Use `_authenticate` dependency for sudo operations
+4. **Extension Pattern**: Follow the internal/public target naming convention
+5. **Testing Requirement**: All changes must be testable via make commands
+6. **Security Requirement**: Ensure proper sudo cleanup in uninstall target
+7. **Documentation Standard**: Update both CLAUDE.md and README for user-facing changes
 
-This repository represents a mature, well-structured dotfiles system optimized for reliability and ease of use. Maintain these architectural decisions while extending functionality.
+This repository represents a mature, well-structured dotfiles system optimized for reliability, security, and ease of use. Maintain these architectural decisions while extending functionality.
+
+### Key Implementation Notes for Claude Code:
+
+- **Authentication**: Always add `_authenticate` dependency when target requires sudo
+- **Cleanup**: Every sudo operation must have corresponding cleanup in `uninstall`
+- **Security**: Temporary system files must be properly removed
+- **User Experience**: Maintain single password prompt for entire session
+- **Testing**: Verify authentication and cleanup work correctly
