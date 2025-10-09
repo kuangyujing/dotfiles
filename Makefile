@@ -1,12 +1,13 @@
 # dotfiles Makefile for macOS development environment setup
 
-.PHONY: help setup setup-apps setup-all uninstall backup-brewfile _install-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _install-apps _configure-linearmouse
+.PHONY: help setup setup-apps setup-extra setup-all uninstall backup-brewfile _install-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _configure-system _configure-vscode _install-apps _configure-linearmouse
 
 # Default target
 help:
 	@echo "Available targets:"
 	@echo "  setup     - Basic environment setup (homebrew + packages + bash + bashrc + fonts + vim + git)"
 	@echo "  setup-apps - Setup macOS applications and LinearMouse configuration"
+	@echo "  setup-extra - Install additional development tools (CLI + desktop apps)"
 	@echo "  setup-all - Complete environment setup including development tools and apps"
 	@echo "  uninstall - Remove all configurations, packages, and restore defaults"
 	@echo "  backup-brewfile - Create host-specific Brewfile backup"
@@ -33,7 +34,7 @@ setup: _install-homebrew _install-packages _configure-default-sh _configure-bash
 	@echo "=================================================="
 
 # Complete setup including development tools
-setup-all: _install-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git setup-apps
+setup-all: setup setup-extra setup-apps
 	@echo ""
 	@echo "=================================================="
 	@echo "Complete environment setup with development tools finished!"
@@ -174,9 +175,6 @@ _configure-vim:
 	@echo "Vim configuration files copied:"
 	@echo "  ~/.vimrc"
 	@echo "  ~/.vim/autoload/plug.vim"
-	@# Install vim plugins using vim-plug
-	@echo "Installing vim plugins..."
-	@vim +PlugInstall +qall
 
 # Configure git
 _configure-git:
@@ -189,6 +187,20 @@ _configure-git:
 	@# Copy configuration file
 	@cp git/gitconfig ~/.gitconfig
 	@echo "Git configuration copied to ~/.gitconfig"
+
+# Configure system settings
+_configure-system:
+	@echo "Configuring system settings..."
+	@# Enable key repeat globally for all applications
+	@defaults write -g ApplePressAndHoldEnabled -bool false
+	@echo "Global key repeat enabled for all applications"
+
+# Configure VS Code
+_configure-vscode:
+	@echo "Configuring VS Code..."
+	@# Enable key repeat for VS Code (disable press and hold)
+	@defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+	@echo "VS Code key repeat enabled (ApplePressAndHoldEnabled disabled)"
 
 # Install macOS applications
 _install-apps:
@@ -216,8 +228,12 @@ _configure-linearmouse:
 	@echo "LinearMouse configuration copied to ~/.config/linearmouse/"
 
 # Setup macOS applications and LinearMouse configuration
-setup-apps: _install-apps _configure-linearmouse
+setup-apps: _install-apps _configure-linearmouse _configure-system _configure-vscode
 	@echo "macOS applications and LinearMouse configuration setup complete!"
+
+# Setup additional development tools
+setup-extra: _install-homebrew _install-dev-cli _install-dev-cli-extra _install-dev-apps
+	@echo "Additional development tools setup complete!"
 
 # Uninstall all configurations and packages
 uninstall:
