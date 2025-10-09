@@ -1,0 +1,116 @@
+DOTFILES(1)                    User Commands                    DOTFILES(1)
+
+NAME
+     dotfiles - macOS development environment setup automation
+
+SYNOPSIS
+     make [target]
+
+DESCRIPTION
+     The dotfiles repository provides automated setup for a complete macOS
+     development environment using Makefile-based configuration management.
+
+     All configuration files are copied (not symlinked) to their target
+     locations, removing repository dependencies after installation.
+
+TARGETS
+     help
+             Display available targets and their descriptions (default).
+
+     setup
+             Basic environment setup including:
+             - Homebrew installation
+             - 23 development packages (bash, git, go, node@22, CLI utilities)
+             - Homebrew Bash as default shell
+             - Bash configuration (bashrc -> ~/.profile)
+             - Font installation to ~/Library/Fonts
+             - Vim configuration and plugins via vim-plug
+             - Git configuration
+
+     setup-apps
+             Install macOS applications and configure LinearMouse:
+             - iTerm2, Alt-Tab, Displaperture, LinearMouse, Stats
+             - Visual Studio Code
+             - LinearMouse configuration
+
+     setup-all
+             Complete environment setup combining setup + development tools:
+             - All components from 'setup' target
+             - Development CLI tools (kubectl, aws-cli, azure-cli, docker)
+             - Additional tools (lazygit, lazydocker)
+             - Development applications (Docker Desktop, GitHub Desktop)
+             - All components from 'setup-apps' target
+
+     uninstall
+             Remove all configurations and restore system defaults:
+             - Remove configuration files
+             - Delete Vim configuration and plugins
+             - Remove installed fonts
+             - Uninstall all Homebrew packages
+             - Restore default shell to /bin/bash
+             - Remove Homebrew Bash from /etc/shells
+
+PACKAGE MANAGEMENT
+     The homebrew/Brewfile serves as a reference and can be updated with:
+         brew bundle dump --force --no-vscode
+
+INTERNAL TARGETS
+     The following internal targets are called automatically by public targets.
+     They are prefixed with underscore and not intended for direct use:
+
+     _install-homebrew       Install Homebrew if not already present
+     _install-packages       Install basic development packages
+     _install-dev-cli        Install development CLI tools
+     _install-dev-cli-extra  Install additional development CLI tools
+     _install-dev-apps       Install development desktop applications
+     _install-fonts          Copy fonts to ~/Library/Fonts
+     _install-apps           Install macOS applications
+
+     _configure-default-sh   Configure Homebrew bash as default shell
+     _configure-bash         Copy bash configuration to ~/.profile
+     _configure-vim          Setup vim configuration and install plugins
+     _configure-git          Copy git configuration to ~/.gitconfig
+     _configure-linearmouse  Setup LinearMouse configuration
+
+SYSTEM REQUIREMENTS
+     - macOS (tested on recent versions)
+     - Internet connection for Homebrew and package downloads
+     - Administrative privileges for shell configuration changes
+
+INSTALLATION
+     Clone the repository and run setup:
+
+         git clone https://github.com/kuangyujing/dotfiles.git
+         cd dotfiles
+         make setup
+
+EXAMPLES
+     Basic environment setup:
+         make setup
+
+     Complete development environment:
+         make setup-all
+
+     Install only macOS applications:
+         make setup-apps
+
+     Remove all configurations:
+         make uninstall
+
+     Display help:
+         make help
+
+NOTES
+     - Homebrew itself is not removed during uninstall
+     - VS Code extensions are managed through Settings Sync
+     - Shell changes require terminal restart to take effect
+     - Existing configuration files are removed before installation
+
+SEE ALSO
+     make(1), brew(1), bash(1), vim(1), git(1)
+
+VERSION
+     dotfiles automation system for macOS development environments
+
+AUTHORS
+     Personal dotfiles repository with Makefile-based automation
