@@ -15,8 +15,9 @@ This file provides comprehensive guidance to Claude Code (claude.ai/code) when w
 ```bash
 make help          # Show available commands (default target)
 make setup         # Basic environment setup
-make setup-apps    # macOS applications + LinearMouse
-make setup-all     # Complete setup (basic + development tools + apps)
+make setup-apps    # macOS applications + system settings
+make setup-extra   # Additional development tools (CLI + desktop apps)
+make setup-all     # Complete setup (setup + setup-extra + setup-apps)
 make uninstall     # Remove all configurations and packages
 make backup-brewfile # Create host-specific Brewfile backup
 ```
@@ -24,7 +25,7 @@ make backup-brewfile # Create host-specific Brewfile backup
 ### Internal Implementation
 All setup is handled through internal targets with underscore prefix:
 - `_install-*`: Installation tasks (homebrew, packages, apps, fonts)
-- `_configure-*`: Configuration tasks (bash, vim, git, linearmouse)
+- `_configure-*`: Configuration tasks (bash, vim, git, system, vscode, linearmouse)
 
 ## Critical Architecture Decisions
 
@@ -41,7 +42,7 @@ All setup is handled through internal targets with underscore prefix:
 - **Command**: `make backup-brewfile` creates/updates host-specific backup
 
 ### 3. Target Naming Convention
-**Public** (user-facing): `help`, `setup`, `setup-apps`, `setup-all`, `uninstall`, `backup-brewfile`
+**Public** (user-facing): `help`, `setup`, `setup-apps`, `setup-extra`, `setup-all`, `uninstall`, `backup-brewfile`
 **Internal** (implementation): `_install-*`, `_configure-*` with underscore prefix
 - **Rule**: Never use `setup` prefix for internal targets
 - **Visibility**: Only public targets appear in help output
@@ -61,10 +62,12 @@ fonts/*.ttf → ~/Library/Fonts/
 
 ### Package Categories (installed via Makefile)
 - **Basic packages** (_install-packages): bash, git, go, node@22, CLI utilities, GNU tools
-- **Development CLI** (_install-dev-cli): kubectl, awscli, azure-cli, docker
+- **Development CLI** (_install-dev-cli): kubectl, kubecolor, awscli, azure-cli, docker
 - **Additional dev CLI** (_install-dev-cli-extra): lazygit, lazydocker
 - **Development apps** (_install-dev-apps): Docker Desktop, GitHub Desktop
 - **macOS applications** (_install-apps): iTerm2, Alt-Tab, LinearMouse, Stats, VS Code
+- **System settings** (_configure-system): Global key repeat enabled
+- **VS Code settings** (_configure-vscode): VS Code-specific key repeat enabled
 
 ### Directory Organization
 ```
@@ -130,7 +133,7 @@ dotfiles/
 
 Before committing changes:
 1. Test full installation: `make setup-all`
-2. Test partial installations: `make setup`, `make setup-apps`
+2. Test partial installations: `make setup`, `make setup-apps`, `make setup-extra`
 3. Test uninstallation: `make uninstall`
 4. Verify host-specific backup: `make backup-brewfile`
 5. Test on clean macOS system if possible
