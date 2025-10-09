@@ -51,8 +51,14 @@ TARGETS
              - Remove Homebrew Bash from /etc/shells
 
 PACKAGE MANAGEMENT
-     The homebrew/Brewfile serves as a reference and can be updated with:
-         brew bundle dump --force --no-vscode
+     The brewfiles/ directory contains host-specific subdirectories for daily
+     backups of installed packages. Each host has its own Brewfile maintained
+     separately from the Makefile automation:
+
+         brewfiles/[hostname]/Brewfile
+
+     These Brewfiles serve as backup references and are not used by the
+     automated Makefile setup process.
 
 INTERNAL TARGETS
      The following internal targets are called automatically by public targets.
