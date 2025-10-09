@@ -60,6 +60,13 @@ PACKAGE MANAGEMENT
      These Brewfiles serve as backup references and are not used by the
      automated Makefile setup process.
 
+     To create a Brewfile backup for the current host:
+
+         make backup-brewfile
+
+     This command automatically detects the hostname and creates a backup of
+     all currently installed Homebrew packages (excluding VS Code extensions).
+
 INTERNAL TARGETS
      The following internal targets are called automatically by public targets.
      They are prefixed with underscore and not intended for direct use:

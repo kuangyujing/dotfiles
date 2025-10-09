@@ -33,6 +33,9 @@ Packages are now managed directly through Makefile targets, not via Brewfile:
 # Basic packages are installed via make setup
 # Development CLI tools via make setup-all
 # Individual components are internal targets (not for direct use)
+
+# Create host-specific Brewfile backup
+make backup-brewfile
 ```
 
 ### Manual Configuration (Legacy)
@@ -52,7 +55,7 @@ The repository follows a flexible directory structure with automated Makefile-ba
 
 2. **Symbolic Link Strategy**: Most configuration files use symbolic links to enable automatic synchronization between repository and active configurations. Changes made through applications are automatically reflected in the working tree.
 
-3. **Package Management**: Packages are installed directly through Makefile targets. The `brewfiles/` directory contains host-specific subdirectories (`brewfiles/[hostname]/`) for daily backups of installed packages. These Brewfiles serve as backup references and are not used by the automated Makefile setup process.
+3. **Package Management**: Packages are installed directly through Makefile targets. The `brewfiles/` directory contains host-specific subdirectories (`brewfiles/[hostname]/`) for daily backups of installed packages. These Brewfiles serve as backup references and are not used by the automated Makefile setup process. Use `make backup-brewfile` to automatically create host-specific Brewfile backups with hostname detection.
 
 4. **VS Code Integration**: VS Code extensions managed through built-in sync functionality, separate from Homebrew package management.
 

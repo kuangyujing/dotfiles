@@ -1,6 +1,6 @@
 # dotfiles Makefile for macOS development environment setup
 
-.PHONY: help setup setup-apps setup-all uninstall _install-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _install-apps _configure-linearmouse
+.PHONY: help setup setup-apps setup-all uninstall backup-brewfile _install-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _install-apps _configure-linearmouse
 
 # Default target
 help:
@@ -9,6 +9,7 @@ help:
 	@echo "  setup-apps - Setup macOS applications and LinearMouse configuration"
 	@echo "  setup-all - Complete environment setup including development tools and apps"
 	@echo "  uninstall - Remove all configurations, packages, and restore defaults"
+	@echo "  backup-brewfile - Create host-specific Brewfile backup"
 	@echo "  help      - Show this help message"
 
 # Basic setup
@@ -272,3 +273,15 @@ uninstall:
 	@echo "To completely remove Homebrew, run:"
 	@echo "/bin/bash -c \"\$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)\""
 	@echo "=================================================="
+
+# Create host-specific Brewfile backup
+backup-brewfile:
+	@echo "Creating Brewfile backup..."
+	@# Get hostname
+	@hostname=$$(hostname -s); \
+	echo "Host: $$hostname"; \
+	# Create directory if it doesn't exist
+	mkdir -p "brewfiles/$$hostname"; \
+	# Create Brewfile backup
+	brew bundle dump --file="brewfiles/$$hostname/Brewfile" --force --no-vscode; \
+	echo "Brewfile backup created at brewfiles/$$hostname/Brewfile"
