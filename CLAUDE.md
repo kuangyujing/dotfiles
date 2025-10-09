@@ -113,6 +113,16 @@ VS Code configuration with Claude Code integration and development-focused setti
 - Fonts should be copied, not linked, to `~/Library/Fonts/`
 - System changes (like shell configuration) should be reversible in the uninstall target
 
+### Makefile Target Naming Convention:
+- **Public targets** (for user consumption): `help`, `setup`, `setup-apps`, `setup-all`, `uninstall`
+- **Internal targets** (for implementation): Use underscore prefix (`_`) to indicate private/internal use
+- **Internal target naming**: 
+  - `_configure-*` for configuration setup (e.g., `_configure-homebrew`, `_configure-bash`)
+  - `_install-*` for installation tasks (e.g., `_install-packages`, `_install-fonts`)
+  - `_link-*` for symbolic link creation (e.g., `_link-bashrc`)
+- **Public targets only** should be listed in help output to avoid confusion
+- Never use `setup` prefix for internal targets to prevent confusion with public `setup*` targets
+
 ### Configuration Change Tracking:
 Symbolic links enable automatic synchronization between active configurations and repository, providing real-time tracking and seamless multi-machine synchronization without manual copying.
 

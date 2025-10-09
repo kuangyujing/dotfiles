@@ -1,30 +1,18 @@
 # dotfiles Makefile for macOS development environment setup
 
-.PHONY: help setup-homebrew install-packages install-dev-cli install-dev-cli-extra install-dev-apps setup-bash link-bashrc install-fonts setup-vim setup-git install-apps setup-linearmouse setup-apps setup setup-all uninstall all
+.PHONY: help setup setup-apps setup-all uninstall _configure-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-bash _link-bashrc _install-fonts _configure-vim _configure-git _install-apps _configure-linearmouse
 
 # Default target
 help:
 	@echo "Available targets:"
-	@echo "  setup            - Basic environment setup (homebrew + packages + bash + bashrc + fonts + vim + git)"
-	@echo "  setup-all        - Complete environment setup including development tools and apps"
-	@echo "  setup-homebrew   - Install Homebrew if not present"
-	@echo "  install-packages - Install basic development packages"
-	@echo "  install-dev-cli  - Install development CLI tools (kubectl, AWS CLI, Azure CLI, etc.)"
-	@echo "  install-dev-cli-extra - Install additional development CLI tools (lazygit, lazydocker)"
-	@echo "  install-dev-apps - Install development desktop applications (Docker Desktop, GitHub Desktop)"
-	@echo "  setup-bash       - Setup Homebrew bash and make it default shell"
-	@echo "  link-bashrc      - Create symbolic link from bash/bashrc to ~/.profile"
-	@echo "  install-fonts    - Copy fonts to ~/Library/Fonts"
-	@echo "  setup-vim        - Setup vim configuration and plug.vim"
-	@echo "  setup-git        - Create symbolic link from git/gitconfig to ~/.gitconfig"
-	@echo "  install-apps     - Install macOS applications"
-	@echo "  setup-linearmouse - Setup LinearMouse configuration"
-	@echo "  setup-apps       - Setup macOS applications and LinearMouse configuration"
-	@echo "  uninstall        - Remove all configurations, packages, and restore defaults"
-	@echo "  help             - Show this help message"
+	@echo "  setup     - Basic environment setup (homebrew + packages + bash + bashrc + fonts + vim + git)"
+	@echo "  setup-apps - Setup macOS applications and LinearMouse configuration"
+	@echo "  setup-all - Complete environment setup including development tools and apps"
+	@echo "  uninstall - Remove all configurations, packages, and restore defaults"
+	@echo "  help      - Show this help message"
 
 # Basic setup
-setup: setup-homebrew install-packages setup-bash link-bashrc install-fonts setup-vim setup-git
+setup: _configure-homebrew _install-packages _configure-bash _link-bashrc _install-fonts _configure-vim _configure-git
 	@echo ""
 	@echo "=================================================="
 	@echo "Basic environment setup complete!"
@@ -44,7 +32,7 @@ setup: setup-homebrew install-packages setup-bash link-bashrc install-fonts setu
 	@echo "=================================================="
 
 # Complete setup including development tools
-setup-all: setup-homebrew install-packages install-dev-cli install-dev-cli-extra install-dev-apps setup-bash link-bashrc install-fonts setup-vim setup-git setup-apps
+setup-all: _configure-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-bash _link-bashrc _install-fonts _configure-vim _configure-git setup-apps
 	@echo ""
 	@echo "=================================================="
 	@echo "Complete environment setup with development tools finished!"
@@ -68,8 +56,8 @@ setup-all: setup-homebrew install-packages install-dev-cli install-dev-cli-extra
 	@echo "=================================================="
 
 # Install Homebrew if not already installed
-setup-homebrew:
-	@echo "Setting up Homebrew..."
+_configure-homebrew:
+	@echo "Configuring Homebrew..."
 	@if command -v brew >/dev/null 2>&1; then \
 		echo "Homebrew is already installed"; \
 	else \
@@ -79,7 +67,7 @@ setup-homebrew:
 	fi
 
 # Install packages using brew install commands
-install-packages: setup-homebrew
+_install-packages: _configure-homebrew
 	@echo "Installing development packages..."
 	@# Core Tools
 	@brew install bash bash-completion git gh make
@@ -97,7 +85,7 @@ install-packages: setup-homebrew
 	@echo "Packages installed successfully"
 
 # Install development CLI tools
-install-dev-cli: setup-homebrew
+_install-dev-cli: _configure-homebrew
 	@echo "Installing development CLI tools..."
 	@# Kubernetes tools
 	@brew install kubectl kubecolor
@@ -108,7 +96,7 @@ install-dev-cli: setup-homebrew
 	@echo "Development CLI tools installed successfully"
 
 # Install additional development CLI tools
-install-dev-cli-extra: setup-homebrew
+_install-dev-cli-extra: _configure-homebrew
 	@echo "Installing additional development CLI tools..."
 	@# Git tools
 	@brew install lazygit
@@ -117,16 +105,16 @@ install-dev-cli-extra: setup-homebrew
 	@echo "Additional development CLI tools installed successfully"
 
 # Install development desktop applications
-install-dev-apps: setup-homebrew
+_install-dev-apps: _configure-homebrew
 	@echo "Installing development desktop applications..."
 	@# Development applications
 	@brew install --cask docker
 	@brew install --cask github
 	@echo "Development desktop applications installed successfully"
 
-# Setup Homebrew bash as default shell
-setup-bash: install-packages
-	@echo "Setting up Homebrew bash..."
+# Configure Homebrew bash as default shell
+_configure-bash: _install-packages
+	@echo "Configuring Homebrew bash..."
 	@# Check if Homebrew bash is already in /etc/shells
 	@if grep -q "/opt/homebrew/bin/bash" /etc/shells 2>/dev/null; then \
 		echo "Homebrew bash is already registered in /etc/shells"; \
@@ -146,9 +134,9 @@ setup-bash: install-packages
 		echo "Please restart your terminal or run 'exec /opt/homebrew/bin/bash' to use the new shell"; \
 	fi
 
-# Create symbolic link for bashrc
-link-bashrc:
-	@echo "Setting up bashrc configuration..."
+# Copy bashrc configuration
+_link-bashrc:
+	@echo "Configuring bashrc..."
 	@# Remove existing shell configuration files
 	@for file in ~/.profile ~/.bashrc ~/.bash_profile ~/.bash_logout ~/.zshrc ~/.zprofile; do \
 		if [ -e "$$file" ]; then \
@@ -156,20 +144,20 @@ link-bashrc:
 			rm -f "$$file"; \
 		fi; \
 	done
-	@# Create symbolic link
-	@ln -s "$$(pwd)/bash/bashrc" ~/.profile
-	@echo "Symbolic link created: ~/.profile -> $$(pwd)/bash/bashrc"
+	@# Copy configuration file
+	@cp bash/bashrc ~/.profile
+	@echo "Bashrc configuration copied to ~/.profile"
 
 # Install fonts
-install-fonts:
+_install-fonts:
 	@echo "Installing fonts..."
 	@mkdir -p ~/Library/Fonts
 	@cp fonts/*.ttf ~/Library/Fonts/
 	@echo "Fonts copied to ~/Library/Fonts"
 
-# Setup vim configuration
-setup-vim:
-	@echo "Setting up vim configuration..."
+# Configure vim
+_configure-vim:
+	@echo "Configuring vim..."
 	@# Remove existing vim configuration files
 	@for file in ~/.vimrc ~/.vim; do \
 		if [ -e "$$file" ]; then \
@@ -179,41 +167,42 @@ setup-vim:
 	done
 	@# Create ~/.vim/autoload directory
 	@mkdir -p ~/.vim/autoload
-	@# Create symbolic links
-	@ln -s "$$(pwd)/vim/vimrc" ~/.vimrc
-	@ln -s "$$(pwd)/vim/plug.vim" ~/.vim/autoload/plug.vim
-	@echo "Symbolic links created:"
-	@echo "  ~/.vimrc -> $$(pwd)/vim/vimrc"
-	@echo "  ~/.vim/autoload/plug.vim -> $$(pwd)/vim/plug.vim"
+	@# Copy configuration files
+	@cp vim/vimrc ~/.vimrc
+	@cp vim/plug.vim ~/.vim/autoload/plug.vim
+	@echo "Vim configuration files copied:"
+	@echo "  ~/.vimrc"
+	@echo "  ~/.vim/autoload/plug.vim"
 	@# Install vim plugins using vim-plug
 	@echo "Installing vim plugins..."
 	@vim +PlugInstall +qall
 
-# Setup git configuration
-setup-git:
-	@echo "Setting up git configuration..."
+# Configure git
+_configure-git:
+	@echo "Configuring git..."
 	@# Remove existing git configuration
 	@if [ -e ~/.gitconfig ]; then \
 		echo "Removing existing ~/.gitconfig"; \
 		rm -f ~/.gitconfig; \
 	fi
-	@# Create symbolic link
-	@ln -s "$$(pwd)/git/gitconfig" ~/.gitconfig
-	@echo "Symbolic link created: ~/.gitconfig -> $$(pwd)/git/gitconfig"
+	@# Copy configuration file
+	@cp git/gitconfig ~/.gitconfig
+	@echo "Git configuration copied to ~/.gitconfig"
 
 # Install macOS applications
-install-apps:
+_install-apps:
 	@echo "Installing macOS applications..."
 	@brew install --cask iterm2
 	@brew install --cask alt-tab
 	@brew install --cask displaperture
 	@brew install --cask linearmouse
 	@brew install --cask stats
+	@brew install --cask visual-studio-code
 	@echo "macOS applications installed successfully"
 
-# Setup LinearMouse configuration
-setup-linearmouse:
-	@echo "Setting up LinearMouse configuration..."
+# Configure LinearMouse
+_configure-linearmouse:
+	@echo "Configuring LinearMouse..."
 	@# Remove existing LinearMouse configuration
 	@if [ -e ~/.config/linearmouse ]; then \
 		echo "Removing existing ~/.config/linearmouse"; \
@@ -226,7 +215,7 @@ setup-linearmouse:
 	@echo "LinearMouse configuration copied to ~/.config/linearmouse/"
 
 # Setup macOS applications and LinearMouse configuration
-setup-apps: install-apps setup-linearmouse
+setup-apps: _install-apps _configure-linearmouse
 	@echo "macOS applications and LinearMouse configuration setup complete!"
 
 # Uninstall all configurations and packages
