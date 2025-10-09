@@ -10,35 +10,29 @@ This is a personal dotfiles repository organized by application/tool. It focuses
 
 ### Automated Setup (Preferred Method)
 ```bash
-# Complete environment setup
+# Show all available commands (default)
+make
+make help
+
+# Basic environment setup
 make setup
 
-# Individual components
-make setup-homebrew   # Install Homebrew
-make install-packages # Install packages from Brewfile
-make setup-bash       # Setup Homebrew Bash as default shell
-make link-bashrc      # Create bashrc symbolic link
-make install-fonts    # Copy fonts to ~/Library/Fonts
-make setup-vim        # Setup Vim configuration and plugins
-make setup-git        # Setup Git configuration
+# macOS applications setup
+make setup-apps
+
+# Complete environment setup including development tools
+make setup-all
 
 # Uninstall everything
 make uninstall
-
-# Show all available commands
-make help
 ```
 
 ### Package Management
+Packages are now managed directly through Makefile targets, not via Brewfile:
 ```bash
-# Install all packages from Brewfile
-cd homebrew && brew bundle
-
-# Update Brewfile with currently installed packages (excluding VS Code extensions)
-brew bundle dump --force --no-vscode
-
-# Install individual package and update Brewfile
-brew install <package> && brew bundle dump --force --no-vscode
+# Basic packages are installed via make setup
+# Development CLI tools via make setup-all
+# Individual components are internal targets (not for direct use)
 ```
 
 ### Manual Configuration (Legacy)
@@ -68,26 +62,37 @@ The repository follows a flexible directory structure with automated Makefile-ba
 
 ### Makefile
 Central automation script that provides:
-- `make setup`: Complete environment setup (homebrew + packages + bash + bashrc + fonts + vim + git)
+- `make setup`: Basic environment setup (homebrew + packages + bash + bashrc + fonts + vim + git)
+- `make setup-apps`: macOS applications and LinearMouse configuration
+- `make setup-all`: Complete environment setup including development tools and apps
 - `make uninstall`: Complete removal of all configurations and packages
-- Individual setup targets for granular control
+- `make help`: Show available commands (default when running `make`)
 - macOS Bash compatibility (runs on system default `/bin/bash`)
-- Handles existing file cleanup, symbolic link creation, and system configuration
+- Handles existing file cleanup, file copying, and system configuration
+- Internal targets use underscore prefix and are not intended for direct user access
 
-### homebrew/Brewfile
-Contains 56+ packages including development tools, CLI utilities, specialized tools, and GUI applications. Created with `--no-vscode` to exclude VS Code extensions.
+### Package Installation (via Makefile)
+Packages are installed directly via brew commands in Makefile targets:
+- **Basic packages**: bash, bash-completion, git, gh, make, go, node@22, bat, tree, jq, yq, curl, wget, watch, coreutils, findutils, diffutils, binutils, glow, cliclick, code-minimap, im-select
+- **Development CLI tools**: kubectl, kubecolor, awscli, azure-cli, docker
+- **Additional development CLI tools**: lazygit, lazydocker  
+- **Development desktop apps**: Docker Desktop, GitHub Desktop
+- **macOS applications**: iTerm2, alt-tab, displaperture, linearmouse, stats, Visual Studio Code
 
-### bash/bashrc (→ ~/.profile)
+### bash/bashrc (copied to ~/.profile)
 Comprehensive bash configuration handling PATH setup, git-aware prompt, environment variables, aliases, vi mode, and bash completion.
 
-### vim/vimrc (→ ~/.vimrc) and vim/plug.vim (→ ~/.vim/autoload/plug.vim)
+### vim/vimrc (copied to ~/.vimrc) and vim/plug.vim (copied to ~/.vim/autoload/plug.vim)
 Vim configuration with vim-plug plugin manager. Automatically installs vim-plug and runs `:PlugInstall` during setup.
 
-### git/gitconfig (→ ~/.gitconfig)
+### git/gitconfig (copied to ~/.gitconfig)
 Git configuration including LFS, user identity, default branch "main", and push behavior.
 
 ### fonts/ (copied to ~/Library/Fonts/)
-UDEVGothicLG font family (4 files). Files are copied, not linked, to system font directory.
+UDEVGothicLG font family (4 files). Files are copied to system font directory.
+
+### linearmouse/linearmouse.json (copied to ~/.config/linearmouse/)
+LinearMouse configuration for mouse acceleration control.
 
 ### vscode/settings.json
 VS Code configuration with Claude Code integration and development-focused settings. VS Code extensions managed separately via Settings Sync.
@@ -124,7 +129,10 @@ VS Code configuration with Claude Code integration and development-focused setti
 - Never use `setup` prefix for internal targets to prevent confusion with public `setup*` targets
 
 ### Configuration Change Tracking:
-Symbolic links enable automatic synchronization between active configurations and repository, providing real-time tracking and seamless multi-machine synchronization without manual copying.
+Configuration files are copied to their target locations, removing repository dependencies. To update configurations after changes:
+1. Modify files in the repository
+2. Run appropriate setup commands (`make setup`, `make setup-apps`, or `make setup-all`)
+3. This approach ensures configurations are independent and portable
 
 ### Future Development:
 When adding new tools or configurations, approach should be determined based on the specific situation:

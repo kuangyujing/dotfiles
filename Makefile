@@ -1,6 +1,6 @@
 # dotfiles Makefile for macOS development environment setup
 
-.PHONY: help setup setup-apps setup-all uninstall _configure-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-bash _link-bashrc _install-fonts _configure-vim _configure-git _install-apps _configure-linearmouse
+.PHONY: help setup setup-apps setup-all uninstall _install-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _install-apps _configure-linearmouse
 
 # Default target
 help:
@@ -12,7 +12,7 @@ help:
 	@echo "  help      - Show this help message"
 
 # Basic setup
-setup: _configure-homebrew _install-packages _configure-bash _link-bashrc _install-fonts _configure-vim _configure-git
+setup: _install-homebrew _install-packages _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git
 	@echo ""
 	@echo "=================================================="
 	@echo "Basic environment setup complete!"
@@ -32,7 +32,7 @@ setup: _configure-homebrew _install-packages _configure-bash _link-bashrc _insta
 	@echo "=================================================="
 
 # Complete setup including development tools
-setup-all: _configure-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-bash _link-bashrc _install-fonts _configure-vim _configure-git setup-apps
+setup-all: _install-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git setup-apps
 	@echo ""
 	@echo "=================================================="
 	@echo "Complete environment setup with development tools finished!"
@@ -56,7 +56,7 @@ setup-all: _configure-homebrew _install-packages _install-dev-cli _install-dev-c
 	@echo "=================================================="
 
 # Install Homebrew if not already installed
-_configure-homebrew:
+_install-homebrew:
 	@echo "Configuring Homebrew..."
 	@if command -v brew >/dev/null 2>&1; then \
 		echo "Homebrew is already installed"; \
@@ -67,7 +67,7 @@ _configure-homebrew:
 	fi
 
 # Install packages using brew install commands
-_install-packages: _configure-homebrew
+_install-packages: _install-homebrew
 	@echo "Installing development packages..."
 	@# Core Tools
 	@brew install bash bash-completion git gh make
@@ -85,7 +85,7 @@ _install-packages: _configure-homebrew
 	@echo "Packages installed successfully"
 
 # Install development CLI tools
-_install-dev-cli: _configure-homebrew
+_install-dev-cli: _install-homebrew
 	@echo "Installing development CLI tools..."
 	@# Kubernetes tools
 	@brew install kubectl kubecolor
@@ -96,7 +96,7 @@ _install-dev-cli: _configure-homebrew
 	@echo "Development CLI tools installed successfully"
 
 # Install additional development CLI tools
-_install-dev-cli-extra: _configure-homebrew
+_install-dev-cli-extra: _install-homebrew
 	@echo "Installing additional development CLI tools..."
 	@# Git tools
 	@brew install lazygit
@@ -105,7 +105,7 @@ _install-dev-cli-extra: _configure-homebrew
 	@echo "Additional development CLI tools installed successfully"
 
 # Install development desktop applications
-_install-dev-apps: _configure-homebrew
+_install-dev-apps: _install-homebrew
 	@echo "Installing development desktop applications..."
 	@# Development applications
 	@brew install --cask docker
@@ -113,7 +113,7 @@ _install-dev-apps: _configure-homebrew
 	@echo "Development desktop applications installed successfully"
 
 # Configure Homebrew bash as default shell
-_configure-bash: _install-packages
+_configure-default-sh: _install-packages
 	@echo "Configuring Homebrew bash..."
 	@# Check if Homebrew bash is already in /etc/shells
 	@if grep -q "/opt/homebrew/bin/bash" /etc/shells 2>/dev/null; then \
@@ -135,7 +135,7 @@ _configure-bash: _install-packages
 	fi
 
 # Copy bashrc configuration
-_link-bashrc:
+_configure-bash:
 	@echo "Configuring bashrc..."
 	@# Remove existing shell configuration files
 	@for file in ~/.profile ~/.bashrc ~/.bash_profile ~/.bash_logout ~/.zshrc ~/.zprofile; do \
