@@ -1,0 +1,402 @@
+{
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0",
+  "schemes" : [
+    {
+      "pointer" : {
+        "disableAcceleration" : false,
+        "acceleration" : 0.6,
+        "speed" : 0.07
+      },
+      "scrolling" : {
+        "acceleration" : 1,
+        "speed" : {
+          "vertical" : 50,
+          "horizontal" : 0
+        },
+        "modifiers" : {
+          "vertical" : {
+            "option" : {
+              "type" : "preventDefault"
+            },
+            "control" : {
+              "type" : "alterOrientation"
+            },
+            "shift" : {
+              "type" : "changeSpeed",
+              "scale" : 10
+            }
+          },
+          "horizontal" : {
+            "control" : {
+              "type" : "preventDefault"
+            },
+            "shift" : {
+              "type" : "preventDefault"
+            }
+          }
+        },
+        "distance" : {
+          "vertical" : "auto",
+          "horizontal" : 3
+        }
+      },
+      "if" : {
+        "device" : {
+          "productID" : "0xc548",
+          "vendorID" : "0x46d",
+          "category" : "mouse",
+          "productName" : "USB Receiver"
+        }
+      },
+      "buttons" : {
+        "mappings" : [
+
+        ]
+      }
+    },
+    {
+      "pointer" : {
+        "acceleration" : 0.6,
+        "speed" : 0.1,
+        "disableAcceleration" : false
+      },
+      "scrolling" : {
+        "acceleration" : 1,
+        "speed" : {
+          "vertical" : 50,
+          "horizontal" : 0
+        },
+        "modifiers" : {
+          "vertical" : {
+            "control" : {
+              "type" : "alterOrientation"
+            },
+            "shift" : {
+              "scale" : 10,
+              "type" : "changeSpeed"
+            },
+            "option" : {
+              "type" : "preventDefault"
+            }
+          },
+          "horizontal" : {
+            "shift" : {
+              "type" : "preventDefault"
+            }
+          }
+        },
+        "distance" : {
+          "vertical" : "auto",
+          "horizontal" : 3
+        }
+      },
+      "if" : {
+        "device" : {
+          "productName" : "Mouse",
+          "vendorID" : "0x1997",
+          "category" : "mouse",
+          "productID" : "0x2436"
+        }
+      }
+    },
+    {
+      "pointer" : {
+        "acceleration" : 0.7,
+        "speed" : 0.069
+      },
+      "scrolling" : {
+        "modifiers" : {
+          "vertical" : {
+            "shift" : {
+              "type" : "preventDefault"
+            }
+          }
+        },
+        "acceleration" : {
+          "vertical" : 1
+        }
+      },
+      "if" : {
+        "device" : {
+          "productName" : "Apple Internal Keyboard \/ Trackpad",
+          "category" : "trackpad",
+          "vendorID" : "0x0",
+          "productID" : "0x0"
+        }
+      }
+    },
+    {
+      "pointer" : {
+        "acceleration" : 0.5
+      },
+      "scrolling" : {
+        "modifiers" : {
+          "horizontal" : {
+            "shift" : {
+              "type" : "preventDefault"
+            }
+          },
+          "vertical" : {
+            "control" : {
+              "type" : "alterOrientation"
+            },
+            "shift" : {
+              "type" : "preventDefault"
+            }
+          }
+        },
+        "distance" : 3,
+        "speed" : 0,
+        "acceleration" : 1
+      },
+      "if" : {
+        "device" : {
+          "vendorID" : "0x47d",
+          "productName" : "Kensignton Orbit",
+          "productID" : "0x80a8",
+          "category" : "mouse"
+        }
+      }
+    },
+    {
+      "pointer" : {
+        "speed" : 0.1,
+        "acceleration" : 0.7,
+        "disableAcceleration" : false
+      },
+      "scrolling" : {
+        "speed" : {
+          "horizontal" : 0,
+          "vertical" : 50
+        },
+        "acceleration" : 1,
+        "modifiers" : {
+          "vertical" : {
+            "shift" : {
+              "scale" : 10,
+              "type" : "changeSpeed"
+            },
+            "control" : {
+              "type" : "alterOrientation"
+            }
+          }
+        },
+        "distance" : {
+          "horizontal" : 3,
+          "vertical" : "auto"
+        }
+      },
+      "if" : {
+        "device" : {
+          "vendorID" : "0x47d",
+          "category" : "mouse",
+          "productID" : "0x80a6",
+          "productName" : "ORBIT WIRELESS TB"
+        }
+      }
+    },
+    {
+      "pointer" : {
+        "speed" : 0.069
+      },
+      "scrolling" : {
+        "acceleration" : 1,
+        "distance" : 3,
+        "modifiers" : {
+          "vertical" : {
+            "shift" : {
+              "scale" : 10,
+              "type" : "changeSpeed"
+            }
+          }
+        },
+        "speed" : 0
+      },
+      "if" : {
+        "device" : {
+          "productName" : "ORBIT BT5.0",
+          "vendorID" : "0x47d",
+          "productID" : "0x80a8",
+          "category" : "mouse"
+        }
+      }
+    },
+    {
+      "pointer" : {
+        "acceleration" : 0.7,
+        "speed" : 0.1
+      },
+      "scrolling" : {
+        "distance" : {
+          "horizontal" : 3,
+          "vertical" : 6
+        },
+        "acceleration" : 1,
+        "modifiers" : {
+          "horizontal" : {
+            "shift" : {
+              "type" : "preventDefault"
+            }
+          },
+          "vertical" : {
+            "shift" : {
+              "scale" : 10,
+              "type" : "changeSpeed"
+            },
+            "option" : {
+              "type" : "preventDefault"
+            },
+            "control" : {
+              "type" : "alterOrientation"
+            }
+          }
+        },
+        "speed" : 0
+      },
+      "if" : {
+        "device" : {
+          "category" : "mouse",
+          "productName" : "Wireless Receiver",
+          "productID" : "0xc542",
+          "vendorID" : "0x46d"
+        }
+      }
+    },
+    {
+      "scrolling" : {
+        "speed" : {
+          "vertical" : 0
+        },
+        "modifiers" : {
+          "vertical" : {
+            "shift" : {
+              "scale" : 10,
+              "type" : "changeSpeed"
+            }
+          }
+        },
+        "distance" : {
+          "vertical" : 3
+        },
+        "acceleration" : {
+          "vertical" : 1
+        }
+      },
+      "if" : {
+        "device" : {
+          "vendorID" : "0x47d",
+          "category" : "mouse",
+          "productID" : "0x80a8",
+          "productName" : "Orbit Wireless"
+        }
+      }
+    },
+    {
+      "pointer" : {
+        "acceleration" : 0.8
+      },
+      "scrolling" : {
+        "modifiers" : {
+          "vertical" : {
+            "control" : {
+              "type" : "alterOrientation"
+            },
+            "shift" : {
+              "type" : "changeSpeed",
+              "scale" : 10
+            }
+          }
+        },
+        "speed" : 0,
+        "acceleration" : 1,
+        "distance" : {
+          "horizontal" : 3,
+          "vertical" : 4
+        }
+      },
+      "if" : {
+        "device" : {
+          "vendorID" : "0x56e",
+          "productName" : "ELECOM BlueLED Mouse",
+          "category" : "mouse",
+          "productID" : "0x144"
+        }
+      }
+    },
+    {
+      "pointer" : {
+        "acceleration" : 0.8
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "modifiers" : {
+          "vertical" : {
+            "control" : {
+              "type" : "alterOrientation"
+            },
+            "command" : {
+              "type" : "preventDefault"
+            },
+            "shift" : {
+              "type" : "changeSpeed",
+              "scale" : 10
+            }
+          }
+        },
+        "speed" : {
+          "vertical" : 0
+        },
+        "distance" : {
+          "vertical" : 4
+        }
+      },
+      "if" : {
+        "device" : {
+          "vendorID" : "0x46d",
+          "productName" : "Pebble M350s - 1",
+          "category" : "mouse",
+          "productID" : "0xb036",
+          "serialNumber" : "9C6F0A13"
+        }
+      }
+    },
+    {
+      "pointer" : {
+        "acceleration" : 0.8
+      },
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        },
+        "modifiers" : {
+          "vertical" : {
+            "control" : {
+              "type" : "changeSpeed",
+              "scale" : 10
+            },
+            "shift" : {
+              "type" : "alterOrientation"
+            }
+          }
+        },
+        "distance" : {
+          "vertical" : 4
+        },
+        "speed" : {
+          "vertical" : 0
+        }
+      },
+      "if" : {
+        "device" : {
+          "productName" : "Pebble M350s",
+          "category" : "mouse",
+          "productID" : "0xb036",
+          "serialNumber" : "9C6F0A13",
+          "vendorID" : "0x46d"
+        }
+      }
+    }
+  ]
+}
