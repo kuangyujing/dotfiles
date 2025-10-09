@@ -277,11 +277,8 @@ uninstall:
 # Create host-specific Brewfile backup
 backup-brewfile:
 	@echo "Creating Brewfile backup..."
-	@# Get hostname
 	@hostname=$$(hostname -s); \
 	echo "Host: $$hostname"; \
-	# Create directory if it doesn't exist
 	mkdir -p "brewfiles/$$hostname"; \
-	# Create Brewfile backup
 	brew bundle dump --file="brewfiles/$$hostname/Brewfile" --force --no-vscode; \
 	echo "Brewfile backup created at brewfiles/$$hostname/Brewfile"
