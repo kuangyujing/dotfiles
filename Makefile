@@ -1,14 +1,16 @@
 # dotfiles Makefile for macOS development environment setup
 
-.PHONY: help setup-homebrew install-packages install-dev-cli install-dev-apps setup-bash link-bashrc install-fonts setup-vim setup-git install-apps setup-linearmouse setup uninstall all
+.PHONY: help setup-homebrew install-packages install-dev-cli install-dev-cli-extra install-dev-apps setup-bash link-bashrc install-fonts setup-vim setup-git install-apps setup-linearmouse setup-apps setup setup-all uninstall all
 
 # Default target
 help:
 	@echo "Available targets:"
-	@echo "  setup            - Complete environment setup (homebrew + packages + dev-cli + dev-apps + bash + bashrc + fonts + vim + git + apps + linearmouse)"
+	@echo "  setup            - Basic environment setup (homebrew + packages + bash + bashrc + fonts + vim + git)"
+	@echo "  setup-all        - Complete environment setup including development tools and apps"
 	@echo "  setup-homebrew   - Install Homebrew if not present"
 	@echo "  install-packages - Install basic development packages"
 	@echo "  install-dev-cli  - Install development CLI tools (kubectl, AWS CLI, Azure CLI, etc.)"
+	@echo "  install-dev-cli-extra - Install additional development CLI tools (lazygit, lazydocker)"
 	@echo "  install-dev-apps - Install development desktop applications (Docker Desktop, GitHub Desktop)"
 	@echo "  setup-bash       - Setup Homebrew bash and make it default shell"
 	@echo "  link-bashrc      - Create symbolic link from bash/bashrc to ~/.profile"
@@ -17,27 +19,48 @@ help:
 	@echo "  setup-git        - Create symbolic link from git/gitconfig to ~/.gitconfig"
 	@echo "  install-apps     - Install macOS applications"
 	@echo "  setup-linearmouse - Setup LinearMouse configuration"
+	@echo "  setup-apps       - Setup macOS applications and LinearMouse configuration"
 	@echo "  uninstall        - Remove all configurations, packages, and restore defaults"
 	@echo "  help             - Show this help message"
 
-# Complete setup
-setup: setup-homebrew install-packages install-dev-cli install-dev-apps setup-bash link-bashrc install-fonts setup-vim setup-git install-apps setup-linearmouse
+# Basic setup
+setup: setup-homebrew install-packages setup-bash link-bashrc install-fonts setup-vim setup-git
 	@echo ""
 	@echo "=================================================="
-	@echo "Environment setup complete!"
+	@echo "Basic environment setup complete!"
+	@echo ""
+	@echo "The following has been configured:"
+	@echo "  - Homebrew installation"
+	@echo "  - Basic development packages"
+	@echo "  - Homebrew Bash as default shell"
+	@echo "  - Bash configuration (bashrc -> ~/.profile)"
+	@echo "  - Font installation to ~/Library/Fonts"
+	@echo "  - Vim configuration and plugins"
+	@echo "  - Git configuration"
+	@echo ""
+	@echo "You can now close Terminal.app safely."
+	@echo "Next time you open a terminal, the new environment"
+	@echo "will be active with all configurations applied."
+	@echo "=================================================="
+
+# Complete setup including development tools
+setup-all: setup-homebrew install-packages install-dev-cli install-dev-cli-extra install-dev-apps setup-bash link-bashrc install-fonts setup-vim setup-git setup-apps
+	@echo ""
+	@echo "=================================================="
+	@echo "Complete environment setup with development tools finished!"
 	@echo ""
 	@echo "The following has been configured:"
 	@echo "  - Homebrew installation"
 	@echo "  - Basic development packages"
 	@echo "  - Development CLI tools"
+	@echo "  - Additional development CLI tools"
 	@echo "  - Development desktop applications"
 	@echo "  - Homebrew Bash as default shell"
 	@echo "  - Bash configuration (bashrc -> ~/.profile)"
 	@echo "  - Font installation to ~/Library/Fonts"
 	@echo "  - Vim configuration and plugins"
 	@echo "  - Git configuration"
-	@echo "  - macOS applications"
-	@echo "  - LinearMouse configuration"
+	@echo "  - macOS applications and LinearMouse configuration"
 	@echo ""
 	@echo "You can now close Terminal.app safely."
 	@echo "Next time you open a terminal, the new environment"
@@ -83,6 +106,15 @@ install-dev-cli: setup-homebrew
 	@# Container tools
 	@brew install docker
 	@echo "Development CLI tools installed successfully"
+
+# Install additional development CLI tools
+install-dev-cli-extra: setup-homebrew
+	@echo "Installing additional development CLI tools..."
+	@# Git tools
+	@brew install lazygit
+	@# Docker tools
+	@brew install lazydocker
+	@echo "Additional development CLI tools installed successfully"
 
 # Install development desktop applications
 install-dev-apps: setup-homebrew
@@ -192,6 +224,10 @@ setup-linearmouse:
 	@# Copy configuration file
 	@cp linearmouse/linearmouse.json ~/.config/linearmouse/
 	@echo "LinearMouse configuration copied to ~/.config/linearmouse/"
+
+# Setup macOS applications and LinearMouse configuration
+setup-apps: install-apps setup-linearmouse
+	@echo "macOS applications and LinearMouse configuration setup complete!"
 
 # Uninstall all configurations and packages
 uninstall:
