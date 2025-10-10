@@ -2,65 +2,104 @@
 
 This file provides comprehensive guidance to Claude Code (claude.ai/code) when working with this repository.
 
-## Repository Overview
+## IMMEDIATE CONTEXT FOR CLAUDE CODE
 
-**Type**: Personal dotfiles repository with automated macOS development environment setup
-**Primary Interface**: Makefile-based automation system
-**Architecture**: File copying (not symbolic links) for repository independence
-**Target Platform**: macOS with Homebrew ecosystem
-**Authentication**: One-time sudo authentication with 1-hour session extension
+### Essential System Architecture
+- **Repository Type**: macOS dotfiles automation via Makefile
+- **File Strategy**: Copy configurations (repository-independent after setup)
+- **Authentication**: Single sudo prompt with 1-hour session extension
+- **Target Structure**: Core (`setup`, `setup-apps`) + Optional (`optional-*`) + Internal (`_*`)
+- **Idempotency**: All targets safe to run multiple times
 
-## Quick Command Reference
-
-### Primary Commands (User-Facing)
+### Critical Commands
 ```bash
-make help          # Show available commands (default target)
-make setup         # Basic environment setup
+# Core environment setup
+make setup         # Basic dev environment (homebrew, packages, shell, configs)
 make setup-apps    # macOS applications + system settings
-make setup-extra   # Additional development tools (CLI + desktop apps)
-make setup-all     # Complete setup (setup + setup-extra + setup-apps)
-make uninstall     # Remove all configurations and packages
+
+# Optional development environments
+make optional-cloud-cli     # AWS/Azure CLI tools
+make optional-docker        # Docker + colima backend
+make optional-kubernetes    # minikube + kubectl + kubecolor
+
+# Management
 make backup-brewfile # Create host-specific Brewfile backup
+make uninstall      # Complete removal with cleanup
 ```
 
-### Internal Implementation
-All setup is handled through internal targets with underscore prefix:
-- `_authenticate`: Sudo authentication with 1-hour timeout extension
-- `_install-*`: Installation tasks (homebrew, packages, apps, fonts)
-- `_configure-*`: Configuration tasks (bash, vim, git, system, vscode, linearmouse)
+### Dependency Chain Rules
+```bash
+# Authentication required for:
+setup: _authenticate         # Shell changes need sudo
+optional-docker: _authenticate    # System service management
+optional-kubernetes: _authenticate # Cluster operations
 
-## Critical Architecture Decisions
-
-### 1. File Management Strategy
-**Current**: Configuration files are **copied** (not symlinked) to target locations
-- **Rationale**: Removes repository dependencies after installation
-- **Implication**: Changes to active configs don't sync back to repository
-- **Update Process**: Modify repository → re-run appropriate make target
-
-### 2. Authentication Strategy
-**Current**: One-time sudo authentication with automatic 1-hour extension
-- **Implementation**: `_authenticate` target creates `/etc/sudoers.d/dotfiles_temp`
-- **Security**: Temporary file automatically removed during uninstall
-- **User Experience**: Single password prompt enables fully unattended setup
-- **Timeout**: 60-minute session prevents multiple password prompts
-
-### 3. Package Management Dual System
-**Installation**: Direct `brew install` commands in Makefile targets
-**Backup**: `brewfiles/[hostname]/Brewfile` for host-specific package snapshots
-- **Key Point**: Brewfiles are NOT used for installation, only for backup/reference
-- **Command**: `make backup-brewfile` creates/updates host-specific backup
-
-### 4. Target Naming Convention
-**Public** (user-facing): `help`, `setup`, `setup-apps`, `setup-extra`, `setup-all`, `uninstall`, `backup-brewfile`
-**Internal** (implementation): `_authenticate`, `_install-*`, `_configure-*` with underscore prefix
-- **Rule**: Never use `setup` prefix for internal targets
-- **Visibility**: Only public targets appear in help output
-
-## File Structure and Mappings
-
-### Configuration Files (copied to destinations)
+# No authentication needed for:
+setup-apps                   # User-space app installation
+backup-brewfile             # Homebrew operations only
 ```
-Source → Destination
+
+## TARGET IMPLEMENTATION PATTERNS
+
+### 1. Configuration Target Pattern
+```bash
+_configure-app: [dependencies]
+	@echo "Configuring app..."
+	@# Always remove existing first
+	@if [ -e ~/.apprc ]; then rm -f ~/.apprc; fi
+	@# Copy from repository
+	@cp app/config ~/.apprc
+	@echo "App configuration copied"
+```
+
+### 2. Package Installation Pattern
+```bash
+_install-category: _install-homebrew
+	@echo "Installing category packages..."
+	@brew install package1 package2 package3
+	@echo "Category packages installed"
+```
+
+### 3. Environment Verification Pattern
+```bash
+optional-service: _authenticate _install-homebrew
+	@# Install tools
+	@brew install service-cli
+	@# Start and verify service
+	@if ! service status >/dev/null 2>&1; then service start; fi
+	@if service-cli info >/dev/null 2>&1; then
+		echo "✓ Service ready"
+	else
+		echo "⚠ Service connection failed"
+	fi
+```
+
+## PACKAGE CATEGORIZATION SYSTEM
+
+### Core Packages (_install-packages)
+- **Purpose**: Essential development tools for all users
+- **Content**: bash, git, go, node@22, CLI utilities, GNU tools
+- **Trigger**: Always installed via `make setup`
+
+### Development Apps (_install-dev-apps)
+- **Purpose**: Development desktop applications
+- **Content**: GitHub Desktop
+- **Trigger**: Installed via `make setup-apps`
+
+### macOS Applications (_install-apps)
+- **Purpose**: General macOS productivity applications
+- **Content**: iTerm2, Alt-Tab, Displaperture, LinearMouse, Stats, VS Code
+- **Trigger**: Installed via `make setup-apps`
+
+### Optional Environments
+- **optional-cloud-cli**: awscli, azure-cli
+- **optional-docker**: docker, docker-compose, colima
+- **optional-kubernetes**: kubectl, kubecolor, minikube
+
+## FILE OPERATION MAPPINGS
+
+### Configuration Files (Repository → System)
+```
 bash/bashrc → ~/.profile
 vim/vimrc → ~/.vimrc
 vim/plug.vim → ~/.vim/autoload/plug.vim
@@ -69,133 +108,143 @@ linearmouse/linearmouse.json → ~/.config/linearmouse/linearmouse.json
 fonts/*.ttf → ~/Library/Fonts/
 ```
 
-### System Files (temporary, removed on uninstall)
+### Temporary System Files (Auto-cleaned)
 ```
-/etc/sudoers.d/dotfiles_temp → Sudo timeout extension (60 minutes)
-```
-
-### Package Categories (installed via Makefile)
-- **Basic packages** (_install-packages): bash, git, go, node@22, CLI utilities, GNU tools
-- **Development CLI** (_install-dev-cli): kubectl, kubecolor, awscli, azure-cli, docker
-- **Additional dev CLI** (_install-dev-cli-extra): lazygit, lazydocker
-- **Development apps** (_install-dev-apps): GitHub Desktop
-- **macOS applications** (_install-apps): iTerm2, Alt-Tab, LinearMouse, Stats, VS Code
-- **System settings** (_configure-system): Global key repeat enabled
-- **VS Code settings** (_configure-vscode): VS Code-specific key repeat enabled
-
-### Directory Organization
-```
-dotfiles/
-├── bash/           # Bash configuration
-├── vim/            # Vim configuration and plugins
-├── git/            # Git configuration
-├── fonts/          # Font files
-├── linearmouse/    # LinearMouse configuration
-├── vscode/         # VS Code settings (extensions via Settings Sync)
-├── brewfiles/      # Host-specific Brewfile backups
-└── Makefile        # Central automation system
+/etc/sudoers.d/dotfiles_temp → Sudo timeout (removed on uninstall)
 ```
 
-## Development Guidelines
+## AUTHENTICATION STRATEGY
 
-### When Adding New Configurations
+### When `_authenticate` Required
+- Shell modification (`chsh`, editing `/etc/shells`)
+- System preference changes (`defaults write -g`)
+- Service management (Docker, Kubernetes)
+- Any `/etc/` file modifications
 
-1. **Determine Scope**
-   - Single application → create dedicated directory (e.g., `tmux/`, `neovim/`)
-   - Related configurations → group logically (e.g., fonts covers multiple files)
+### When NOT Required
+- Home directory operations (`~/.config`, `~/.vimrc`)
+- Homebrew operations (`brew install`, `brew bundle`)
+- Directory creation in user space
 
-2. **Implementation Pattern**
-   ```bash
-   # Add internal target with appropriate prefix
-   _configure-newapp: [dependencies]
-   	@echo "Configuring newapp..."
-   	@# Remove existing configuration
-   	@if [ -e ~/.newapprc ]; then rm -f ~/.newapprc; fi
-   	@# Copy configuration
-   	@cp newapp/config ~/.newapprc
-   	@echo "Newapp configuration copied"
-   ```
+### Implementation Details
+```bash
+_authenticate:
+	@sudo -v  # Prompt for password
+	@echo "Defaults timestamp_timeout=60" | sudo tee /etc/sudoers.d/dotfiles_temp
+```
 
-3. **Integration Steps**
-   - Add internal target to appropriate public target dependencies
-   - Add to `.PHONY` declaration
-   - Consider if sudo authentication is needed (add `_authenticate` dependency)
-   - Implement uninstall logic in `uninstall` target
-   - Update help text if adding public target
-   - Document in this file and README
+## UNINSTALL COMPLETENESS REQUIREMENTS
 
-### Authentication Requirements
+### Mandatory Cleanup Operations
+```bash
+uninstall:
+	# Remove configuration files from home directory
+	@for file in ~/.profile ~/.vimrc ~/.gitconfig; do rm -f "$$file"; done
+	
+	# Remove vim directory
+	@rm -rf ~/.vim
+	
+	# Remove fonts
+	@rm -f ~/Library/Fonts/UDEVGothic*.ttf
+	
+	# Restore system defaults
+	@chsh -s /bin/bash
+	@sudo sed -i '' '/\/opt\/homebrew\/bin\/bash/d' /etc/shells
+	
+	# Remove all packages (empty Brewfile technique)
+	@mkdir -p /tmp/dotfiles-uninstall
+	@touch /tmp/dotfiles-uninstall/Brewfile
+	@cd /tmp/dotfiles-uninstall && brew bundle cleanup --force
+	
+	# Critical: Remove temporary sudo configuration
+	@sudo rm -f /etc/sudoers.d/dotfiles_temp
+```
 
-**When to add `_authenticate` dependency:**
-- Target requires `sudo` commands (system file modifications, shell changes)
-- Target modifies `/etc/` files or system preferences
-- Target uses `chsh`, `dscl`, or other privileged commands
+## ERROR HANDLING STANDARDS
 
-**When NOT to add `_authenticate`:**
-- File copying to user home directory (`~/.config`, `~/.vimrc`, etc.)
-- Homebrew operations (brew install, brew bundle)
-- Creating directories in user space
+### Required Output Pattern
+```bash
+@echo "Starting operation..."
+@if operation_succeeds; then
+	echo "✓ Operation completed successfully"
+else
+	echo "⚠ Operation failed: specific_reason"
+	echo "Troubleshooting: suggested_action"
+fi
+```
 
-### Makefile Best Practices
+### Service Verification Pattern
+```bash
+# Always verify service status after setup
+@if service_check_command >/dev/null 2>&1; then
+	echo "✓ Service operational"
+	service_info_command  # Show status
+else
+	echo "⚠ Service not responding"
+	echo "Try: manual_start_command"
+fi
+```
 
-- **Dependencies**: Use proper target dependencies (`target: dependency`)
-- **Authentication**: Add `_authenticate` dependency for sudo operations
-- **Error Handling**: Check for existing files/directories before operations
-- **User Feedback**: Provide clear echo messages for major operations
-- **macOS Compatibility**: Test with system default `/bin/bash`
-- **Cleanup**: Always implement reverse operations in `uninstall` target
-- **Security**: Remove temporary sudo configurations during cleanup
+## DEVELOPMENT EXTENSION GUIDELINES
 
-### Package Management
+### Adding New Configuration
+1. **Create directory**: `mkdir new-app/`
+2. **Add internal target**: `_configure-new-app: [deps]`
+3. **Follow copy pattern**: Remove existing → Copy new → Confirm
+4. **Add to public target**: Include in appropriate `setup*` target
+5. **Update .PHONY**: Add target to declaration
+6. **Implement cleanup**: Add removal logic to `uninstall`
+7. **Test idempotency**: Verify safe to run multiple times
 
-**Adding Packages**:
-1. Add `brew install package-name` to appropriate `_install-*` target
-2. Categorize correctly (basic/dev-cli/dev-cli-extra/dev-apps/macos-apps)
-3. Test installation and uninstallation
+### Adding Optional Environment
+1. **Create target**: `optional-new-env: _authenticate _install-homebrew`
+2. **Install packages**: Use `brew install` commands
+3. **Start services**: Check status, start if needed
+4. **Verify connectivity**: Test functionality, provide feedback
+5. **Document usage**: Add example commands in output
 
-**DO NOT**:
-- Use Brewfiles for installation (they're backup-only)
-- Mix package categories inappropriately
-- Install packages outside Makefile system
+### Adding Package Categories
+- **Never mix categories**: Each serves distinct purpose
+- **Use appropriate target**: Match package type to target
+- **Test installation**: Verify packages install correctly
+- **Test removal**: Ensure cleanup works in uninstall
+
+## KEY CONSTRAINTS FOR CLAUDE CODE
+
+### Architectural Constraints
+- **File copying**: Never use symbolic links
+- **Single authentication**: One sudo prompt per session
+- **Modular design**: Respect core/optional separation
+- **Idempotency**: All operations must be repeatable
+
+### Security Requirements
+- **Temporary files**: Always clean up system modifications
+- **Sudo management**: Remove `/etc/sudoers.d/dotfiles_temp` on uninstall
+- **No secrets**: Never commit or log sensitive information
+
+### User Experience Standards
+- **Clear feedback**: Echo status for major operations
+- **Error guidance**: Provide actionable troubleshooting
+- **Unattended setup**: Minimize user interaction after initial password
 
 ### Testing Requirements
+1. **Core functionality**: `make setup && make setup-apps`
+2. **Optional features**: Test each `optional-*` independently
+3. **Complete removal**: `make uninstall` must restore clean state
+4. **Authentication flow**: Verify single password prompt works
+5. **Sudo cleanup**: Confirm temporary configuration removed
 
-Before committing changes:
-1. Test full installation: `make setup-all`
-2. Test partial installations: `make setup`, `make setup-apps`, `make setup-extra`
-3. Test uninstallation: `make uninstall`
-4. Verify authentication works correctly (single password prompt)
-5. Verify sudo cleanup (check `/etc/sudoers.d/dotfiles_temp` is removed)
-6. Verify host-specific backup: `make backup-brewfile`
-7. Test on clean macOS system if possible
+## IMPLEMENTATION CHECKLIST
 
-## Code Quality Standards
+When modifying this repository:
 
-- **No Emojis**: Never use emojis in any files
-- **Consistent Formatting**: Follow existing Makefile tab/space conventions
-- **Clear Documentation**: Update both CLAUDE.md and README for changes
-- **Error Messages**: Provide helpful feedback for failures
-- **Idempotency**: Make targets should be safe to run multiple times
-- **Security**: Handle sudo operations responsibly with proper cleanup
+- [ ] Follow target naming convention (`_internal`, `public`, `optional-*`)
+- [ ] Add `_authenticate` dependency for sudo operations
+- [ ] Implement corresponding cleanup in `uninstall` target
+- [ ] Update `.PHONY` declaration
+- [ ] Test idempotency (safe to run multiple times)
+- [ ] Verify authentication works (single password prompt)
+- [ ] Confirm cleanup works (check `/etc/sudoers.d/dotfiles_temp` removed)
+- [ ] Update documentation (README and CLAUDE.md)
 
-## Context for AI Code Generation
-
-When Claude Code works with this repository:
-
-1. **Primary Goal**: Maintain and extend the automated macOS development environment setup
-2. **Core Constraint**: Preserve file copying approach (not symbolic links)
-3. **Authentication Pattern**: Use `_authenticate` dependency for sudo operations
-4. **Extension Pattern**: Follow the internal/public target naming convention
-5. **Testing Requirement**: All changes must be testable via make commands
-6. **Security Requirement**: Ensure proper sudo cleanup in uninstall target
-7. **Documentation Standard**: Update both CLAUDE.md and README for user-facing changes
-
-This repository represents a mature, well-structured dotfiles system optimized for reliability, security, and ease of use. Maintain these architectural decisions while extending functionality.
-
-### Key Implementation Notes for Claude Code:
-
-- **Authentication**: Always add `_authenticate` dependency when target requires sudo
-- **Cleanup**: Every sudo operation must have corresponding cleanup in `uninstall`
-- **Security**: Temporary system files must be properly removed
-- **User Experience**: Maintain single password prompt for entire session
-- **Testing**: Verify authentication and cleanup work correctly
+This repository provides a mature, secure, and user-friendly dotfiles automation system. Maintain these architectural decisions while extending functionality.

@@ -239,13 +239,6 @@ _install-packages: _install-homebrew
 	@brew install daipeihust/tap/im-select
 	@echo "Packages installed successfully"
 
-# Install cloud CLI tools
-_install-cloud-cli: _install-homebrew
-	@echo "Installing cloud CLI tools..."
-	@# Cloud CLI tools
-	@brew install awscli azure-cli
-	@echo "Cloud CLI tools installed successfully"
-
 # Install development desktop applications
 _install-dev-apps: _install-homebrew
 	@echo "Installing development desktop applications..."
