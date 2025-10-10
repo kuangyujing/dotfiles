@@ -78,7 +78,7 @@ fonts/*.ttf → ~/Library/Fonts/
 - **Basic packages** (_install-packages): bash, git, go, node@22, CLI utilities, GNU tools
 - **Development CLI** (_install-dev-cli): kubectl, kubecolor, awscli, azure-cli, docker
 - **Additional dev CLI** (_install-dev-cli-extra): lazygit, lazydocker
-- **Development apps** (_install-dev-apps): Docker Desktop, GitHub Desktop
+- **Development apps** (_install-dev-apps): GitHub Desktop
 - **macOS applications** (_install-apps): iTerm2, Alt-Tab, LinearMouse, Stats, VS Code
 - **System settings** (_configure-system): Global key repeat enabled
 - **VS Code settings** (_configure-vscode): VS Code-specific key repeat enabled

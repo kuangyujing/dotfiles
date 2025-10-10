@@ -38,7 +38,7 @@ TARGETS
              Install additional development tools:
              - Development CLI tools (kubectl, kubecolor, awscli, azure-cli, docker)
              - Additional development CLI tools (lazygit, lazydocker)
-             - Development desktop applications (Docker Desktop, GitHub Desktop)
+             - Development desktop applications (GitHub Desktop)
 
      setup-all
              Complete environment setup (setup + setup-extra + setup-apps):

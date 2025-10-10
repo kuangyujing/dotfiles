@@ -1,6 +1,6 @@
 # dotfiles Makefile for macOS development environment setup
 
-.PHONY: help setup setup-apps setup-extra setup-all uninstall backup-brewfile _authenticate _install-homebrew _install-packages _install-dev-cli _install-dev-cli-extra _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _configure-system _configure-vscode _install-apps _configure-linearmouse
+.PHONY: help setup setup-apps setup-extra setup-all setup-docker setup-kubernetes uninstall backup-brewfile _authenticate _install-homebrew _install-packages _install-dev-cli _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _configure-system _configure-vscode _install-apps _configure-linearmouse
 
 # Default target
 help:
@@ -8,6 +8,8 @@ help:
 	@echo "  setup     - Basic environment setup (homebrew + packages + bash + bashrc + fonts + vim + git)"
 	@echo "  setup-apps - Setup macOS applications and LinearMouse configuration"
 	@echo "  setup-extra - Install additional development tools (CLI + desktop apps)"
+	@echo "  setup-docker - Setup Docker environment (Docker CLI + colima)"
+	@echo "  setup-kubernetes - Setup Kubernetes environment (minikube + kubectl + kubecolor)"
 	@echo "  setup-all - Complete environment setup including development tools and apps"
 	@echo "  uninstall - Remove all configurations, packages, and restore defaults"
 	@echo "  backup-brewfile - Create host-specific Brewfile backup"
@@ -97,28 +99,15 @@ _install-packages: _install-homebrew
 # Install development CLI tools
 _install-dev-cli: _install-homebrew
 	@echo "Installing development CLI tools..."
-	@# Kubernetes tools
-	@brew install kubectl kubecolor
 	@# Cloud CLI tools
 	@brew install awscli azure-cli
-	@# Container tools
-	@brew install docker
 	@echo "Development CLI tools installed successfully"
 
-# Install additional development CLI tools
-_install-dev-cli-extra: _install-homebrew
-	@echo "Installing additional development CLI tools..."
-	@# Git tools
-	@brew install lazygit
-	@# Docker tools
-	@brew install lazydocker
-	@echo "Additional development CLI tools installed successfully"
 
 # Install development desktop applications
 _install-dev-apps: _install-homebrew
 	@echo "Installing development desktop applications..."
 	@# Development applications
-	@brew install --cask docker
 	@brew install --cask github
 	@echo "Development desktop applications installed successfully"
 
@@ -240,8 +229,91 @@ setup-apps: _install-apps _configure-linearmouse _configure-system _configure-vs
 	@echo "macOS applications and LinearMouse configuration setup complete!"
 
 # Setup additional development tools
-setup-extra: _authenticate _install-homebrew _install-dev-cli _install-dev-cli-extra _install-dev-apps
+setup-extra: _authenticate _install-homebrew _install-dev-cli _install-dev-apps
 	@echo "Additional development tools setup complete!"
+
+# Setup Docker environment
+setup-docker: _authenticate _install-homebrew
+	@echo "Setting up Docker environment..."
+	@# Install Docker CLI and compose
+	@brew install docker
+	@brew install docker-compose
+	@# Install colima for lightweight container runtime
+	@brew install colima
+	@echo "Docker tools installed successfully"
+	@# Start colima service
+	@echo "Starting colima service..."
+	@if ! colima status >/dev/null 2>&1; then \
+		colima start; \
+		echo "Colima started successfully"; \
+	else \
+		echo "Colima is already running"; \
+	fi
+	@# Verify Docker connectivity and context
+	@echo "Verifying Docker connectivity..."
+	@if docker info >/dev/null 2>&1; then \
+		echo "Docker CLI successfully connected to colima"; \
+	else \
+		echo "Warning: Docker CLI connection failed. Try running 'colima start' manually"; \
+	fi
+	@echo "Checking Docker context..."
+	@docker context ls
+	@current_context=$$(docker context show 2>/dev/null || echo "default"); \
+	if [ "$$current_context" = "colima" ]; then \
+		echo "✓ Docker context is correctly set to colima"; \
+	else \
+		echo "Current context: $$current_context"; \
+		if docker context ls | grep -q "colima"; then \
+			echo "Setting Docker context to colima..."; \
+			docker context use colima; \
+			echo "✓ Docker context switched to colima"; \
+		else \
+			echo "Warning: colima context not found. Colima may not be properly configured"; \
+		fi; \
+	fi
+	@echo "Docker environment setup complete!"
+	@echo "You can now use Docker commands with colima backend:"
+	@echo "  docker run hello-world"
+	@echo "  docker-compose up"
+
+# Setup Kubernetes environment
+setup-kubernetes: _authenticate _install-homebrew
+	@echo "Setting up Kubernetes environment..."
+	@# Install kubectl and kubecolor
+	@brew install kubectl kubecolor
+	@# Install minikube
+	@brew install minikube
+	@echo "Kubernetes tools installed successfully"
+	@# Start minikube cluster
+	@echo "Starting minikube cluster..."
+	@if ! minikube status >/dev/null 2>&1; then \
+		echo "Starting new minikube cluster..."; \
+		minikube start --driver=docker; \
+		echo "Minikube cluster started successfully"; \
+	else \
+		echo "Minikube cluster is already running"; \
+	fi
+	@# Verify kubectl connectivity
+	@echo "Verifying kubectl connectivity..."
+	@if kubectl cluster-info >/dev/null 2>&1; then \
+		echo "✓ kubectl successfully connected to minikube cluster"; \
+		kubectl get nodes; \
+	else \
+		echo "Warning: kubectl connection failed. Try running 'minikube start' manually"; \
+	fi
+	@# Test kubecolor
+	@echo "Testing kubecolor..."
+	@if command -v kubecolor >/dev/null 2>&1; then \
+		echo "✓ kubecolor is available. You can use 'kubecolor get pods' for colored output"; \
+	else \
+		echo "Warning: kubecolor not found in PATH"; \
+	fi
+	@echo "Kubernetes environment setup complete!"
+	@echo "You can now use Kubernetes commands:"
+	@echo "  kubectl get nodes"
+	@echo "  kubectl get pods"
+	@echo "  kubecolor get pods  # colored output"
+	@echo "  minikube dashboard  # web UI"
 
 # Uninstall all configurations and packages
 uninstall:
