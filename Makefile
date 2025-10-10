@@ -1,6 +1,6 @@
 # dotfiles Makefile for macOS development environment setup
 
-.PHONY: help setup setup-apps setup-extra setup-docker setup-kubernetes setup-all uninstall backup-brewfile _authenticate _install-homebrew _install-packages _install-cloud-cli _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _configure-system _configure-vscode _install-apps _configure-linearmouse
+.PHONY: help setup setup-apps optional-cloud-cli optional-docker optional-kubernetes uninstall backup-brewfile _authenticate _install-homebrew _install-packages _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _configure-system _configure-vscode _install-apps _configure-linearmouse
 
 # ==================== PUBLIC TARGETS ====================
 
@@ -9,10 +9,9 @@ help:
 	@echo "Available targets:"
 	@echo "  setup     - Basic environment setup (homebrew + packages + bash + bashrc + fonts + vim + git)"
 	@echo "  setup-apps - Setup macOS applications and LinearMouse configuration"
-	@echo "  setup-extra - Install cloud CLI tools (awscli, azure-cli)"
-	@echo "  setup-docker - Setup Docker environment (Docker CLI + colima)"
-	@echo "  setup-kubernetes - Setup Kubernetes environment (minikube + kubectl + kubecolor)"
-	@echo "  setup-all - Complete environment setup including development tools and apps"
+	@echo "  optional-cloud-cli - Install cloud CLI tools (awscli, azure-cli)"
+	@echo "  optional-docker - Setup Docker environment (Docker CLI + colima)"
+	@echo "  optional-kubernetes - Setup Kubernetes environment (minikube + kubectl + kubecolor)"
 	@echo "  uninstall - Remove all configurations, packages, and restore defaults"
 	@echo "  backup-brewfile - Create host-specific Brewfile backup"
 	@echo "  help      - Show this help message"
@@ -41,12 +40,15 @@ setup: _authenticate _install-homebrew _install-packages _configure-default-sh _
 setup-apps: _install-apps _install-dev-apps _configure-linearmouse _configure-system _configure-vscode
 	@echo "macOS applications and development desktop applications setup complete!"
 
-# Setup cloud CLI tools
-setup-extra: _authenticate _install-homebrew _install-cloud-cli
-	@echo "Cloud CLI tools setup complete!"
+# Install cloud CLI tools (optional)
+optional-cloud-cli: _authenticate _install-homebrew
+	@echo "Installing cloud CLI tools..."
+	@# Cloud CLI tools
+	@brew install awscli azure-cli
+	@echo "Cloud CLI tools installed successfully"
 
-# Setup Docker environment
-setup-docker: _authenticate _install-homebrew
+# Setup Docker environment (optional)
+optional-docker: _authenticate _install-homebrew
 	@echo "Setting up Docker environment..."
 	@# Install Docker CLI and compose
 	@brew install docker
@@ -89,8 +91,8 @@ setup-docker: _authenticate _install-homebrew
 	@echo "  docker run hello-world"
 	@echo "  docker-compose up"
 
-# Setup Kubernetes environment
-setup-kubernetes: _authenticate _install-homebrew
+# Setup Kubernetes environment (optional)
+optional-kubernetes: _authenticate _install-homebrew
 	@echo "Setting up Kubernetes environment..."
 	@# Install kubectl and kubecolor
 	@brew install kubectl kubecolor
@@ -128,29 +130,6 @@ setup-kubernetes: _authenticate _install-homebrew
 	@echo "  kubecolor get pods  # colored output"
 	@echo "  minikube dashboard  # web UI"
 
-# Complete setup including development tools
-setup-all: setup setup-extra setup-apps setup-docker
-	@echo ""
-	@echo "=================================================="
-	@echo "Complete environment setup with development tools finished!"
-	@echo ""
-	@echo "The following has been configured:"
-	@echo "  - Homebrew installation"
-	@echo "  - Basic development packages"
-	@echo "  - Cloud CLI tools (awscli, azure-cli)"
-	@echo "  - Development desktop applications"
-	@echo "  - Docker environment (docker, docker-compose, colima)"
-	@echo "  - Homebrew Bash as default shell"
-	@echo "  - Bash configuration (bashrc -> ~/.profile)"
-	@echo "  - Font installation to ~/Library/Fonts"
-	@echo "  - Vim configuration and plugins"
-	@echo "  - Git configuration"
-	@echo "  - macOS applications and system settings"
-	@echo ""
-	@echo "You can now close Terminal.app safely."
-	@echo "Next time you open a terminal, the new environment"
-	@echo "will be active with all configurations applied."
-	@echo "=================================================="
 
 # Uninstall all configurations and packages
 uninstall:
