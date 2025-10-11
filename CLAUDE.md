@@ -105,6 +105,7 @@ vim/vimrc → ~/.vimrc
 vim/plug.vim → ~/.vim/autoload/plug.vim
 git/gitconfig → ~/.gitconfig
 linearmouse/linearmouse.json → ~/.config/linearmouse/linearmouse.json
+alt-tab/com.lwouis.alt-tab-macos.plist → ~/Library/Preferences/com.lwouis.alt-tab-macos.plist
 fonts/*.ttf → ~/Library/Fonts/
 ```
 
@@ -141,8 +142,11 @@ uninstall:
 	# Remove configuration files from home directory
 	@for file in ~/.profile ~/.vimrc ~/.gitconfig; do rm -f "$$file"; done
 	
-	# Remove vim directory
-	@rm -rf ~/.vim
+	# Remove configuration directories
+	@rm -rf ~/.vim ~/.config/linearmouse
+	
+	# Remove application preferences
+	@rm -f ~/Library/Preferences/com.lwouis.alt-tab-macos.plist
 	
 	# Remove fonts
 	@rm -f ~/Library/Fonts/UDEVGothic*.ttf

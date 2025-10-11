@@ -31,7 +31,7 @@ TARGETS
              Install macOS applications and development desktop applications:
              - iTerm2, Alt-Tab, Displaperture, LinearMouse, Stats
              - Visual Studio Code, GitHub Desktop
-             - LinearMouse configuration
+             - LinearMouse and Alt-Tab configuration
              - Global key repeat enabled for all applications
 
      optional-cloud-cli
@@ -94,6 +94,7 @@ INTERNAL TARGETS
      _configure-system       Configure global system settings (key repeat)
      _configure-vscode       Configure VS Code settings (key repeat)
      _configure-linearmouse  Setup LinearMouse configuration
+     _configure-alt-tab      Setup Alt-Tab configuration
      _authenticate           Authenticate sudo access for 1 hour session
 
 SYSTEM REQUIREMENTS

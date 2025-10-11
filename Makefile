@@ -1,6 +1,6 @@
 # dotfiles Makefile for macOS development environment setup
 
-.PHONY: help setup setup-apps optional-cloud-cli optional-docker optional-kubernetes uninstall backup-brewfile _authenticate _install-homebrew _install-packages _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _configure-system _configure-vscode _install-apps _configure-linearmouse
+.PHONY: help setup setup-apps optional-cloud-cli optional-docker optional-kubernetes uninstall backup-brewfile _authenticate _install-homebrew _install-packages _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _configure-system _configure-vscode _install-apps _configure-linearmouse _configure-alt-tab
 
 # ==================== PUBLIC TARGETS ====================
 
@@ -37,7 +37,7 @@ setup: _authenticate _install-homebrew _install-packages _configure-default-sh _
 	@echo "=================================================="
 
 # Setup macOS applications and LinearMouse configuration
-setup-apps: _install-apps _install-dev-apps _configure-linearmouse _configure-system _configure-vscode
+setup-apps: _install-apps _install-dev-apps _configure-linearmouse _configure-alt-tab _configure-system _configure-vscode
 	@echo "macOS applications and development desktop applications setup complete!"
 
 # Install cloud CLI tools (optional)
@@ -138,11 +138,11 @@ uninstall:
 	@echo "Uninstalling dotfiles environment..."
 	@echo "=================================================="
 	@echo ""
-	@# Remove symbolic links
-	@echo "Removing symbolic links..."
+	@# Remove configuration files
+	@echo "Removing configuration files..."
 	@for file in ~/.profile ~/.vimrc ~/.gitconfig; do \
-		if [ -L "$$file" ]; then \
-			echo "Removing symbolic link $$file"; \
+		if [ -e "$$file" ]; then \
+			echo "Removing $$file"; \
 			rm -f "$$file"; \
 		fi; \
 	done
@@ -150,6 +150,16 @@ uninstall:
 	@if [ -d ~/.vim ]; then \
 		echo "Removing ~/.vim directory"; \
 		rm -rf ~/.vim; \
+	fi
+	@# Remove LinearMouse configuration
+	@if [ -d ~/.config/linearmouse ]; then \
+		echo "Removing ~/.config/linearmouse directory"; \
+		rm -rf ~/.config/linearmouse; \
+	fi
+	@# Remove Alt-Tab configuration
+	@if [ -f ~/Library/Preferences/com.lwouis.alt-tab-macos.plist ]; then \
+		echo "Removing ~/Library/Preferences/com.lwouis.alt-tab-macos.plist"; \
+		rm -f ~/Library/Preferences/com.lwouis.alt-tab-macos.plist; \
 	fi
 	@# Remove installed fonts
 	@echo "Removing installed fonts..."
@@ -358,3 +368,15 @@ _configure-linearmouse:
 	@# Copy configuration file
 	@cp linearmouse/linearmouse.json ~/.config/linearmouse/
 	@echo "LinearMouse configuration copied to ~/.config/linearmouse/"
+
+# Configure Alt-Tab
+_configure-alt-tab:
+	@echo "Configuring Alt-Tab..."
+	@# Remove existing Alt-Tab configuration
+	@if [ -e ~/Library/Preferences/com.lwouis.alt-tab-macos.plist ]; then \
+		echo "Removing existing ~/Library/Preferences/com.lwouis.alt-tab-macos.plist"; \
+		rm -f ~/Library/Preferences/com.lwouis.alt-tab-macos.plist; \
+	fi
+	@# Copy configuration file
+	@cp alt-tab/com.lwouis.alt-tab-macos.plist ~/Library/Preferences/
+	@echo "Alt-Tab configuration copied to ~/Library/Preferences/"
