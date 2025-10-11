@@ -347,6 +347,12 @@ _configure-system:
 	@# Enable key repeat globally for all applications
 	@defaults write -g ApplePressAndHoldEnabled -bool false
 	@echo "Global key repeat enabled for all applications"
+	@# Set Finder to list view as default
+	@defaults write com.apple.Finder FXPreferredViewStyle -string "Nlsv"
+	@echo "Finder default view set to list view"
+	@# Restart affected applications to apply settings
+	@killall Finder 2>/dev/null || true
+	@echo "Finder restarted to apply settings"
 
 # Configure VS Code
 _configure-vscode:
