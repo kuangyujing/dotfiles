@@ -257,7 +257,7 @@ _install-dev-apps: _install-homebrew
 	@echo "Development desktop applications installed successfully"
 
 # Install macOS applications
-_install-apps:
+_install-apps: _install-homebrew
 	@echo "Installing macOS applications..."
 	@brew install --cask iterm2
 	@brew install --cask alt-tab
