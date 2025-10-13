@@ -178,6 +178,44 @@ dotfiles/
 
 **Note**: Only files explicitly copied in Makefile targets are automated. Other files are for reference or future implementation.
 
+## DOCUMENTATION MAINTENANCE
+
+**CRITICAL**: When you modify Makefile, you MUST update documentation to maintain consistency.
+
+### Required Documentation Updates
+When adding/removing/modifying Makefile targets or packages:
+
+1. **Update README** (if user-facing changes):
+   - `TARGETS` section: Add/update target descriptions
+   - Package counts: Update numbers if packages added/removed
+   - Examples: Add usage examples for new features
+   - `INTERNAL TARGETS` section: Add new internal targets
+
+2. **Update CLAUDE.md** (if implementation patterns change):
+   - `Installed Packages` section: Update package lists and counts
+   - `Installed Applications` section: Update app lists
+   - `Configuration File Mappings`: Add new file mappings
+   - `Directory Structure Overview`: Add new directories
+   - Reference implementations: Update target descriptions if behavior changes
+
+### Examples of When to Update Documentation
+
+**Adding a package to `_install-packages`**:
+- README: Update package count in `setup` target description (e.g., "23 development packages" → "24 development packages")
+- CLAUDE.md: Add package to `Installed Packages` list
+
+**Creating new optional target** (e.g., `optional-python`):
+- README: Add to `TARGETS` section with description
+- CLAUDE.md: No update needed unless it introduces new patterns
+
+**Adding new configuration target** (e.g., `_configure-tmux`):
+- README: Add to `INTERNAL TARGETS` section
+- CLAUDE.md: Add to `Configuration File Mappings` and `Directory Structure Overview`
+
+**Changing authentication requirements**:
+- README: Update `NOTES` section if affects user experience
+- CLAUDE.md: Update `Authentication Decision Tree`
+
 ## IMPLEMENTATION CHECKLIST
 
 When modifying this repository:
@@ -185,6 +223,8 @@ When modifying this repository:
 - [ ] Add `_authenticate` dependency ONLY if needed (see decision tree)
 - [ ] Implement cleanup in `uninstall` target
 - [ ] Update `.PHONY` declaration at top of Makefile
+- [ ] **Update README if user-facing changes** (targets, packages, behavior)
+- [ ] **Update CLAUDE.md if implementation patterns or structure changes**
 - [ ] Test idempotency (safe to run 2-3 times)
 - [ ] Verify single password prompt works
 - [ ] Confirm complete cleanup after uninstall
