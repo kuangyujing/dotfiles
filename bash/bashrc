@@ -21,17 +21,9 @@ export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM=auto
 export GIT_PS1_STATESEPARATOR=
-#git_color() {
-#  local git_status="$(git status --porcelain 2>/dev/null)"
-#  local untracked_files="$(git status --porcelain 2>/dev/null | grep '^??' || echo '')"
-#  if [[ -n "$untracked_files" ]]; then echo "\033[3;38;5;15;48;5;203m"; elif [[ -n "$git_status" ]]; then echo "\033[3;38;5;15;48;5;63m"; else echo "\033[3;38;5;15;48;5;39m"; fi
-#}
-#export PS1='\[\033[2K\r\]\[\033[3;38;5;15;48;5;26m\] \w \033[3;38;5;15;48;5;33m $(__git_ps1 "%s ")\[\033[0m\] ' #\033[2K: Erase Entire Line
-PROMPT_COMMAND='stty -echo; printf "\033[6n" >&2; IFS=";" read -sdR -r -d R cur_pos; stty echo; col=${cur_pos##*;}; [ "$col" != "1" ] && echo'
-export PS1='\[\033[2K\r\]\[\033[2m\]\w $(__git_ps1 "(%s)")\[\033[0m\] ' #\033[2K: Erase Entire Line
+export PS1='\[\033[2K\r\]\[\033[2m\]\w$(__git_ps1 " (%s)")\[\033[0m\] ' #\033[2K: Erase Entire Line
 export PS2=
 export PS4='\[\033[2m\] ${BASH_SOURCE}:${LINENO}\[\033[0m\] '
-#export PS4='\[\033[3;38;5;15;48;5;239m\] ${BASH_SOURCE} \[\033[3;38;5;15;48;5;241m\] ${LINENO} \[\033[0m\] '
 # supress zsh warning
 export BASH_SILENCE_DEPRECATION_WARNING=1
 # homebrew
@@ -72,6 +64,8 @@ bind 'set menu-complete-display-prefix on'
 [ -f /opt/homebrew/etc/bash_completion ] && . /opt/homebrew/etc/bash_completion
 # gh completion
 eval "$(gh completion -s bash)"
+# npm completion
+eval "$(npm completion)"
 # awscli completion
 complete -C /opt/homebrew/bin/aws_completer aws
 # aliases
