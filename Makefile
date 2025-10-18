@@ -1,6 +1,6 @@
 # dotfiles Makefile for macOS development environment setup
 
-.PHONY: help setup setup-apps optional-cloud-cli optional-docker optional-kubernetes uninstall backup-brewfile _authenticate _install-homebrew _install-packages _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _configure-system _configure-vscode _install-apps _configure-linearmouse _configure-alt-tab
+.PHONY: help setup setup-apps optional-cloud-cli optional-docker optional-kubernetes uninstall backup-brewfile _authenticate _install-homebrew _install-packages _install-dev-apps _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _configure-system _configure-vscode _install-apps _configure-linearmouse _configure-alt-tab _configure-npm-config
 
 # ==================== PUBLIC TARGETS ====================
 
@@ -17,7 +17,7 @@ help:
 	@echo "  help      - Show this help message"
 
 # Basic setup
-setup: _authenticate _install-homebrew _install-packages _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git
+setup: _authenticate _install-homebrew _install-packages _configure-default-sh _configure-bash _install-fonts _configure-vim _configure-git _configure-npm-config
 	@echo ""
 	@echo "=================================================="
 	@echo "Basic environment setup complete!"
@@ -30,6 +30,7 @@ setup: _authenticate _install-homebrew _install-packages _configure-default-sh _
 	@echo "  - Font installation to ~/Library/Fonts"
 	@echo "  - Vim configuration and plugins"
 	@echo "  - Git configuration"
+	@echo "  - npm configuration"
 	@echo ""
 	@echo "You can now close Terminal.app safely."
 	@echo "Next time you open a terminal, the new environment"
@@ -169,6 +170,12 @@ uninstall:
 			rm -f ~/Library/Fonts/$$font; \
 		fi; \
 	done
+	@# Remove npm global configuration
+	@echo "Removing npm global configuration..."
+	@if [ -f ~/.npmrc ]; then \
+		echo "Removing ~/.npmrc"; \
+		rm -f ~/.npmrc; \
+	fi
 	@# Restore default shell
 	@echo "Restoring default shell to /bin/bash..."
 	@chsh -s /bin/bash
@@ -386,3 +393,15 @@ _configure-alt-tab:
 	@# Copy configuration file
 	@cp alt-tab/com.lwouis.alt-tab-macos.plist ~/Library/Preferences/
 	@echo "Alt-Tab configuration copied to ~/Library/Preferences/"
+
+# Configure npm
+_configure-npm-config: _install-packages
+	@echo "Configuring npm..."
+	@# Execute all npm configuration scripts
+	@for script in npm/*.sh; do \
+		if [ -f "$$script" ]; then \
+			echo "Executing $$script..."; \
+			/opt/homebrew/bin/bash "$$script"; \
+		fi; \
+	done
+	@echo "npm configuration complete"
