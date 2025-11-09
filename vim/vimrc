@@ -100,39 +100,29 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 " Git
-Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " Web
 Plug 'kuangyujing/html5.vim',{'for':['html','javascript','css']}
 " JavaScript
 Plug 'pangloss/vim-javascript',{'for':['html','javascript']}
-Plug 'othree/yajs.vim',{'for':['html','javascript']}
-Plug 'othree/es.next.syntax.vim',{'for':['html','javascript']}
 " Node.js
 Plug 'moll/vim-node',{'for':'javascript'}
 " Golang
 Plug 'fatih/vim-go',{'for':'go'}
-" Python
-Plug 'hdima/python-syntax',{'for':'python'}
-Plug 'Vimjas/vim-python-pep8-indent',{'for':'python'}
 " TypeScript
 Plug 'leafgarland/typescript-vim',{'for':['javascript','typescript']}
 " JSX, TSX
 Plug 'maxmellon/vim-jsx-pretty',{'for':['javascript','typescript']}
-" GraphQL
-Plug 'jparise/vim-graphql'
 " CSV
 Plug 'chrisbra/csv.vim'
 " SQL
 Plug 'shmup/vim-sql-syntax',{'for':['sql']}
-" ColorScheme
-Plug 'joshdick/onedark.vim'
 " Minimap
 Plug 'kuangyujing/minimap.vim'
 " Razor and Blazor
 Plug 'jlcrochet/vim-razor',{'for':['razor']}
-" Power Query
-Plug 'Jan-Bruun-Andersen/mpq-syntax-for-vim',{'for':['mpq']}
+" ColorScheme
+Plug 'joshdick/onedark.vim'
 call plug#end()
 syntax on
 colorscheme onedark
