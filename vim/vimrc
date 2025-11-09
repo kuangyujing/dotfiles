@@ -1,9 +1,10 @@
+source /opt/homebrew/etc/plug.vim
 set nocompatible
 set ambiwidth=single "listchars, fillchars
 set backspace=indent
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2 "4
+set shiftwidth=2 "4
+set softtabstop=2 "4
 set textwidth=0
 set expandtab
 set autoindent
@@ -11,7 +12,7 @@ set smartindent
 set breakindent
 "set cindent
 set cinoptions=+2,t0,l1,j1,J1 "(s,L0
-set formatoptions=tcroqnblmM1j
+set formatoptions=tcqnblmM1j
 set autoread
 set cmdheight=1
 set scrolloff=2
@@ -50,6 +51,7 @@ nnoremap <silent> <tab> <c-w>w
 nnoremap <silent> <s-tab> <c-w>W
 filetype plugin indent on
 autocmd filetype c,cpp set cindent
+"autocmd filetype markdown setlocal formatoptions-=ro
 "autocmd bufenter * if &filetype == '' | setlocal filetype=text | endif
 autocmd bufenter * if expand('%') =~# 'MINIMAP' | set laststatus=0 | else | set laststatus=2 | endif
 autocmd insertleave * redraw! " force redraw for macOS
@@ -85,7 +87,7 @@ let g:nredtree_tabs_open_on_console_startup=1
 let g:lsp_signature_help_enabled=0
 let g:lsp_semantic_enabled=1
 let g:lsp_document_code_action_signs_enabled=0 " disable vim-lsp A>
-call plug#begin("~/.vim/plug")
+call plug#begin("~/.vim")
 Plug 'junegunn/vim-plug'
 " basics
 Plug 'itchyny/lightline.vim'
@@ -121,9 +123,6 @@ Plug 'maxmellon/vim-jsx-pretty',{'for':['javascript','typescript']}
 Plug 'jparise/vim-graphql'
 " CSV
 Plug 'chrisbra/csv.vim'
-" Markdown
-Plug 'godlygeek/tabular',{'for':['markdown']}
-Plug 'preservim/vim-markdown',{'for':['markdown']}
 " SQL
 Plug 'shmup/vim-sql-syntax',{'for':['sql']}
 " ColorScheme
@@ -132,6 +131,8 @@ Plug 'joshdick/onedark.vim'
 Plug 'kuangyujing/minimap.vim'
 " Razor and Blazor
 Plug 'jlcrochet/vim-razor',{'for':['razor']}
+" Power Query
+Plug 'Jan-Bruun-Andersen/mpq-syntax-for-vim',{'for':['mpq']}
 call plug#end()
 syntax on
 colorscheme onedark
