@@ -21,7 +21,8 @@ export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM=auto
 export GIT_PS1_STATESEPARATOR=
-export PS1='\[\033[2K\r\]\[\033[2m\]\w$(__git_ps1 " (%s)")\[\033[0m\] ' #\033[2K: Erase Entire Line
+export PS1='\[\033[2K\r\]\[\033[3;38;5;15;48;5;33m\] \w \033[3;38;5;15;48;5;63m$(__git_ps1 " %s ")\[\033[0m\] '
+#export PS1='\[\033[2m\]\w$(__git_ps1 " (%s)")\[\033[0m\] ' #\033[2K: Erase Entire Line
 export PS2=
 export PS4='\[\033[2m\] ${BASH_SOURCE}:${LINENO}\[\033[0m\] '
 # supress zsh warning
@@ -55,6 +56,8 @@ export DISABLE_BUG_COMMAND=1
 export DISABLE_COST_WARNINGS=1
 export DISABLE_ERROR_REPORTING=1
 export DISABLE_TELEMETRY=1
+# docker context
+export DOCKER_HOST=unix:///Users/kuangyujing/.colima/default/docker.sock
 # bash bind
 bind 'TAB:menu-complete'
 bind 'set show-all-if-ambiguous on'
@@ -73,7 +76,6 @@ if [[ $- == *i* ]]; then
   alias r='fc -s'
   alias ls='ls -h --color=auto --group-directories-first'
   alias diff='diff -u'
-  alias cat='bat --tabs 4 --paging auto --style full'
   alias glow='glow -p -w0'
   alias curl='curl -Ss'
   alias wget='wget -q'
