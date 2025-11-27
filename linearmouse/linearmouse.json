@@ -31,7 +31,7 @@
         }
       },
       "pointer" : {
-        "acceleration" : 1,
+        "acceleration" : 0.875,
         "disableAcceleration" : false,
         "redirectsToScroll" : false,
         "speed" : 0.069
@@ -75,7 +75,7 @@
         }
       },
       "pointer" : {
-        "acceleration" : 1,
+        "acceleration" : 0.875,
         "disableAcceleration" : false,
         "redirectsToScroll" : false,
         "speed" : 0.069
