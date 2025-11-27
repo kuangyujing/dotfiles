@@ -2,6 +2,26 @@
   "$schema" : "https:\/\/schema.linearmouse.app\/0.10.2",
   "schemes" : [
     {
+      "buttons" : {
+        "mappings" : [
+          {
+            "action" : "none",
+            "button" : 3,
+            "command" : false,
+            "control" : false,
+            "option" : false,
+            "shift" : false
+          },
+          {
+            "action" : "none",
+            "button" : 4,
+            "command" : false,
+            "control" : false,
+            "option" : false,
+            "shift" : false
+          }
+        ]
+      },
       "if" : {
         "device" : {
           "category" : "mouse",
@@ -11,22 +31,25 @@
         }
       },
       "pointer" : {
-        "acceleration" : 0.7,
+        "acceleration" : 1,
         "disableAcceleration" : false,
         "redirectsToScroll" : false,
-        "speed" : 0.1
+        "speed" : 0.069
       },
       "scrolling" : {
-        "acceleration" : {
-          "vertical" : 1
-        },
+        "acceleration" : 1,
         "distance" : {
+          "horizontal" : 2,
           "vertical" : "auto"
         },
         "modifiers" : {
           "vertical" : {
-            "control" : {
+            "command" : {
               "type" : "pinchZoom"
+            },
+            "control" : {
+              "scale" : 10,
+              "type" : "changeSpeed"
             },
             "option" : {
               "type" : "preventDefault"
@@ -37,6 +60,7 @@
           }
         },
         "speed" : {
+          "horizontal" : 0,
           "vertical" : 50
         }
       }
@@ -51,61 +75,33 @@
         }
       },
       "pointer" : {
-        "acceleration" : "unset",
+        "acceleration" : 1,
         "disableAcceleration" : false,
         "redirectsToScroll" : false,
-        "speed" : "unset"
+        "speed" : 0.069
       },
       "scrolling" : {
-        "acceleration" : {
-          "vertical" : 1
-        },
+        "acceleration" : 1,
         "distance" : {
+          "horizontal" : 2,
           "vertical" : "auto"
         },
         "modifiers" : {
           "vertical" : {
-            "control" : {
-              "type" : "preventDefault"
+            "command" : {
+              "type" : "pinchZoom"
             },
-            "shift" : {
-              "type" : "preventDefault"
-            }
-          }
-        },
-        "speed" : {
-          "vertical" : 50
-        }
-      }
-    },
-    {
-      "if" : {
-        "device" : {
-          "category" : "mouse",
-          "productID" : "0x80a8",
-          "productName" : "ORBIT BT5.0",
-          "vendorID" : "0x47d"
-        }
-      },
-      "pointer" : {
-        "acceleration" : "unset",
-        "disableAcceleration" : false,
-        "redirectsToScroll" : false,
-        "speed" : "unset"
-      },
-      "scrolling" : {
-        "modifiers" : {
-          "vertical" : {
             "control" : {
-              "type" : "alterOrientation"
-            },
-            "shift" : {
               "scale" : 10,
               "type" : "changeSpeed"
+            },
+            "shift" : {
+              "type" : "alterOrientation"
             }
           }
         },
         "speed" : {
+          "horizontal" : 0,
           "vertical" : 50
         }
       }
@@ -118,6 +114,12 @@
           "productName" : "Apple Internal Keyboard \/ Trackpad",
           "vendorID" : "0x0"
         }
+      },
+      "pointer" : {
+        "acceleration" : 0.688,
+        "disableAcceleration" : false,
+        "redirectsToScroll" : false,
+        "speed" : 0.069
       },
       "scrolling" : {
         "acceleration" : {
