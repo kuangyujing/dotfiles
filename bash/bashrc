@@ -21,8 +21,8 @@ export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM=auto
 export GIT_PS1_STATESEPARATOR=
-export PS1='\[\033[2K\r\]\[\033[3;38;5;15;48;5;33m\] \w \033[3;38;5;15;48;5;63m$(__git_ps1 " %s ")\[\033[0m\] '
 #export PS1='\[\033[2m\]\w$(__git_ps1 " (%s)")\[\033[0m\] ' #\033[2K: Erase Entire Line
+export PS1='\[\033[2K\033[G\]\[\033[0;38;5;15;48;5;33m\] \w \[\033[48;5;63m\]$(__git_ps1 " %s ")\[\033[0m\] '
 export PS2=
 export PS4='\[\033[2m\] ${BASH_SOURCE}:${LINENO}\[\033[0m\] '
 # supress zsh warning
