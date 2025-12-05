@@ -40,7 +40,7 @@
         "acceleration" : 1,
         "distance" : {
           "horizontal" : 2,
-          "vertical" : "auto"
+          "vertical" : 10
         },
         "modifiers" : {
           "vertical" : {
@@ -48,21 +48,17 @@
               "type" : "pinchZoom"
             },
             "control" : {
-              "scale" : 10,
-              "type" : "changeSpeed"
+              "type" : "alterOrientation"
             },
             "option" : {
               "type" : "preventDefault"
             },
             "shift" : {
-              "type" : "alterOrientation"
+              "type" : "preventDefault"
             }
           }
         },
-        "speed" : {
-          "horizontal" : 0,
-          "vertical" : 50
-        }
+        "speed" : 0
       }
     },
     {
@@ -75,16 +71,16 @@
         }
       },
       "pointer" : {
-        "acceleration" : 0.875,
+        "acceleration" : "unset",
         "disableAcceleration" : false,
         "redirectsToScroll" : false,
-        "speed" : 0.069
+        "speed" : "unset"
       },
       "scrolling" : {
         "acceleration" : 1,
         "distance" : {
           "horizontal" : 2,
-          "vertical" : "auto"
+          "vertical" : 10
         },
         "modifiers" : {
           "vertical" : {
@@ -92,18 +88,14 @@
               "type" : "pinchZoom"
             },
             "control" : {
-              "scale" : 10,
-              "type" : "changeSpeed"
+              "type" : "alterOrientation"
             },
             "shift" : {
-              "type" : "alterOrientation"
+              "type" : "preventDefault"
             }
           }
         },
-        "speed" : {
-          "horizontal" : 0,
-          "vertical" : 50
-        }
+        "speed" : 0
       }
     },
     {
